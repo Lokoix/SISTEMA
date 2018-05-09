@@ -5,10 +5,7 @@
  */
 package importacao.arqtxt.Beans;
 
-/**
- *
- * @author rafae
- */
 public class LoteBeans {
+    int id;
     
 }
