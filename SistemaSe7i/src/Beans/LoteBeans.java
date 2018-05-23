@@ -3,9 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package importacao.arqtxt.Beans;
+package Beans;
 
 public class LoteBeans {
     int id;
+    ProprietarioBeans proprietario;
+
     
 }

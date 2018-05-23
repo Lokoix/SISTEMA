@@ -30,6 +30,7 @@ public class Conexao {
         if (con == null) {
             new Conexao();
         }
+        System.out.println("conectado");
         return con;
     }
 
