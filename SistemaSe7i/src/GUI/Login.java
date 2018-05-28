@@ -5,31 +5,36 @@
  */
 package GUI;
 
+import Beans.UsuariosBeans;
 import Controller.LoginController;
 import java.sql.Connection;
 import javax.swing.JOptionPane;
 
-
 public class Login extends javax.swing.JFrame {
-LoginController loginC = new LoginController();
-    
+
+    LoginController loginC = new LoginController();
+    UsuariosBeans usuarioB = new UsuariosBeans();
+
     public Login() {
         initComponents();
-       
+
     }
 
-    public void logar(){
-        boolean busca = loginC.logar(txt_login.getText(), txt_senha.getText());
-        if(busca){
+    public void logar() {
+        usuarioB.setLogin(txt_login.getText());
+        usuarioB.setSenha(txt_senha.getText());
+        
+        boolean busca = loginC.logar(usuarioB);
+        if (busca) {
             Principal principal = new Principal();
             this.dispose();
             principal.setVisible(true);
-        } else{
+        } else {
             JOptionPane.showMessageDialog(null, "Usuário Inválido");
         }
-        
+
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {

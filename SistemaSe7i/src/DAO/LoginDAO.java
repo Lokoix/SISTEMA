@@ -5,6 +5,7 @@
  */
 package DAO;
 
+import Beans.UsuariosBeans;
 import Utilitarios.Conexao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -16,33 +17,28 @@ import javax.swing.JOptionPane;
  */
 public class LoginDAO {
 
-    public boolean logar(String login, String senha) {
+    public boolean logar(UsuariosBeans usuario) {
 
         String SQL = "select * from usuarios where login = ? and senha = ?";
         try {
             PreparedStatement st = Conexao.getConnection().prepareStatement(SQL);
-            st.setString(1, login);
-            st.setString(2, senha);
-            
+            st.setString(1, usuario.getLogin());
+            st.setString(2, usuario.getSenha());
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
-                System.out.println("passou por aqui");
-                return true;
-                
-            }else{
-                System.out.println("passou por ali");
-                return false;
-            }
+                if (usuario.getLogin().equals(rs.getString("login")) && usuario.getSenha().equals(rs.getString("senha"))) {
+                    return true;
+                } else {
+                    return false;
+                }
 
-            
+            }
 
         } catch (Exception ex) {
 
             JOptionPane.showMessageDialog(null, ex);
         }
         return false;
-        
 
     }
 }
-
