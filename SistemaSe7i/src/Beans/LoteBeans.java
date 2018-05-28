@@ -8,6 +8,7 @@ package Beans;
 public class LoteBeans {
     int id;
     ProprietarioBeans proprietario;
+    int dasdas;
 
     
 }
