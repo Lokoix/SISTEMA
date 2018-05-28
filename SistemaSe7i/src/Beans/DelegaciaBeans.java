@@ -12,5 +12,6 @@ package Beans;
 public class DelegaciaBeans {
     
     private int id;
+    private String nome;
     
 }
