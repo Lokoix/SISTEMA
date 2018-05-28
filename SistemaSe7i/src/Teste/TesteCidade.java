@@ -8,22 +8,26 @@ package Teste;
 import Beans.CidadeBeans;
 import DAO.CidadeDAO;
 import java.util.ArrayList;
+
 /**
  *
  * @author rafae
  */
 public class TesteCidade {
+
     public static void main(String[] args) {
-        CidadeBeans cidB;
+        CidadeBeans cidB = new CidadeBeans();
         CidadeDAO cidD = new CidadeDAO();
-        
-        ArrayList<CidadeBeans> cidades = new ArrayList<>(cidD.ArrayMunicipioBD());
-        System.out.println("ola");
-        System.out.println(cidades.size());
-       for(int i=0; cidades.size() > i;i++){
-           System.out.println(cidades.get(i).getId()+" - "+cidades.get(i).getNome()+" - "+ cidades.get(i).getUf());
-       }
+
+        cidB = cidD.BuscarPk(6103);
+
+        System.out.println(cidB.getId() + " - " + cidB.getNome() + " - " + cidB.getUf());
+
+        ArrayList<CidadeBeans> cidades = new ArrayList();
+        cidades = cidD.ArrayMunicipioBD();
+        for (int i = 0; i < cidades.size(); i++) {
+            System.out.println(cidades.get(i).getId() + " - " + cidades.get(i).getNome() + " - " + cidades.get(i).getUf());
+        }
     }
-    
-    
+
 }
