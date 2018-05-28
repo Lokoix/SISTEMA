@@ -10,6 +10,7 @@ public class ProprietarioBeans {
     private String endereco;
     private String cpf;
     private String rg;
+    String m;
 
     public int getId() {
         return id;
