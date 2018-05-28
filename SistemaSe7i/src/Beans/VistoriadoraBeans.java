@@ -9,7 +9,7 @@ package Beans;
  *
  * @author Eu
  */
-public class LeiloeiroBeans {
+public class VistoriadoraBeans {
 
     private int id;
     private String nome;
@@ -17,19 +17,7 @@ public class LeiloeiroBeans {
     private String numero;
     private String bairro;
     private String cep;
-    private String telefone;
-    private String celular;
-    private String email;
     private CidadeBeans cidade;
-    private EmpresaBeans empresa;
-
-    public EmpresaBeans getEmpresa() {
-        return empresa;
-    }
-
-    public void setEmpresa(EmpresaBeans empresa) {
-        this.empresa = empresa;
-    }
 
     public int getId() {
         return id;
@@ -85,29 +73,5 @@ public class LeiloeiroBeans {
 
     public void setCidade(CidadeBeans cidade) {
         this.cidade = cidade;
-    }
-
-    public String getTelefone() {
-        return telefone;
-    }
-
-    public void setTelefone(String telefone) {
-        this.telefone = telefone;
-    }
-
-    public String getCelular() {
-        return celular;
-    }
-
-    public void setCelular(String celular) {
-        this.celular = celular;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 }
