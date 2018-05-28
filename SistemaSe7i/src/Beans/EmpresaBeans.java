@@ -17,6 +17,7 @@ public class EmpresaBeans {
     private String endereco;
     private String numero;
     private String bairro;
+    private String cep;
     private String telefone;
     private String login;
     private String senha;
