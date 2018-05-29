@@ -70,9 +70,6 @@ public class Usuario extends javax.swing.JInternalFrame {
         txt_nome.setText(null);
         txt_login.setText(null);
         txt_senha.setText(null);
-        rb_adm.setText(null);
-        rb_colab.setText(null);
-        rb_finan.setText(null);
     }
     /**
      * This method is called from within the constructor to initialize the form.
