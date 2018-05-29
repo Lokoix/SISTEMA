@@ -33,7 +33,7 @@ public class Principal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-<<<<<<< HEAD
+
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
@@ -47,7 +47,7 @@ public class Principal extends javax.swing.JFrame {
         jMenu2.setText("Importar");
 
         jMenuItem1.setText("Fotos");
-=======
+
         desktop = new javax.swing.JDesktopPane();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
@@ -70,22 +70,22 @@ public class Principal extends javax.swing.JFrame {
         jMenu1.setText("Cadastro");
 
         jMenuItem1.setText("Usuários");
->>>>>>> 6e7e5530e8e152a57898c0ece4b2fc624db9e8bb
+
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem1ActionPerformed(evt);
             }
         });
-<<<<<<< HEAD
+
         jMenu2.add(jMenuItem1);
 
-=======
+
         jMenu1.add(jMenuItem1);
 
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText("Sair");
->>>>>>> 6e7e5530e8e152a57898c0ece4b2fc624db9e8bb
+
         jMenuBar1.add(jMenu2);
 
         setJMenuBar(jMenuBar1);
@@ -94,19 +94,19 @@ public class Principal extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-<<<<<<< HEAD
+
             .addGap(0, 402, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 279, Short.MAX_VALUE)
-=======
+
             .addComponent(desktop)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(desktop)
->>>>>>> 6e7e5530e8e152a57898c0ece4b2fc624db9e8bb
+
         );
 
         pack();
@@ -163,10 +163,9 @@ public class Principal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-<<<<<<< HEAD
-=======
+
     private javax.swing.JDesktopPane desktop;
->>>>>>> 6e7e5530e8e152a57898c0ece4b2fc624db9e8bb
+
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
