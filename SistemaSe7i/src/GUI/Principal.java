@@ -114,10 +114,9 @@ public class Principal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-<<<<<<< HEAD
+
         UploadFotos uploadfotos = new UploadFotos(); 
         uploadfotos.setVisible(true); 
-=======
         usuario = new Usuario();
         usuario.setVisible(true);
         desktop.add(usuario);
@@ -125,7 +124,7 @@ public class Principal extends javax.swing.JFrame {
             usuario.setSelected(true);
         } catch (Exception e) {
         }
->>>>>>> 6e7e5530e8e152a57898c0ece4b2fc624db9e8bb
+
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     /**
