@@ -24,9 +24,10 @@ UsuarioController usuarioC = new UsuarioController();
     }
 
     private void cadastrar(){
-        usuarioC.c
-               
-        
+        popularUsuario();
+        System.out.println(usuarioB.getNome());
+        usuarioC.cadastrar(usuarioB);
+                     
     }
     
     private void popularUsuario(){
@@ -53,6 +54,7 @@ UsuarioController usuarioC = new UsuarioController();
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         lbl_id = new javax.swing.JLabel();
         txt_id = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
@@ -62,10 +64,10 @@ UsuarioController usuarioC = new UsuarioController();
         jLabel4 = new javax.swing.JLabel();
         txt_senha = new javax.swing.JPasswordField();
         jPanel1 = new javax.swing.JPanel();
-        jLabel5 = new javax.swing.JLabel();
         rb_adm = new javax.swing.JRadioButton();
         rb_colab = new javax.swing.JRadioButton();
         rb_finan = new javax.swing.JRadioButton();
+        jLabel5 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         txt = new javax.swing.JLabel();
         txt_buscar = new javax.swing.JTextField();
@@ -90,13 +92,16 @@ UsuarioController usuarioC = new UsuarioController();
 
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        jLabel5.setText("Permissão");
-
+        buttonGroup1.add(rb_adm);
         rb_adm.setText("Administrador");
 
+        buttonGroup1.add(rb_colab);
         rb_colab.setText("Colaborador");
 
+        buttonGroup1.add(rb_finan);
         rb_finan.setText("Financeiro");
+
+        jLabel5.setText("Permissão");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -108,11 +113,11 @@ UsuarioController usuarioC = new UsuarioController();
                     .addComponent(jLabel5)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(rb_adm)
-                        .addGap(18, 18, 18)
+                        .addGap(27, 27, 27)
                         .addComponent(rb_colab)
                         .addGap(18, 18, 18)
                         .addComponent(rb_finan)))
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addContainerGap(17, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -121,9 +126,9 @@ UsuarioController usuarioC = new UsuarioController();
                 .addComponent(jLabel5)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(rb_adm)
+                    .addComponent(rb_finan)
                     .addComponent(rb_colab)
-                    .addComponent(rb_finan))
+                    .addComponent(rb_adm))
                 .addContainerGap(12, Short.MAX_VALUE))
         );
 
@@ -152,6 +157,11 @@ UsuarioController usuarioC = new UsuarioController();
 
         jButton2.setFont(new java.awt.Font("Arial Black", 0, 11)); // NOI18N
         jButton2.setText("SALVAR");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setFont(new java.awt.Font("Arial Black", 0, 11)); // NOI18N
         jButton3.setText("EDITAR");
@@ -263,8 +273,13 @@ UsuarioController usuarioC = new UsuarioController();
         setBounds(0, 0, 593, 518);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        cadastrar();
+    }//GEN-LAST:event_jButton2ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;

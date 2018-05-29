@@ -5,10 +5,18 @@
  */
 package Controller;
 
+import Beans.UsuarioBeans;
+import DAO.UsuarioDAO;
+
 /**
  *
  * @author Guilhermengenharia
  */
 public class UsuarioController {
+    UsuarioDAO usuarioD = new UsuarioDAO();
     
+    public void cadastrar(UsuarioBeans usuario){
+        usuarioD.cadastrar(usuario);
+    }
 }
+
