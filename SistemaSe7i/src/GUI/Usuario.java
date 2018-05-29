@@ -5,21 +5,45 @@
  */
 package GUI;
 
+import Beans.UsuarioBeans;
+import Controller.UsuarioController;
+
 /**
  *
  * @author Guilhermengenharia
  */
 public class Usuario extends javax.swing.JInternalFrame {
+UsuarioController usuarioC = new UsuarioController();
 
-    /**
-     * Creates new form Usuários
-     */
+ UsuarioBeans usuarioB = new UsuarioBeans();
+ 
     public Usuario() {
         initComponents();
         txt_id.setVisible(false);
         lbl_id.setVisible(false);
     }
 
+    private void cadastrar(){
+        usuarioC.c
+               
+        
+    }
+    
+    private void popularUsuario(){
+        usuarioB.setNome(txt_nome.getText());
+        usuarioB.setLogin(txt_login.getText());
+        usuarioB.setSenha(txt_senha.getText());
+        if(rb_adm.isSelected()){
+            usuarioB.setPermissao("Administrador");                      
+        }
+        if(rb_colab.isSelected()){
+            usuarioB.setPermissao("Colaborador");
+        }
+        if(rb_finan.isSelected()){
+            usuarioB.setPermissao("Financeiro");
+        }
+     
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
