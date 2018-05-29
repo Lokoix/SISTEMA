@@ -9,7 +9,7 @@ package Beans;
  *
  * @author Eu
  */
-public class UsuarioBeans {
+public class UsuariosBeans {
     
     private int id;
     private String nome;

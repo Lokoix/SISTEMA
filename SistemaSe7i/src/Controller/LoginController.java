@@ -5,7 +5,7 @@
  */
 package Controller;
 
-import Beans.UsuarioBeans;
+import Beans.UsuariosBeans;
 import DAO.LoginDAO;
 
 
@@ -13,7 +13,7 @@ import DAO.LoginDAO;
 public class LoginController {
     LoginDAO loginD = new LoginDAO();
 
-    public boolean logar(UsuarioBeans usuario) {
+    public boolean logar(UsuariosBeans usuario) {
         return loginD.logar(usuario);
                 
     }
