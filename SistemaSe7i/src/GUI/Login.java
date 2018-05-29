@@ -5,7 +5,7 @@
  */
 package GUI;
 
-import Beans.UsuariosBeans;
+import Beans.UsuarioBeans;
 import Controller.LoginController;
 import java.sql.Connection;
 import javax.swing.JOptionPane;
@@ -13,7 +13,7 @@ import javax.swing.JOptionPane;
 public class Login extends javax.swing.JFrame {
 
     LoginController loginC = new LoginController();
-    UsuariosBeans usuarioB = new UsuariosBeans();
+    UsuarioBeans usuarioB = new UsuarioBeans();
 
     public Login() {
         initComponents();

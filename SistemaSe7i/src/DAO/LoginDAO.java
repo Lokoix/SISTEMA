@@ -5,7 +5,7 @@
  */
 package DAO;
 
-import Beans.UsuariosBeans;
+import Beans.UsuarioBeans;
 import Utilitarios.Conexao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -17,7 +17,7 @@ import javax.swing.JOptionPane;
  */
 public class LoginDAO {
 
-    public boolean logar(UsuariosBeans usuario) {
+    public boolean logar(UsuarioBeans usuario) {
 
         String SQL = "select * from usuarios where login = ? and senha = ?";
         try {

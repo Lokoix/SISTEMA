@@ -6,16 +6,17 @@
 package Controller;
 
 import Beans.UsuarioBeans;
-import DAO.LoginDAO;
+import DAO.UsuarioDAO;
 
-
-
-public class LoginController {
-    LoginDAO loginD = new LoginDAO();
-
-    public boolean logar(UsuarioBeans usuario) {
-        return loginD.logar(usuario);
-                
-    }
+/**
+ *
+ * @author Guilhermengenharia
+ */
+public class UsuarioController {
+    UsuarioDAO usuarioD = new UsuarioDAO();
     
+    public void cadastrar(UsuarioBeans usuario){
+        usuarioD.cadastrar(usuario);
+    }
 }
+
