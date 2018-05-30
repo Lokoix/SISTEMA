@@ -8,8 +8,10 @@ package DAO;
 import Beans.UsuarioBeans;
 import Utilitarios.Conexao;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -32,6 +34,38 @@ public class UsuarioDAO {
 
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex);
+        }
+
+    }
+
+    public void buscarUsuario(String Pesquisa, DefaultTableModel Modelo) {
+        try {
+            String sql = "select * from usuario where id = ?";
+            PreparedStatement st = Conexao.getConnection().prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Modelo.addRow(new Object[]{rs.getString("id"), rs.getString("nome"), rs.getString("login"), rs.getString("senha"), rs.getString("permissao")});
+            }
+
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex);
+        }
+
+    }
+
+    public UsuarioBeans preencherCampos(int Codigo) {
+
+    }
+
+    public void editar(UsuarioBeans usuarioB) {
+
+    }
+
+    public String proximoRegeistro() {
+        String sql = "select * from usuario order by id desc limit 1";
+        try {
+            
+        } catch (Exception e) {
         }
 
     }
