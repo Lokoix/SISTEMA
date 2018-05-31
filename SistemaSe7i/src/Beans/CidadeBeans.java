@@ -9,7 +9,7 @@ package Beans;
  *
  * @author Eu
  */
-class CidadeBeans {
+public class CidadeBeans {
     
     private int id;
     private String nome;
@@ -37,5 +37,9 @@ class CidadeBeans {
 
     public void setEstado(EstadoBeans estado) {
         this.estado = estado;
+    }
+    
+    public void exibe(){
+        System.out.println(this.id+" - "+this.getNome()+" - "+this.estado.getId()+" - "+this.estado.getNome());
     }
 }

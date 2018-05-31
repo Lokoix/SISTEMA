@@ -9,11 +9,20 @@ package Beans;
  *
  * @author Eu
  */
-class EstadoBeans {
+public class EstadoBeans {
     
     private int id;
     private String nome;
 
+    public EstadoBeans(){
+        
+    }
+    
+    public EstadoBeans(int id, String nome){
+       this.id = id;
+       this.nome = nome;
+    }
+    
     public int getId() {
         return id;
     }
