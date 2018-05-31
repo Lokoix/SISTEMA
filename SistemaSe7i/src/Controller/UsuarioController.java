@@ -7,6 +7,7 @@ package Controller;
 
 import Beans.UsuarioBeans;
 import DAO.UsuarioDAO;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -17,6 +18,22 @@ public class UsuarioController {
     
     public void cadastrar(UsuarioBeans usuario){
         usuarioD.cadastrar(usuario);
+    }
+    public void controlePesquisa(String Pesquisa, DefaultTableModel Modelo) {
+        usuarioD.buscarUsuario(Pesquisa, Modelo);
+    }
+
+    public UsuarioBeans controlePreencherCampos(int Codigo) {
+        return usuarioD.preencherCampos(Codigo);
+    }
+    
+       public void editarController(UsuarioBeans usuarioB) {
+        usuarioD.editar(usuarioB);
+    }
+       
+
+    public String controleDeCodigo() {
+        return usuarioD.proximoRegeistro();
     }
 }
 
