@@ -7,6 +7,7 @@ package Controller;
 
 import Beans.UsuarioBeans;
 import DAO.UsuarioDAO;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -14,11 +15,13 @@ import javax.swing.table.DefaultTableModel;
  * @author Guilhermengenharia
  */
 public class UsuarioController {
+
     UsuarioDAO usuarioD = new UsuarioDAO();
-    
-    public void cadastrar(UsuarioBeans usuario){
+
+    public void cadastrar(UsuarioBeans usuario) {
         usuarioD.cadastrar(usuario);
     }
+
     public void controlePesquisa(String Pesquisa, DefaultTableModel Modelo) {
         usuarioD.buscarUsuario(Pesquisa, Modelo);
     }
@@ -26,14 +29,35 @@ public class UsuarioController {
     public UsuarioBeans controlePreencherCampos(int Codigo) {
         return usuarioD.preencherCampos(Codigo);
     }
-    
-       public void editarController(UsuarioBeans usuarioB) {
+
+    public void editarController(UsuarioBeans usuarioB) {
         usuarioD.editar(usuarioB);
     }
-       
 
     public String controleDeCodigo() {
         return usuarioD.proximoRegeistro();
     }
-}
 
+    public boolean verificarDados(UsuarioBeans usuario) {
+        if (usuario.getNome().equals("")) {
+            JOptionPane.showMessageDialog(null, "Preencher Campo Nome", "Erro", 0);
+            return false;
+        }
+
+        if (usuario.getLogin().equals("")) {
+            JOptionPane.showMessageDialog(null, "Preencher Campo Login", "Eroo", 0);
+            return false;
+        }
+
+        if (usuario.getSenha().equals("")) {
+            JOptionPane.showMessageDialog(null, "Preencher Campo Senha", "Erro", 0);
+            return false;
+        }
+        
+        if(usuario.getPermissao().equals("")){
+            JOptionPane.showMessageDialog(null, "Selecionar Permissão", "Erro", 0);
+            return false;
+        }
+        return false;
+    }
+}

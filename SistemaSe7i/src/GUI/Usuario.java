@@ -15,13 +15,14 @@ import javax.swing.table.DefaultTableModel;
  * @author Guilhermengenharia
  */
 public class Usuario extends javax.swing.JInternalFrame {
- UsuarioController usuarioC = new UsuarioController();
+
+    UsuarioController usuarioC = new UsuarioController();
     UsuarioDAO usuarioD = new UsuarioDAO();
     UsuarioBeans usuarioB = new UsuarioBeans();
 
     public Usuario() {
         initComponents();
-        
+
         txt_id.setVisible(false);
         lbl_id.setVisible(false);
         habilitarCampos(false);
@@ -71,6 +72,7 @@ public class Usuario extends javax.swing.JInternalFrame {
         txt_login.setText(null);
         txt_senha.setText(null);
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -182,9 +184,16 @@ public class Usuario extends javax.swing.JInternalFrame {
 
         btn_novo.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
         btn_novo.setText("NOVO");
+        btn_novo.setEnabled(false);
+        btn_novo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_novoActionPerformed(evt);
+            }
+        });
 
         btn_salvar.setFont(new java.awt.Font("Arial Black", 0, 11)); // NOI18N
         btn_salvar.setText("SALVAR");
+        btn_salvar.setEnabled(false);
         btn_salvar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_salvarActionPerformed(evt);
@@ -193,12 +202,15 @@ public class Usuario extends javax.swing.JInternalFrame {
 
         btn_editar.setFont(new java.awt.Font("Arial Black", 0, 11)); // NOI18N
         btn_editar.setText("EDITAR");
+        btn_editar.setEnabled(false);
 
         btn_alterar.setFont(new java.awt.Font("Arial Black", 0, 11)); // NOI18N
         btn_alterar.setText("ALTERAR");
+        btn_alterar.setEnabled(false);
 
         btn_cancelar.setFont(new java.awt.Font("Arial Black", 0, 11)); // NOI18N
         btn_cancelar.setText("CANCELAR");
+        btn_cancelar.setEnabled(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -296,6 +308,21 @@ public class Usuario extends javax.swing.JInternalFrame {
     private void btn_salvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_salvarActionPerformed
         cadastrar();
     }//GEN-LAST:event_btn_salvarActionPerformed
+
+    private void btn_novoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_novoActionPerformed
+        habilitarCampos(true);
+        btn_salvar.setEnabled(true);
+        btn_cancelar.setEnabled(true);
+        btn_editar.setEnabled(false);
+        txt_buscar.setEnabled(false);
+        limparCampos();
+        usuarioC.controleDeCodigo();
+        txt_id.setText(usuarioC.controleDeCodigo());
+        btn_novo.setEnabled(false);
+        tb_usuario.setEnabled(false);
+        
+
+    }//GEN-LAST:event_btn_novoActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
