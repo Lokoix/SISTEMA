@@ -1,4 +1,4 @@
-package GUI;
+ package GUI;
 
 
 import Beans.FotosBeans;
@@ -491,18 +491,18 @@ public class UploadFotos extends javax.swing.JFrame {
                         lblexistentes.setText(lblexistentes.getText() + existente + "\n");
                     }
                 }
-                else if (caminhofinal.contains("F.jpg")) {
-                              
-                    Lote = caminhofinal.substring(caminhofinal.lastIndexOf("\\") + 1, caminhofinal.lastIndexOf(".jpg")-1);                
-                    Tipo = caminhofinal.substring(caminhofinal.indexOf(".jpg")-1, caminhofinal.lastIndexOf(".jpg"));
-                    
+                else if (caminhofinal.contains("F_")) 
+                {
+                    Lote = caminhofinal.substring(caminhofinal.lastIndexOf("\\") + 1, caminhofinal.lastIndexOf("F_"));
+                    Tipo = caminhofinal.substring(caminhofinal.lastIndexOf("F_"), caminhofinal.lastIndexOf("F_") + 2);
+                                    
                     String sql1 = "select * from fotos where caminho=?";
                     PreparedStatement st = Conexao.getConnection().prepareStatement(sql1);
                     st.setString(1, diretoriofinal + Lote + Tipo + ".jpg");
                     ResultSet rs = st.executeQuery();
                     
                     if (!rs.next()) {
-                        File outputfile = new File(diretoriofinal + Lote + Tipo + "F.jpg");
+                        File outputfile = new File(diretoriofinal + Lote + Tipo + ".jpg");
                         ImageIO.write(i, "jpg", outputfile);
 
                         FotoB.setCaminho(caminhofinal); 
@@ -510,7 +510,7 @@ public class UploadFotos extends javax.swing.JFrame {
                         FotoB.setTipo(Tipo);
                         FotoC.InserirFotos(FotoB);
                         
-                        String existente = Lote + Tipo;
+                        String existente = Lote +Tipo;
                         lblatualizados.setText(lblatualizados.getText() + existente + "\n");
                     } else {
                        String existente = Lote + Tipo;
@@ -581,7 +581,7 @@ public class UploadFotos extends javax.swing.JFrame {
     
     public void carregarfototraseira() {
         String sql = "Select * from fotos where lote=" + txtlote.getText() + " and leilao=" + txtIdCid.getText() + " and tipo='T_'";
-        try {
+        try {        
             PreparedStatement st = Conexao.getConnection().prepareStatement(sql);
             ResultSet rs = st.executeQuery();
             String caminhofinal = null;
@@ -602,8 +602,8 @@ public class UploadFotos extends javax.swing.JFrame {
     }
 
     public void carregarfotofrente() {
-        String sql = "Select * from fotos where lote=" + txtlote.getText() + " and leilao=" + txtIdCid.getText() + " and tipo='F'";
-        try {
+        String sql = "Select * from fotos where lote=" + txtlote.getText() + " and leilao=" + txtIdCid.getText() + " and tipo='F_'";
+        try {       
             PreparedStatement st = Conexao.getConnection().prepareStatement(sql);
             ResultSet rs = st.executeQuery();
             String caminhofinal = null;
