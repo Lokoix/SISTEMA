@@ -10,6 +10,7 @@ import Controller.LoginController;
 import javax.swing.JOptionPane;
 import static sun.security.jgss.GSSUtil.login;
 
+
 public class Login extends javax.swing.JFrame {
 
     LoginController loginC = new LoginController();
@@ -17,15 +18,15 @@ public class Login extends javax.swing.JFrame {
 
     public Login() {
         initComponents();
-
+        
         this.setResizable(false);
-
+        
     }
 
     public void logar() {
         usuarioB.setLogin(txt_login.getText());
         usuarioB.setSenha(txt_senha.getText());
-
+        
         boolean busca = loginC.logar(usuarioB);
         if (busca) {
             Principal principal = new Principal();
@@ -36,7 +37,6 @@ public class Login extends javax.swing.JFrame {
         }
 
     }
-
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -208,7 +208,7 @@ public class Login extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-
+                
                 new Login().setVisible(true);
             }
         });
