@@ -10,10 +10,7 @@ import Controller.LoginController;
 import javax.swing.JOptionPane;
 import static sun.security.jgss.GSSUtil.login;
 
-/**
- *
- * @author Guilhermengenharia
- */
+
 public class Login extends javax.swing.JFrame {
 
     LoginController loginC = new LoginController();
@@ -77,6 +74,11 @@ public class Login extends javax.swing.JFrame {
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         btn_logar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/OK-32.png"))); // NOI18N
+        btn_logar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_logarActionPerformed(evt);
+            }
+        });
 
         btn_cancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/ico_sair.png"))); // NOI18N
 
@@ -170,6 +172,10 @@ public class Login extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btn_logarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_logarActionPerformed
+        logar();
+    }//GEN-LAST:event_btn_logarActionPerformed
 
     /**
      * @param args the command line arguments
