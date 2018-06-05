@@ -22,19 +22,23 @@ import javax.swing.table.DefaultTableModel;
  */
 public class Usuario extends javax.swing.JInternalFrame {
 
-    UsuarioController usuarioC = new UsuarioController();
-    UsuarioDAO usuarioD = new UsuarioDAO();
-    UsuarioBeans usuarioB = new UsuarioBeans();
+    UsuarioController usuarioC;
+    UsuarioDAO usuarioD;
+    UsuarioBeans usuarioB;
+    DefaultTableModel Modelo;
 
     public Usuario() {
         initComponents();
-
+        usuarioB = new UsuarioBeans();
+        usuarioC = new UsuarioController();
+        usuarioD = new UsuarioDAO();
         txt_id.setVisible(false);
         lbl_id.setVisible(false);
         habilitarCampos(false);
         btn_novo.setEnabled(true);
         DefaultTableModel Modelo = (DefaultTableModel) tb_usuario.getModel();
-        //usuarioD.buscarTodosUsuarios(Modelo);
+        usuarioD.buscarTodosUsuarios(Modelo);
+        controlaEsc();
         limparCampos();
 
     }
@@ -79,7 +83,7 @@ public class Usuario extends javax.swing.JInternalFrame {
         txt_senha.setText(null);
     }
 
-        public void ControlaEsc() {
+    public void controlaEsc() {
         KeyStroke ks = KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0, true);
         getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(ks, "esc");
         getRootPane().getActionMap().put("esc", new AbstractAction() {
@@ -91,6 +95,7 @@ public class Usuario extends javax.swing.JInternalFrame {
             }
         });
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -339,8 +344,33 @@ public class Usuario extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_salvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_salvarActionPerformed
-        
-        cadastrar();
+        int i = JOptionPane.showConfirmDialog(null, "Deseja Cadastrar Usuário?" + txt_nome.getText() + "?", "Cadastrar Usuário", JOptionPane.YES_NO_OPTION);
+        if (i == JOptionPane.YES_OPTION) {
+            if (txt_id.getText().equals("")) {
+                //usuarioB.setId(Integer.parseInt(txt_id.getText()));
+                popularUsuario();
+                if (usuarioC.verificarDados(usuarioB)) {
+                    System.out.println("passei aqui");
+                    btn_salvar.setEnabled(false);
+                    btn_alterar.setEnabled(false);
+                    btn_editar.setEnabled(false);
+                    btn_cancelar.setEnabled(false);
+                    btn_novo.setEnabled(true);
+                    tb_usuario.setVisible(true);
+                    habilitarCampos(false);
+                    limparCampos();
+                    //Modelo.setNumRows(0);
+                    //usuarioD.buscarTodosUsuarios(Modelo);
+                    usuarioC.cadastrar(usuarioB);
+
+                }
+            }else{
+                //usuarioB.setId(Integer.parseInt(txt_id.getText()));
+            }
+
+        } else {
+
+        }
     }//GEN-LAST:event_btn_salvarActionPerformed
 
     private void btn_novoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_novoActionPerformed
@@ -353,19 +383,19 @@ public class Usuario extends javax.swing.JInternalFrame {
         //usuarioC.controleDeCodigo();
         //txt_id.setText(usuarioC.controleDeCodigo());
         btn_novo.setEnabled(false);
-        tb_usuario.setEnabled(false);      
+        tb_usuario.setEnabled(false);
     }//GEN-LAST:event_btn_novoActionPerformed
 
     private void btn_editarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_editarActionPerformed
-        
+
     }//GEN-LAST:event_btn_editarActionPerformed
 
     private void btn_alterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_alterarActionPerformed
-        
+
     }//GEN-LAST:event_btn_alterarActionPerformed
 
     private void btn_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cancelarActionPerformed
-        
+
     }//GEN-LAST:event_btn_cancelarActionPerformed
 
 

@@ -58,6 +58,6 @@ public class UsuarioController {
             JOptionPane.showMessageDialog(null, "Selecionar Permissão", "Erro", 0);
             return false;
         }
-        return false;
+        return true;
     }
 }
