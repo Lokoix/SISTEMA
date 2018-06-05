@@ -91,8 +91,8 @@
                       <Component id="lbl" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel2" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Component id="txt_senha" alignment="0" max="32767" attributes="0"/>
-                      <Component id="txt_login" alignment="0" max="32767" attributes="0"/>
                       <Component id="jPanel1" alignment="0" max="32767" attributes="0"/>
+                      <Component id="txt_login" alignment="0" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
@@ -186,6 +186,9 @@
                   <Image iconType="3" name="/Imagens/ico_sair.png"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_cancelarActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="btn_sobre">
               <Properties>
@@ -193,6 +196,9 @@
                   <Image iconType="3" name="/Imagens/sobre.png"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_sobreActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>

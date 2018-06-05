@@ -37,6 +37,12 @@ public class Login extends javax.swing.JFrame {
         }
 
     }
+    
+    final void limparCampos(){
+        txt_login.setText(null);
+        txt_senha.setText(null);
+        
+    }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -82,8 +88,18 @@ public class Login extends javax.swing.JFrame {
         });
 
         btn_cancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/ico_sair.png"))); // NOI18N
+        btn_cancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_cancelarActionPerformed(evt);
+            }
+        });
 
         btn_sobre.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/sobre.png"))); // NOI18N
+        btn_sobre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_sobreActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -116,8 +132,8 @@ public class Login extends javax.swing.JFrame {
                     .addComponent(lbl)
                     .addComponent(jLabel2)
                     .addComponent(txt_senha)
-                    .addComponent(txt_login)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txt_login))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -177,6 +193,14 @@ public class Login extends javax.swing.JFrame {
     private void btn_logarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_logarActionPerformed
         logar();
     }//GEN-LAST:event_btn_logarActionPerformed
+
+    private void btn_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cancelarActionPerformed
+        limparCampos();
+    }//GEN-LAST:event_btn_cancelarActionPerformed
+
+    private void btn_sobreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_sobreActionPerformed
+        JOptionPane.showMessageDialog(null, "Se7i - Soluções Especiais em Tecnologia da Informação");
+    }//GEN-LAST:event_btn_sobreActionPerformed
 
     /**
      * @param args the command line arguments
