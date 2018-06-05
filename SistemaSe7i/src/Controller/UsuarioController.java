@@ -35,7 +35,7 @@ public class UsuarioController {
     }
 
     public String controleDeCodigo() {
-        return usuarioD.proximoRegeistro();
+        return usuarioD.proximoRegistro();
     }
 
     public boolean verificarDados(UsuarioBeans usuario) {

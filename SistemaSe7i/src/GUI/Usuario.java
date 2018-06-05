@@ -8,6 +8,12 @@ package GUI;
 import Beans.UsuarioBeans;
 import Controller.UsuarioController;
 import DAO.UsuarioDAO;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+import javax.swing.AbstractAction;
+import javax.swing.JComponent;
+import javax.swing.JOptionPane;
+import javax.swing.KeyStroke;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -73,6 +79,18 @@ public class Usuario extends javax.swing.JInternalFrame {
         txt_senha.setText(null);
     }
 
+        public void ControlaEsc() {
+        KeyStroke ks = KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0, true);
+        getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(ks, "esc");
+        getRootPane().getActionMap().put("esc", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                if (JOptionPane.showConfirmDialog(null, "Deseja Sair desta página?", "Fechar", JOptionPane.YES_NO_OPTION) == 0) {
+                    dispose();
+                }
+            }
+        });
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
