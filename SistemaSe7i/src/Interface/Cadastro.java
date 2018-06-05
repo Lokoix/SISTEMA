@@ -5,9 +5,7 @@
  */
 package Interface;
 
-import Beans.CidadeBeans;
-import Beans.ProprietarioBeans;
-import DAO.CidadeDAO;
+import Beans.ModeloBeans;
 import java.util.List;
 
 /**
@@ -15,40 +13,9 @@ import java.util.List;
  * @author rafael Piedade
  */
 public class Cadastro {
-
-    CidadeDAO cidD;
     
-    public ProprietarioBeans getProprietario(List<String> result) {
-        ProprietarioBeans x = new ProprietarioBeans();
-
-        x.setNome(RemoverEspacosDuplo(result.get(16).substring(11, 132)));
-        x.setEndereco(RemoverEspacosDuplo(result.get(17).substring(9, 70) +" ,"+result.get(17).substring(71, 81)));
+    public void getModelo(List<String> result){
         
-        x.setBairro(RemoverEspacosDuplo(result.get(17).substring(70, 85)));
-        x.setCep(RemoverTodosEspacos(result.get(17).substring(90, 97)));
-
-        x.setCidade(cidD.getCidadeId());
-
-        x.setRg(rg);
-        x.setCpfCpnpj(cpfCpnpj);
-
-    }
-
-    private String RemoverTodosEspacos(String s) {
-        while (s.contains(" ")) {
-            s = s.replaceAll(" ", "");
-        }
-        s = s.trim();
-
-        return s;
-    }
-
-    private String RemoverEspacosDuplo(String s) {
-        while (s.contains("  ")) {
-            s = s.replaceAll("  ", " ");
-        }
-        s = s.trim();
-
-        return s;
+        System.out.println(result.get(10).subSequence(25, 50));
     }
 }

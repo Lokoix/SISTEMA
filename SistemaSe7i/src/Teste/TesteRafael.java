@@ -12,12 +12,11 @@ public class TesteRafael {
         ManipulaTxt m = new ManipulaTxt();
         String local = "C:\\Users\\rafae\\Desktop\\interface\\";
        
-        List<String> arquivos = m.ListaDeArquivos(local);
+        List<String> arquivos = m.listaDeArquivos(local);
         
         for(int i=0; i<arquivos.size();i++){
-            List<String> res = m.LeituraBuffer(local, arquivos.get(i));
-            System.out.println(res.get(17).toString());
-            System.out.println((res.get(17).substring(83, 101)).toString());
-        }        
+            m.Leitura(local, arquivos.get(i));
+        }
+        
     }
 }
