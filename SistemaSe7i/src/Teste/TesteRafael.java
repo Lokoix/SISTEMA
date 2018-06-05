@@ -1,11 +1,6 @@
-
 package Teste;
 
-import Beans.CidadeBeans;
-import Beans.EstadoBeans;
-import DAO.CidadeDAO;
-import DAO.EstadoDAO;
-import java.util.ArrayList;
+import importacao.arqtxt.Beans.ManipulaTxt;
 import java.util.List;
 
 /**
@@ -14,13 +9,14 @@ import java.util.List;
  */
 public class TesteRafael {
     public static void main(String[] args) {
-        CidadeBeans b = new CidadeBeans();
-        CidadeDAO d = new CidadeDAO();
+        ManipulaTxt m = new ManipulaTxt();
+        String local = "C:\\Users\\rafae\\Desktop\\interface\\";
+       
+        List<String> arquivos = m.listaDeArquivos(local);
         
-        List<CidadeBeans> lista = d.carregarCidades("SÃO P");
+        for(int i=0; i<arquivos.size();i++){
+            m.Leitura(local, arquivos.get(i));
+        }
         
-        for (int i = 0; i < lista.size(); i++) {
-            lista.get(i).exibe();
-        }       
     }
 }

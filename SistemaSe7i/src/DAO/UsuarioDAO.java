@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import static sun.security.jgss.GSSUtil.login;
 
 /**
  *
@@ -54,8 +55,24 @@ public class UsuarioDAO {
     }
 
     public UsuarioBeans preencherCampos(int Codigo) {
-        return null;
+        UsuarioBeans Usuario = new UsuarioBeans();
+        try {
+            String sql = "select * from usuario where id = ?";
+            PreparedStatement st = Conexao.getConnection().prepareStatement(sql);
+            st.setInt(1, Codigo);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                Usuario.setId(rs.getInt("id"));
+                Usuario.setNome(rs.getString("nome"));
+                Usuario.setLogin(rs.getString("login"));
+                Usuario.setSenha(rs.getString("senha"));
+                Usuario.setPermissao(rs.getString("permissao"));
 
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex);
+        }
+        return Usuario;
     }
 
     public void editar(UsuarioBeans usuario) {
@@ -96,7 +113,17 @@ public class UsuarioDAO {
     }
 
     public void buscarTodosUsuarios(DefaultTableModel Modelo) {
-        
+        try {
+            String sql = "select * from usuario";
+            PreparedStatement st = Conexao.getConnection().prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Modelo.addRow(new Object[]{rs.getString("id"), rs.getString("nome"), rs.getString("login"), rs.getString("permissao")});
+                
+            }
+        } catch (Exception e) {
+        }
+
     }
 
 }
