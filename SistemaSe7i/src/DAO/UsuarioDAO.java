@@ -77,7 +77,7 @@ public class UsuarioDAO {
 
     }
 
-    public String proximoRegeistro() {
+    public String proximoRegistro() {
         String sql = "select * from usuario order by id desc limit 1";
         try {
             PreparedStatement st = Conexao.getConnection().prepareStatement(sql);
