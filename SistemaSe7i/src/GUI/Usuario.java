@@ -221,14 +221,29 @@ public class Usuario extends javax.swing.JInternalFrame {
         btn_editar.setFont(new java.awt.Font("Arial Black", 0, 11)); // NOI18N
         btn_editar.setText("EDITAR");
         btn_editar.setEnabled(false);
+        btn_editar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_editarActionPerformed(evt);
+            }
+        });
 
         btn_alterar.setFont(new java.awt.Font("Arial Black", 0, 11)); // NOI18N
         btn_alterar.setText("ALTERAR");
         btn_alterar.setEnabled(false);
+        btn_alterar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_alterarActionPerformed(evt);
+            }
+        });
 
         btn_cancelar.setFont(new java.awt.Font("Arial Black", 0, 11)); // NOI18N
         btn_cancelar.setText("CANCELAR");
         btn_cancelar.setEnabled(false);
+        btn_cancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_cancelarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -324,6 +339,7 @@ public class Usuario extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_salvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_salvarActionPerformed
+        
         cadastrar();
     }//GEN-LAST:event_btn_salvarActionPerformed
 
@@ -334,13 +350,23 @@ public class Usuario extends javax.swing.JInternalFrame {
         btn_editar.setEnabled(false);
         txt_buscar.setEnabled(false);
         limparCampos();
-        usuarioC.controleDeCodigo();
-        txt_id.setText(usuarioC.controleDeCodigo());
+        //usuarioC.controleDeCodigo();
+        //txt_id.setText(usuarioC.controleDeCodigo());
         btn_novo.setEnabled(false);
-        tb_usuario.setEnabled(false);
-        
-
+        tb_usuario.setEnabled(false);      
     }//GEN-LAST:event_btn_novoActionPerformed
+
+    private void btn_editarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_editarActionPerformed
+        
+    }//GEN-LAST:event_btn_editarActionPerformed
+
+    private void btn_alterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_alterarActionPerformed
+        
+    }//GEN-LAST:event_btn_alterarActionPerformed
+
+    private void btn_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cancelarActionPerformed
+        
+    }//GEN-LAST:event_btn_cancelarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -199,7 +199,9 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_cancelarActionPerformed
 
     private void btn_sobreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_sobreActionPerformed
-        JOptionPane.showMessageDialog(null, "Se7i - Soluções Especiais em Tecnologia da Informação");
+        JOptionPane.showMessageDialog(null, "Se7i - Soluções Especiais em Tecnologia da Informação \n"
+                + "                        Telefone: 6969-6969 \n         "
+                + "                   Eu sou o Douglas");
     }//GEN-LAST:event_btn_sobreActionPerformed
 
     /**
