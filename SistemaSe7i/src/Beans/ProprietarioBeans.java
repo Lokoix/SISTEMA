@@ -7,12 +7,13 @@ package Beans;
 
 /**
  *
- * @author Eu
+ * @author Gabriel Almeida
  */
 public class ProprietarioBeans {
     
     private int id;
     private String cpfCpnpj;
+    private String rg;
     private String nome;
     private String endereco;
     private String bairro;
@@ -74,6 +75,12 @@ public class ProprietarioBeans {
     public void setCidade(CidadeBeans cidade) {
         this.cidade = cidade;
     }
-    
-    
+
+    public String getRg() {
+        return rg;
+    }
+
+    public void setRg(String rg) {
+        this.rg = rg;
+    }  
 }
