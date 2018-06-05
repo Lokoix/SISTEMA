@@ -10,7 +10,7 @@ package Beans;
  * @author Eu
  */
 public class CidadeBeans {
-    
+    //dsasa
     private int id;
     private String nome;
     private EstadoBeans estado;
