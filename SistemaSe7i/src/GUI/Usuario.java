@@ -74,6 +74,7 @@ public class Usuario extends javax.swing.JInternalFrame {
         rb_colab.setEnabled(valor);
         rb_finan.setEnabled(valor);
 
+
     }
 
     final void limparCampos() {
@@ -493,8 +494,9 @@ public class Usuario extends javax.swing.JInternalFrame {
         btn_cancelar.setEnabled(true);
         btn_alterar.setEnabled(false);
         btn_deletar.setEnabled(false);
-        tb_usuario.setVisible(false);
+        //tb_usuario.setVisible(false);
         habilitarCampos(true);
+        
     }//GEN-LAST:event_btn_alterarActionPerformed
 
     private void rb_admActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rb_admActionPerformed
