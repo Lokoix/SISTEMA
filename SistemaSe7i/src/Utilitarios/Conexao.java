@@ -17,8 +17,8 @@ import javax.swing.JOptionPane;
  * @author Guilhermengenharia
  */
 public class Conexao {
-    
-     private final String URL = "jdbc:mysql://localhost:3306/sistemase7i";//private final não pode ser alterado; URL caminho para se chegar ao BD
+
+    private final String URL = "jdbc:mysql://localhost:3306/sistemase7i";//private final não pode ser alterado; URL caminho para se chegar ao BD
     private final String Driver = "org.gjt.mm.mysql.Driver";//informação de conexão
     private final String Usuario = "root";
     private final String Senha = "";
@@ -27,7 +27,7 @@ public class Conexao {
     public Conexao() {
         try {
             Con = DriverManager.getConnection(URL, Usuario, Senha);
-            Con.setAutoCommit(false);//não consegue voltar atrás
+            Con.setAutoCommit(false);//não consegue voltar atrás (caso true)
             //JOptionPane.showMessageDialog(null, "Conectado com Sucesso", "Conectado", 1);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e + "Erro ao Conectar com o Banco", "Erro", 0);
@@ -53,4 +53,3 @@ public class Conexao {
         }
     }
 }
-

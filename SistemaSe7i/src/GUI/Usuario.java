@@ -203,9 +203,9 @@ public class Usuario extends javax.swing.JInternalFrame {
 
         txt.setText("Buscar");
 
-        txt_buscar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt_buscarActionPerformed(evt);
+        txt_buscar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txt_buscarKeyReleased(evt);
             }
         });
 
@@ -390,28 +390,29 @@ public class Usuario extends javax.swing.JInternalFrame {
 
                 }
             } else {
-                usuarioB.setId(Integer.parseInt(txt_id.getText()));                
-                    popularUsuario();
-                    if(usuarioC.verificarDados(usuarioB)){
-                       usuarioC.editarController(usuarioB);
-                       btn_alterar.setEnabled(false);
-                       btn_cancelar.setEnabled(false);
-                       btn_deletar.setEnabled(false);
-                       btn_novo.setEnabled(true);
-                       tb_usuario.setVisible(true);
-                       habilitarCampos(true);
-                       limparCampos();
-                       txt_buscar.setText("");
-                                                                      
-                    }
-                    
+                usuarioB.setId(Integer.parseInt(txt_id.getText()));
+                popularUsuario();
+                if (usuarioC.verificarDados(usuarioB)) {
+                    usuarioC.editarController(usuarioB);
+                    btn_alterar.setEnabled(false);
+                    btn_cancelar.setEnabled(false);
+                    btn_deletar.setEnabled(false);
+                    btn_novo.setEnabled(true);
+                    btn_salvar.setEnabled(false);
+                    tb_usuario.setVisible(true);
+                    habilitarCampos(true);
+                    limparCampos();
+                    txt_buscar.setText("");
+
                 }
-            
-            }else {
+
+            }
+
+        } else {
 
         }
-            Modelo.setNumRows(0);
-            usuarioD.buscarTodosUsuarios(Modelo);
+        Modelo.setNumRows(0);
+        usuarioD.buscarTodosUsuarios(Modelo);
     }//GEN-LAST:event_btn_salvarActionPerformed
 
     private void btn_novoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_novoActionPerformed
@@ -444,7 +445,23 @@ public class Usuario extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btn_cancelarActionPerformed
 
     private void btn_deletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_deletarActionPerformed
+        int i = JOptionPane.showConfirmDialog(null, "Deseja Excluir Registro" + "?", "Excluir Registro", JOptionPane.YES_NO_OPTION);
+        if (i == JOptionPane.YES_OPTION) {
+            popularUsuario();
+            usuarioB.setId(Integer.parseInt(txt_id.getText()));
+            usuarioC.deletarController(usuarioB);
+            btn_novo.setEnabled(true);
+            btn_salvar.setEnabled(false);
+            btn_alterar.setEnabled(false);
+            btn_deletar.setEnabled(false);
+            btn_cancelar.setEnabled(false);
+            tb_usuario.setVisible(true);
+            habilitarCampos(false);
+            limparCampos();
+            Modelo.setNumRows(0);
+            usuarioD.buscarTodosUsuarios(Modelo);
 
+        }
     }//GEN-LAST:event_btn_deletarActionPerformed
 
     private void tb_usuarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tb_usuarioMouseClicked
@@ -492,10 +509,10 @@ public class Usuario extends javax.swing.JInternalFrame {
         String Permissao = "Finaceiro";
     }//GEN-LAST:event_rb_finanActionPerformed
 
-    private void txt_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_buscarActionPerformed
+    private void txt_buscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_buscarKeyReleased
         Modelo.setNumRows(0);
         usuarioC.controlePesquisa(txt_buscar.getText(), Modelo);
-    }//GEN-LAST:event_txt_buscarActionPerformed
+    }//GEN-LAST:event_txt_buscarKeyReleased
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

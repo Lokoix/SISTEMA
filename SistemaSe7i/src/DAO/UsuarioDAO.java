@@ -41,11 +41,11 @@ public class UsuarioDAO {
 
     public void buscarUsuario(String Pesquisa, DefaultTableModel Modelo) {
         try {
-            String sql = "select * from usuarios where id = ?";
+            String sql = "select * from usuarios where nome like '%" + Pesquisa + "%' ";
             PreparedStatement st = Conexao.getConnection().prepareStatement(sql);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
-                Modelo.addRow(new Object[]{rs.getString("id"), rs.getString("nome"), rs.getString("login"), rs.getString("senha"), rs.getString("permissao")});
+                Modelo.addRow(new Object[]{rs.getString("id"), rs.getString("nome"), rs.getString("login"), rs.getString("permissao")});
             }
 
         } catch (Exception ex) {
@@ -112,11 +112,17 @@ public class UsuarioDAO {
     }
 
     public void deletar(UsuarioBeans usuarioB) {
-        String sql = "delete from usuario where id=?";
+        String sql = "delete from usuarios where id = ?";
         try {
             PreparedStatement st = Conexao.getConnection().prepareStatement(sql);
-            ResultSet rs = st.executeQuery();
-        } catch (Exception e) {
+            st.setInt(1, usuarioB.getId());
+            st.executeUpdate();
+            
+            JOptionPane.showMessageDialog(null, "Registro Deletado com Sucesso");
+            Conexao.getConnection().commit();
+            
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex);
         }
     }
 
