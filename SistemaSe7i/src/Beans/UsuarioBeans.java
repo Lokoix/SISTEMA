@@ -16,6 +16,7 @@ public class UsuarioBeans {
     private String login;
     private String senha;
     private String permissao;
+    private String colaborador;
 
     public int getId() {
         return id;
@@ -56,4 +57,5 @@ public class UsuarioBeans {
     public void setPermissao(String permissao) {
         this.permissao = permissao;
     }
+    
 }

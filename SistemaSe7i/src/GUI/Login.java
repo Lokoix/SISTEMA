@@ -5,46 +5,71 @@
  */
 package GUI;
 
+import Beans.EmpresaBeans;
 import Beans.UsuarioBeans;
 import Controller.LoginController;
+import Controller.UsuarioController;
 import javax.swing.JOptionPane;
 import static sun.security.jgss.GSSUtil.login;
-
 
 public class Login extends javax.swing.JFrame {
 
     LoginController loginC = new LoginController();
     UsuarioBeans usuarioB = new UsuarioBeans();
+    UsuarioController usuarioC = new UsuarioController();
+    EmpresaBeans empresaB = new EmpresaBeans();
 
     public Login() {
         initComponents();
-        
+
         this.setResizable(false);
         getRootPane().setDefaultButton(btn_logar);//acionar botão com enter
-        
+
     }
 
     public void logar() {
-        usuarioB.setLogin(txt_login.getText());
-        usuarioB.setSenha(txt_senha.getText());
-        
-        boolean busca = loginC.logar(usuarioB);
-        if (busca) {
-            Principal principal = new Principal();
-            this.dispose();
-            principal.setVisible(true);
-            
-        } else {
-            JOptionPane.showMessageDialog(null, "Usuário Inválido");
+        if (rbColab.isSelected() || rbLeiloeiro.isSelected()) {
+            if (rbColab.isSelected()) {
+                usuarioB.setLogin(txt_login.getText());
+                usuarioB.setSenha(txt_senha.getText());
+
+                boolean busca = loginC.logar(usuarioB);
+                if (busca) {
+                    Principal principal = new Principal();
+                    this.dispose();
+                    principal.setVisible(true);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Usuário Inválido");
+                }
+
+            }
+            if (rbLeiloeiro.isSelected()) {
+                empresaB.setLogin(txt_login.getText());
+                empresaB.setSenha(txt_senha.getText());
+
+                boolean busca = loginC.logarEmpresa(empresaB);
+                if (busca) {
+                    Principal principal = new Principal();
+                    this.dispose();
+                    principal.setVisible(true);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Usuário Inválido");
+                }
+
+            }
+        } else{
+            JOptionPane.showMessageDialog(null, "Selecione o Perfil");
         }
 
     }
-    
-    final void limparCampos(){
+
+    final void limparCampos() {
         txt_login.setText(null);
         txt_senha.setText(null);
-        
+        buttonGroup1.clearSelection();
+
     }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -52,6 +77,7 @@ public class Login extends javax.swing.JFrame {
         jTextField1 = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         lbl = new javax.swing.JLabel();
@@ -63,6 +89,8 @@ public class Login extends javax.swing.JFrame {
         btn_cancelar = new javax.swing.JButton();
         btn_sobre = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
+        rbColab = new javax.swing.JRadioButton();
+        rbLeiloeiro = new javax.swing.JRadioButton();
 
         jTextField1.setText("jTextField1");
 
@@ -161,23 +189,51 @@ public class Login extends javax.swing.JFrame {
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/Logo.PNG"))); // NOI18N
 
+        buttonGroup1.add(rbColab);
+        rbColab.setText("Colaborador");
+        rbColab.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbColabActionPerformed(evt);
+            }
+        });
+
+        buttonGroup1.add(rbLeiloeiro);
+        rbLeiloeiro.setText("Leiloeiro");
+        rbLeiloeiro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbLeiloeiroActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(10, 10, 10)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(11, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(rbColab)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(rbLeiloeiro)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(10, 10, 10)
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(10, 10, 10)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(rbColab)
+                    .addComponent(rbLeiloeiro))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -199,6 +255,14 @@ public class Login extends javax.swing.JFrame {
                 + "                        Telefone: 6969-6969 \n         "
                 + "                   Eu sou o Douglas");
     }//GEN-LAST:event_btn_sobreActionPerformed
+
+    private void rbColabActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbColabActionPerformed
+        String Colaborador = "Colaborador";
+    }//GEN-LAST:event_rbColabActionPerformed
+
+    private void rbLeiloeiroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbLeiloeiroActionPerformed
+        String Leiloeiro = "Leiloeiro";
+    }//GEN-LAST:event_rbLeiloeiroActionPerformed
 
     /**
      * @param args the command line arguments
@@ -230,7 +294,7 @@ public class Login extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                
+
                 new Login().setVisible(true);
             }
         });
@@ -240,6 +304,7 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JButton btn_cancelar;
     private javax.swing.JButton btn_logar;
     private javax.swing.JButton btn_sobre;
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -249,6 +314,8 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel lbl;
+    private javax.swing.JRadioButton rbColab;
+    private javax.swing.JRadioButton rbLeiloeiro;
     private javax.swing.JTextField txt_login;
     private javax.swing.JPasswordField txt_senha;
     // End of variables declaration//GEN-END:variables
