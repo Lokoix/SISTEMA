@@ -22,19 +22,23 @@ import javax.swing.table.DefaultTableModel;
  */
 public class Usuario extends javax.swing.JInternalFrame {
 
-    UsuarioController usuarioC = new UsuarioController();
-    UsuarioDAO usuarioD = new UsuarioDAO();
-    UsuarioBeans usuarioB = new UsuarioBeans();
+    UsuarioController usuarioC;
+    UsuarioDAO usuarioD;
+    UsuarioBeans usuarioB;
+    DefaultTableModel Modelo;
 
     public Usuario() {
         initComponents();
-
+        usuarioB = new UsuarioBeans();
+        usuarioC = new UsuarioController();
+        usuarioD = new UsuarioDAO();
         txt_id.setVisible(false);
         lbl_id.setVisible(false);
         habilitarCampos(false);
         btn_novo.setEnabled(true);
-        DefaultTableModel Modelo = (DefaultTableModel) tb_usuario.getModel();
-        //usuarioD.buscarTodosUsuarios(Modelo);
+        Modelo = (DefaultTableModel) tb_usuario.getModel();
+        usuarioD.buscarTodosUsuarios(Modelo);
+        controlaEsc();
         limparCampos();
 
     }
@@ -70,16 +74,18 @@ public class Usuario extends javax.swing.JInternalFrame {
         rb_colab.setEnabled(valor);
         rb_finan.setEnabled(valor);
 
+
     }
 
     final void limparCampos() {
-        txt_id.setText(null);
+        txt_id.setText("");
         txt_nome.setText(null);
         txt_login.setText(null);
         txt_senha.setText(null);
+        buttonGroup1.clearSelection();
     }
 
-        public void ControlaEsc() {
+    public void controlaEsc() {
         KeyStroke ks = KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0, true);
         getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(ks, "esc");
         getRootPane().getActionMap().put("esc", new AbstractAction() {
@@ -91,6 +97,7 @@ public class Usuario extends javax.swing.JInternalFrame {
             }
         });
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -122,9 +129,9 @@ public class Usuario extends javax.swing.JInternalFrame {
         jSeparator2 = new javax.swing.JSeparator();
         btn_novo = new javax.swing.JButton();
         btn_salvar = new javax.swing.JButton();
-        btn_editar = new javax.swing.JButton();
         btn_alterar = new javax.swing.JButton();
         btn_cancelar = new javax.swing.JButton();
+        btn_deletar = new javax.swing.JButton();
 
         setClosable(true);
 
@@ -142,12 +149,27 @@ public class Usuario extends javax.swing.JInternalFrame {
 
         buttonGroup1.add(rb_adm);
         rb_adm.setText("Administrador");
+        rb_adm.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rb_admActionPerformed(evt);
+            }
+        });
 
         buttonGroup1.add(rb_colab);
         rb_colab.setText("Colaborador");
+        rb_colab.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rb_colabActionPerformed(evt);
+            }
+        });
 
         buttonGroup1.add(rb_finan);
         rb_finan.setText("Financeiro");
+        rb_finan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rb_finanActionPerformed(evt);
+            }
+        });
 
         jLabel5.setText("Permissão");
 
@@ -182,6 +204,12 @@ public class Usuario extends javax.swing.JInternalFrame {
 
         txt.setText("Buscar");
 
+        txt_buscar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txt_buscarKeyReleased(evt);
+            }
+        });
+
         tb_usuario.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -196,6 +224,11 @@ public class Usuario extends javax.swing.JInternalFrame {
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
+            }
+        });
+        tb_usuario.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tb_usuarioMouseClicked(evt);
             }
         });
         jScrollPane1.setViewportView(tb_usuario);
@@ -218,17 +251,32 @@ public class Usuario extends javax.swing.JInternalFrame {
             }
         });
 
-        btn_editar.setFont(new java.awt.Font("Arial Black", 0, 11)); // NOI18N
-        btn_editar.setText("EDITAR");
-        btn_editar.setEnabled(false);
-
         btn_alterar.setFont(new java.awt.Font("Arial Black", 0, 11)); // NOI18N
         btn_alterar.setText("ALTERAR");
         btn_alterar.setEnabled(false);
+        btn_alterar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_alterarActionPerformed(evt);
+            }
+        });
 
         btn_cancelar.setFont(new java.awt.Font("Arial Black", 0, 11)); // NOI18N
         btn_cancelar.setText("CANCELAR");
         btn_cancelar.setEnabled(false);
+        btn_cancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_cancelarActionPerformed(evt);
+            }
+        });
+
+        btn_deletar.setFont(new java.awt.Font("Arial Black", 0, 11)); // NOI18N
+        btn_deletar.setText("DELETAR");
+        btn_deletar.setEnabled(false);
+        btn_deletar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_deletarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -246,11 +294,11 @@ public class Usuario extends javax.swing.JInternalFrame {
                                 .addGap(12, 12, 12)
                                 .addComponent(btn_salvar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btn_editar, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btn_alterar, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(10, 10, 10)
-                                .addComponent(btn_alterar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btn_cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(10, 10, 10)
-                                .addComponent(btn_cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(btn_deletar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(lbl_id)
                                 .addGap(40, 40, 40)
@@ -314,9 +362,9 @@ public class Usuario extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_novo, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_salvar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_editar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_alterar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btn_cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_deletar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(26, Short.MAX_VALUE))
         );
 
@@ -324,29 +372,155 @@ public class Usuario extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_salvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_salvarActionPerformed
-        cadastrar();
+        int i = JOptionPane.showConfirmDialog(null, "Deseja Salvar Usuário " + txt_nome.getText() + "?", "Cadastrar Usuário", JOptionPane.YES_NO_OPTION);
+        if (i == JOptionPane.YES_OPTION) {
+            if (txt_id.getText().equals("")) {
+                System.out.println("passei aqui");
+                popularUsuario();
+                if (usuarioC.verificarDados(usuarioB)) {
+                    System.out.println("passei aqui");
+                    btn_salvar.setEnabled(false);
+                    btn_cancelar.setEnabled(false);
+                    btn_alterar.setEnabled(false);
+                    btn_deletar.setEnabled(false);
+                    btn_novo.setEnabled(true);
+                    tb_usuario.setVisible(true);
+                    habilitarCampos(false);
+                    limparCampos();
+                    usuarioC.cadastrar(usuarioB);
+
+                }
+            } else {
+                usuarioB.setId(Integer.parseInt(txt_id.getText()));
+                popularUsuario();
+                if (usuarioC.verificarDados(usuarioB)) {
+                    usuarioC.editarController(usuarioB);
+                    btn_alterar.setEnabled(false);
+                    btn_cancelar.setEnabled(false);
+                    btn_deletar.setEnabled(false);
+                    btn_novo.setEnabled(true);
+                    btn_salvar.setEnabled(false);
+                    tb_usuario.setVisible(true);
+                    habilitarCampos(true);
+                    limparCampos();
+                    txt_buscar.setText("");
+
+                }
+
+            }
+
+        } else {
+
+        }
+        Modelo.setNumRows(0);
+        usuarioD.buscarTodosUsuarios(Modelo);
     }//GEN-LAST:event_btn_salvarActionPerformed
 
     private void btn_novoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_novoActionPerformed
+
         habilitarCampos(true);
         btn_salvar.setEnabled(true);
+        btn_deletar.setEnabled(false);
+        btn_alterar.setEnabled(false);
         btn_cancelar.setEnabled(true);
-        btn_editar.setEnabled(false);
         txt_buscar.setEnabled(false);
         limparCampos();
-        usuarioC.controleDeCodigo();
-        txt_id.setText(usuarioC.controleDeCodigo());
         btn_novo.setEnabled(false);
-        tb_usuario.setEnabled(false);
-        
-
+        tb_usuario.setVisible(false);
     }//GEN-LAST:event_btn_novoActionPerformed
+
+    private void btn_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cancelarActionPerformed
+        int i = JOptionPane.showConfirmDialog(null, "Deseja cancelar esta operação" + "?", "Cancelar Operação", JOptionPane.YES_NO_OPTION);
+        if (i == JOptionPane.YES_OPTION) {
+            btn_cancelar.setEnabled(false);
+            btn_alterar.setEnabled(false);
+            btn_salvar.setEnabled(false);
+            btn_novo.setEnabled(true);
+            tb_usuario.setVisible(true);
+            limparCampos();
+            habilitarCampos(false);
+
+        } else {
+
+        }
+    }//GEN-LAST:event_btn_cancelarActionPerformed
+
+    private void btn_deletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_deletarActionPerformed
+        int i = JOptionPane.showConfirmDialog(null, "Deseja Excluir Registro" + "?", "Excluir Registro", JOptionPane.YES_NO_OPTION);
+        if (i == JOptionPane.YES_OPTION) {
+            popularUsuario();
+            usuarioB.setId(Integer.parseInt(txt_id.getText()));
+            usuarioC.deletarController(usuarioB);
+            btn_novo.setEnabled(true);
+            btn_salvar.setEnabled(false);
+            btn_alterar.setEnabled(false);
+            btn_deletar.setEnabled(false);
+            btn_cancelar.setEnabled(false);
+            tb_usuario.setVisible(true);
+            habilitarCampos(false);
+            limparCampos();
+            Modelo.setNumRows(0);
+            usuarioD.buscarTodosUsuarios(Modelo);
+
+        }
+    }//GEN-LAST:event_btn_deletarActionPerformed
+
+    private void tb_usuarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tb_usuarioMouseClicked
+        usuarioB = usuarioC.controlePreencherCampos(Integer.parseInt(Modelo.getValueAt(tb_usuario.getSelectedRow(), 0).toString()));
+        txt_id.setText(usuarioB.getId() + "");
+        txt_nome.setText(usuarioB.getNome());
+        txt_login.setText(usuarioB.getLogin());
+        txt_senha.setText(usuarioB.getSenha());
+        if (usuarioB.getPermissao().equals("Administrador")) {
+            rb_adm.setSelected(true);
+        }
+        if (usuarioB.getPermissao().equals("Colaborador")) {
+            rb_colab.setSelected(true);
+        }
+        if (usuarioB.getPermissao().equals("Financeiro")) {
+            rb_finan.setSelected(true);
+        }
+        habilitarCampos(false);
+        btn_novo.setEnabled(true);
+        btn_salvar.setEnabled(false);
+        btn_alterar.setEnabled(true);
+        btn_cancelar.setEnabled(false);
+        btn_deletar.setEnabled(true);
+    }//GEN-LAST:event_tb_usuarioMouseClicked
+
+    private void btn_alterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_alterarActionPerformed
+        btn_salvar.setEnabled(true);
+        btn_novo.setEnabled(false);
+        btn_cancelar.setEnabled(true);
+        btn_alterar.setEnabled(false);
+        btn_deletar.setEnabled(false);
+        //tb_usuario.setVisible(false);
+        habilitarCampos(true);
+        
+    }//GEN-LAST:event_btn_alterarActionPerformed
+
+    private void rb_admActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rb_admActionPerformed
+        String Permissao = "Administrador";
+    }//GEN-LAST:event_rb_admActionPerformed
+
+    private void rb_colabActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rb_colabActionPerformed
+        String Permissao = "Colaborador";
+    }//GEN-LAST:event_rb_colabActionPerformed
+
+    private void rb_finanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rb_finanActionPerformed
+        String Permissao = "Finaceiro";
+    }//GEN-LAST:event_rb_finanActionPerformed
+
+    private void txt_buscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_buscarKeyReleased
+        Modelo.setNumRows(0);
+        usuarioC.controlePesquisa(txt_buscar.getText(), Modelo);
+    }//GEN-LAST:event_txt_buscarKeyReleased
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_alterar;
     private javax.swing.JButton btn_cancelar;
-    private javax.swing.JButton btn_editar;
+    private javax.swing.JButton btn_deletar;
     private javax.swing.JButton btn_novo;
     private javax.swing.JButton btn_salvar;
     private javax.swing.ButtonGroup buttonGroup1;

@@ -33,9 +33,9 @@ public class UsuarioController {
     public void editarController(UsuarioBeans usuarioB) {
         usuarioD.editar(usuarioB);
     }
-
-    public String controleDeCodigo() {
-        return usuarioD.proximoRegistro();
+    
+    public void deletarController(UsuarioBeans usuarioB){
+        usuarioD.deletar(usuarioB);
     }
 
     public boolean verificarDados(UsuarioBeans usuario) {
@@ -58,6 +58,6 @@ public class UsuarioController {
             JOptionPane.showMessageDialog(null, "Selecionar Permissão", "Erro", 0);
             return false;
         }
-        return false;
+        return true;
     }
 }
