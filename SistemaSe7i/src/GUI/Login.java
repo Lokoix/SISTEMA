@@ -9,7 +9,12 @@ import Beans.EmpresaBeans;
 import Beans.UsuarioBeans;
 import Controller.LoginController;
 import Controller.UsuarioController;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+import javax.swing.AbstractAction;
+import javax.swing.JComponent;
 import javax.swing.JOptionPane;
+import javax.swing.KeyStroke;
 import static sun.security.jgss.GSSUtil.login;
 
 public class Login extends javax.swing.JFrame {
@@ -24,6 +29,7 @@ public class Login extends javax.swing.JFrame {
 
         this.setResizable(false);
         getRootPane().setDefaultButton(btn_logar);//acionar botão com enter
+        controlaEsc();
 
     }
 
@@ -57,7 +63,7 @@ public class Login extends javax.swing.JFrame {
                 }
 
             }
-        } else{
+        } else {
             JOptionPane.showMessageDialog(null, "Selecione o Perfil");
         }
 
@@ -68,6 +74,17 @@ public class Login extends javax.swing.JFrame {
         txt_senha.setText(null);
         buttonGroup1.clearSelection();
 
+    }
+
+    public void controlaEsc() {
+        KeyStroke ks = KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0, true);
+        getRootPane().getInputMap().put(ks, "esc");
+        getRootPane().getActionMap().put("esc", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                dispose();
+            }
+        });
     }
 
     @SuppressWarnings("unchecked")
@@ -238,7 +255,7 @@ public class Login extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        pack();
+        setSize(new java.awt.Dimension(196, 407));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 

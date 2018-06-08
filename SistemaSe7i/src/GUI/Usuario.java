@@ -87,14 +87,12 @@ public class Usuario extends javax.swing.JInternalFrame {
 
     public void controlaEsc() {
         KeyStroke ks = KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0, true);
-        getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(ks, "esc");
+        getRootPane().getInputMap().put(ks, "esc");
         getRootPane().getActionMap().put("esc", new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                if (JOptionPane.showConfirmDialog(null, "Deseja Sair desta página?", "Fechar", JOptionPane.YES_NO_OPTION) == 0) {
-                    dispose();
-                }
-            }
+                dispose();
+            } 
         });
     }
 
