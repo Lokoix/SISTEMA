@@ -5,6 +5,7 @@
  */
 package DAO;
 
+import Beans.EmpresaBeans;
 import Beans.UsuarioBeans;
 import Utilitarios.Conexao;
 import java.sql.PreparedStatement;
@@ -40,5 +41,25 @@ public class LoginDAO {
         }
         return false;
 
+    }
+    
+    public boolean logarEmpresa(EmpresaBeans empresa){
+        String SQL = "select * from empresas where login = ? and senha = ?";
+        try {
+            PreparedStatement st = Conexao.getConnection().prepareStatement(SQL);
+            st.setString(1, empresa.getLogin());
+            st.setString(2, empresa.getSenha());
+            ResultSet rs = st.executeQuery();
+            if(rs.next()){
+                if(empresa.getLogin().equals(rs.getString("login")) && empresa.getSenha().equals(rs.getString("senha"))){
+                    return true;
+                }else{
+                    return false;
+                }
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex);
+        }
+        return false;
     }
 }
