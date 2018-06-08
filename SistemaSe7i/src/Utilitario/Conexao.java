@@ -10,7 +10,7 @@ import sun.util.logging.PlatformLogger;
 
 public class Conexao {
 
-    private final String url = "jdbc:mysql://localhost:3306/se7i";// final, não quero que ela seja alterada
+    private final String url = "jdbc:mysql://localhost:3306/sistemase7i";// final, não quero que ela seja alterada
     private final String driver = "org.gjt.mm.mysql.Driver";
     private final String usuario = "root";
     private final String senha = "";
