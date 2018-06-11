@@ -5,6 +5,7 @@
  */
 package Controller;
 
+import Beans.EmpresaBeans;
 import Beans.UsuarioBeans;
 import DAO.LoginDAO;
 
@@ -17,5 +18,11 @@ public class LoginController {
         return loginD.logar(usuario);
                 
     }
+    
+    public boolean logarEmpresa(EmpresaBeans empresa){
+        return loginD.logarEmpresa(empresa);
+    }
+    
+ 
     
 }

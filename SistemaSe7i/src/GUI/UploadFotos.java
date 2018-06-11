@@ -1,5 +1,4 @@
- package GUI;
-
+package GUI;
 
 import Beans.FotosBeans;
 import Controller.FotosController;
@@ -39,8 +38,9 @@ public class UploadFotos extends javax.swing.JFrame {
 
     ArrayList<BufferedImage> imagens;
     ArrayList<String> nomeDosArquivos;
-    FotosBeans FotoB = new FotosBeans(); 
-    FotosController FotoC = new FotosController(); 
+    FotosBeans FotoB = new FotosBeans();
+    FotosController FotoC = new FotosController();
+
     /**
      * Creates new form Upload
      */
@@ -88,6 +88,7 @@ public class UploadFotos extends javax.swing.JFrame {
         btn_OpenFolder = new javax.swing.JButton();
         btn_Import = new javax.swing.JButton();
         btn_BuscarLote = new javax.swing.JButton();
+        barraProgresso = new javax.swing.JProgressBar();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setFocusable(false);
@@ -171,69 +172,74 @@ public class UploadFotos extends javax.swing.JFrame {
             }
         });
 
+        barraProgresso.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 255)));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(19, 19, 19)
-                .addComponent(txtIdCid, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(10, 10, 10)
-                .addComponent(cbleilao, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(10, 10, 10)
-                .addComponent(btn_OpenFolder)
-                .addGap(18, 18, 18)
-                .addComponent(btn_Import)
-                .addGap(314, 314, 314)
-                .addComponent(jLabel5)
-                .addGap(10, 10, 10)
-                .addComponent(txtlote, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(6, 6, 6)
-                .addComponent(btn_BuscarLote, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(51, 51, 51)
-                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(113, 113, 113)
-                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(94, 94, 94)
-                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(46, 46, 46)
-                .addComponent(jLabel1)
-                .addGap(243, 243, 243)
-                .addComponent(jLabel2)
-                .addGap(221, 221, 221)
-                .addComponent(jLabel9))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(10, 10, 10)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(133, 133, 133)
-                        .addComponent(lblImagem))
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(10, 10, 10)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(12, 12, 12)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(8, 8, 8)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(lbltraseira, javax.swing.GroupLayout.DEFAULT_SIZE, 270, Short.MAX_VALUE)
-                    .addComponent(jLabel3)
-                    .addComponent(lblchassi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(51, 51, 51)
+                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(119, 119, 119)
+                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(88, 88, 88)
+                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(46, 46, 46)
+                        .addComponent(jLabel1)
+                        .addGap(243, 243, 243)
+                        .addComponent(jLabel2)
+                        .addGap(221, 221, 221)
+                        .addComponent(jLabel9))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
+                        .addGap(20, 20, 20)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(10, 10, 10)
-                                .addComponent(lblfrente, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(10, 10, 10)
-                                .addComponent(lblextra1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel4)))
-                    .addGroup(layout.createSequentialGroup()
+                                .addGap(123, 123, 123)
+                                .addComponent(lblImagem))
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(10, 10, 10)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(10, 10, 10)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lbltraseira, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3)
+                            .addComponent(lblchassi, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(8, 8, 8)
-                        .addComponent(lblmotor, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(lblextra2, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(12, 12, 12)
+                                .addComponent(lblfrente, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(2, 2, 2)
+                                .addComponent(jLabel4))
+                            .addComponent(lblmotor, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(10, 10, 10)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblextra1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblextra2, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(19, 19, 19)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(barraProgresso, javax.swing.GroupLayout.PREFERRED_SIZE, 1341, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(txtIdCid, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(10, 10, 10)
+                                .addComponent(cbleilao, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(10, 10, 10)
+                                .addComponent(btn_OpenFolder)
+                                .addGap(18, 18, 18)
+                                .addComponent(btn_Import)
+                                .addGap(303, 303, 303)
+                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(10, 10, 10)
+                                .addComponent(txtlote, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(6, 6, 6)
+                                .addComponent(btn_BuscarLote, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addGap(17, 17, 17))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -259,13 +265,15 @@ public class UploadFotos extends javax.swing.JFrame {
                         .addGap(1, 1, 1)
                         .addComponent(txtlote, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(btn_BuscarLote))
-                .addGap(22, 22, 22)
+                .addGap(11, 11, 11)
+                .addComponent(barraProgresso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(6, 6, 6)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(2, 2, 2)
                         .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(2, 2, 2)
+                        .addGap(1, 1, 1)
                         .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(1, 1, 1)
@@ -277,50 +285,44 @@ public class UploadFotos extends javax.swing.JFrame {
                         .addGap(10, 10, 10)
                         .addComponent(jLabel2))
                     .addComponent(jLabel9))
-                .addGap(3, 3, 3)
+                .addGap(4, 4, 4)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(2, 2, 2)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(26, 26, 26)
-                                .addComponent(lblImagem))
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 471, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(136, 136, 136)
+                        .addComponent(lblImagem))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 471, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 471, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 471, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(2, 2, 2)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 471, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(2, 2, 2)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 471, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(210, 210, 210)
-                        .addComponent(lblextra2, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(lbltraseira, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(10, 10, 10)
-                                .addComponent(jLabel3))
-                            .addComponent(lblfrente, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblextra1, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(240, 240, 240)
-                                .addComponent(jLabel4)))
+                        .addGap(108, 108, 108)
+                        .addComponent(lbltraseira, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(10, 10, 10)
+                        .addComponent(jLabel3)
                         .addGap(3, 3, 3)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblmotor, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblchassi, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                        .addComponent(lblchassi, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(108, 108, 108)
+                        .addComponent(lblfrente, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(10, 10, 10)
+                        .addComponent(jLabel4)
+                        .addGap(3, 3, 3)
+                        .addComponent(lblmotor, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(108, 108, 108)
+                        .addComponent(lblextra1, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(20, 20, 20)
+                        .addComponent(lblextra2, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    
-    public void CaminhoFotos()
-    {
+    File[] arquivos;
+
+    public void CaminhoFotos() {
         JFileChooser fc = new JFileChooser();
         fc.setMultiSelectionEnabled(true);
         int res = fc.showOpenDialog(null);
-        File[] arquivos;
+
         if (res == JFileChooser.APPROVE_OPTION) {
 
             arquivos = fc.getSelectedFiles();
@@ -332,7 +334,7 @@ public class UploadFotos extends javax.swing.JFrame {
                 try {
                     imagens.add(Utilitarios.ManipularImagem.setImagemDimensao(f.getAbsolutePath(), 800, 600));
                 } catch (Exception ex) {
-                  
+
                 }
             }
 
@@ -341,200 +343,192 @@ public class UploadFotos extends javax.swing.JFrame {
         }
     }
 
-    public void InserirFotos()
-    {
-        
-        try{
-        int contador = 0;
-            for (BufferedImage i : imagens) {
+    public void InserirFotos() {
+        new Thread() {
+            @Override
+            public void run() {
+                try {
+                    int contador = 0;
+                    barraProgresso.setMaximum(imagens.size());
+                    for (BufferedImage i : imagens) {
 
-                String leilao = cbleilao.getSelectedItem().toString();
-                java.io.File diretorio1 = new java.io.File("C:\\Users\\joaoh\\Desktop\\Leilões");
-                boolean statusDir1 = diretorio1.mkdir();
-                java.io.File diretorio2 = new java.io.File(diretorio1+"\\"+leilao+"\\");
-                boolean statusDir2 = diretorio2.mkdir();
-                java.io.File diretorio3 = new java.io.File(diretorio2+"\\Fotos\\");
-                boolean statusDir3 = diretorio3.mkdir();
-             
+                        String leilao = cbleilao.getSelectedItem().toString();
+                        java.io.File diretorio1 = new java.io.File("C:\\Users\\joaoh\\Desktop\\Leilões");
+                        boolean statusDir1 = diretorio1.mkdir();
+                        java.io.File diretorio2 = new java.io.File(diretorio1 + "\\" + leilao + "\\");
+                        boolean statusDir2 = diretorio2.mkdir();
+                        java.io.File diretorio3 = new java.io.File(diretorio2 + "\\Fotos\\");
+                        boolean statusDir3 = diretorio3.mkdir();
 
-                String caminhofinal = diretorio3 + "\\" + nomeDosArquivos.get(contador);
-                String diretoriofinal = diretorio3 + "\\";
+                        String caminhofinal = diretorio3 + "\\" + nomeDosArquivos.get(contador);
+                        String diretoriofinal = diretorio3 + "\\";
 
-                String Lote, Tipo;
-                
+                        String Lote, Tipo;
 
-                if (caminhofinal.contains("T_")) 
-                {
-                    Lote = caminhofinal.substring(caminhofinal.lastIndexOf("\\") + 1, caminhofinal.lastIndexOf("T_"));
-                    Tipo = caminhofinal.substring(caminhofinal.lastIndexOf("T_"), caminhofinal.lastIndexOf("T_") + 2);
-                    
-                   
-                    String sql1 = "select * from fotos where caminho=?";
-                    PreparedStatement st = Conexao.getConnection().prepareStatement(sql1);
-                    st.setString(1, diretoriofinal + Lote + Tipo + ".jpg");
-                    ResultSet rs = st.executeQuery();
+                        if (caminhofinal.contains("T_")) {
+                            Lote = caminhofinal.substring(caminhofinal.lastIndexOf("\\") + 1, caminhofinal.lastIndexOf("T_"));
+                            Tipo = caminhofinal.substring(caminhofinal.lastIndexOf("T_"), caminhofinal.lastIndexOf("T_") + 2);
 
-                    if (!rs.next()) {
-                        File outputfile = new File(diretoriofinal + Lote + Tipo + ".jpg");
-                        ImageIO.write(i, "jpg", outputfile);
-                        
-                        FotoB.setCaminho(caminhofinal); 
-                        FotoB.setLote(Lote);
-                        FotoB.setTipo(Tipo);
-                        FotoC.InserirFotos(FotoB);
-                        
-                        String existente = Lote + Tipo;      
-                        lblatualizados.setText(lblatualizados.getText() + existente + "\n");
-                    } else {
-                        String existente = Lote + Tipo;
-                        lblexistentes.setText(lblexistentes.getText() + existente + "\n");
+                            String sql1 = "select * from fotos where caminho=?";
+                            PreparedStatement st = Conexao.getConnection().prepareStatement(sql1);
+                            st.setString(1, diretoriofinal + Lote + Tipo + ".jpg");
+                            ResultSet rs = st.executeQuery();
+
+                            if (!rs.next()) {
+                                File outputfile = new File(diretoriofinal + Lote + Tipo + ".jpg");
+                                ImageIO.write(i, "jpg", outputfile);
+
+                                FotoB.setCaminho(caminhofinal);
+                                FotoB.setLote(Lote);
+                                FotoB.setTipo(Tipo);
+                                FotoC.InserirFotos(FotoB);
+
+                                String existente = Lote + Tipo;
+                                lblatualizados.setText(lblatualizados.getText() + existente + "\n");
+                            } else {
+                                String existente = Lote + Tipo;
+                                lblexistentes.setText(lblexistentes.getText() + existente + "\n");
+                            }
+                        } else if (caminhofinal.contains("MP_")) {
+                            Lote = caminhofinal.substring(caminhofinal.lastIndexOf("\\") + 1, caminhofinal.lastIndexOf("MP_"));
+                            Tipo = caminhofinal.substring(caminhofinal.lastIndexOf("MP"), caminhofinal.lastIndexOf("MP_") + 3);
+
+                            String sql1 = "select * from fotos where caminho=?";
+                            PreparedStatement st = Conexao.getConnection().prepareStatement(sql1);
+                            st.setString(1, diretoriofinal + Lote + Tipo + ".jpg");
+                            ResultSet rs = st.executeQuery();
+
+                            if (!rs.next()) {
+                                File outputfile = new File(diretoriofinal + Lote + Tipo + ".jpg");
+                                ImageIO.write(i, "jpg", outputfile);
+                                FotoB.setCaminho(caminhofinal);
+                                FotoB.setLote(Lote);
+                                FotoB.setTipo(Tipo);
+                                FotoC.InserirFotos(FotoB);
+                                String existente = Lote + Tipo;
+                                lblatualizados.setText(lblatualizados.getText() + existente + "\n");
+                            } else {
+                                String existente = Lote + Tipo;
+                                lblexistentes.setText(lblexistentes.getText() + existente + "\n");
+                            }
+                        } else if (caminhofinal.contains("MF_")) {
+                            Lote = caminhofinal.substring(caminhofinal.lastIndexOf("\\") + 1, caminhofinal.lastIndexOf("MF_"));
+                            Tipo = caminhofinal.substring(caminhofinal.lastIndexOf("MF"), caminhofinal.lastIndexOf("MF_") + 3);
+
+                            String sql1 = "select * from fotos where caminho=?";
+                            PreparedStatement st = Conexao.getConnection().prepareStatement(sql1);
+                            st.setString(1, diretoriofinal + Lote + Tipo + ".jpg");
+                            ResultSet rs = st.executeQuery();
+
+                            if (!rs.next()) {
+                                File outputfile = new File(diretoriofinal + Lote + Tipo + ".jpg");
+                                ImageIO.write(i, "jpg", outputfile);
+
+                                FotoB.setCaminho(caminhofinal);
+                                FotoB.setLote(Lote);
+                                FotoB.setTipo(Tipo);
+                                FotoC.InserirFotos(FotoB);
+
+                                String existente = Lote + Tipo;
+                                lblatualizados.setText(lblatualizados.getText() + existente + "\n");
+                            } else {
+                                String existente = Lote + Tipo;
+                                lblexistentes.setText(lblexistentes.getText() + existente + "\n");
+                            }
+                        } else if (caminhofinal.contains("CH_")) {
+                            Lote = caminhofinal.substring(caminhofinal.lastIndexOf("\\") + 1, caminhofinal.lastIndexOf("CH_"));
+                            Tipo = caminhofinal.substring(caminhofinal.lastIndexOf("CH"), caminhofinal.lastIndexOf("CH_") + 3);
+
+                            String sql1 = "select * from fotos where caminho=?";
+                            PreparedStatement st = Conexao.getConnection().prepareStatement(sql1);
+                            st.setString(1, diretoriofinal + Lote + Tipo + ".jpg");
+                            ResultSet rs = st.executeQuery();
+
+                            if (!rs.next()) {
+                                File outputfile = new File(diretoriofinal + Lote + Tipo + ".jpg");
+                                ImageIO.write(i, "jpg", outputfile);
+
+                                FotoB.setCaminho(caminhofinal);
+                                FotoB.setLote(Lote);
+                                FotoB.setTipo(Tipo);
+                                FotoC.InserirFotos(FotoB);
+                                String existente = Lote + Tipo;
+                                lblatualizados.setText(lblatualizados.getText() + existente + "\n");
+                            } else {
+                                String existente = Lote + Tipo;
+                                lblexistentes.setText(lblexistentes.getText() + existente + "\n");
+                            }
+                        } else if (caminhofinal.contains("E")) {
+
+                            Lote = caminhofinal.substring(caminhofinal.lastIndexOf("\\") + 1, caminhofinal.lastIndexOf(".jpg") - 2);
+                            Tipo = caminhofinal.substring(caminhofinal.indexOf(".jpg") - 2, caminhofinal.lastIndexOf(".jpg"));
+
+                            String sql1 = "select * from fotos where caminho=?";
+                            PreparedStatement st = Conexao.getConnection().prepareStatement(sql1);
+                            st.setString(1, diretoriofinal + Lote + Tipo + ".jpg");
+                            ResultSet rs = st.executeQuery();
+
+                            if (!rs.next()) {
+                                File outputfile = new File(diretoriofinal + Lote + Tipo + ".jpg");
+                                ImageIO.write(i, "jpg", outputfile);
+
+                                FotoB.setCaminho(caminhofinal);
+                                FotoB.setLote(Lote);
+                                FotoB.setTipo(Tipo);
+                                FotoC.InserirFotos(FotoB);
+                                String existente = Lote + Tipo;
+                                lblatualizados.setText(lblatualizados.getText() + existente + "\n");
+                            } else {
+                                String existente = Lote + Tipo;
+                                lblexistentes.setText(lblexistentes.getText() + existente + "\n");
+                            }
+                        } else if (caminhofinal.contains("F")) {
+                            Lote = caminhofinal.substring(caminhofinal.lastIndexOf("\\") + 1, caminhofinal.lastIndexOf("F_"));
+                            Tipo = caminhofinal.substring(caminhofinal.lastIndexOf("F_"), caminhofinal.lastIndexOf("F_") + 2);
+
+                            String sql1 = "select * from fotos where caminho=?";
+                            PreparedStatement st = Conexao.getConnection().prepareStatement(sql1);
+                            st.setString(1, diretoriofinal + Lote + Tipo + ".jpg");
+                            ResultSet rs = st.executeQuery();
+
+                            if (!rs.next()) {
+                                File outputfile = new File(diretoriofinal + Lote + Tipo + ".jpg");
+                                ImageIO.write(i, "jpg", outputfile);
+
+                                FotoB.setCaminho(caminhofinal);
+                                FotoB.setLote(Lote);
+                                FotoB.setTipo(Tipo);
+                                FotoC.InserirFotos(FotoB);
+
+                                String existente = Lote + Tipo;
+                                lblatualizados.setText(lblatualizados.getText() + existente + "\n");
+                            } else {
+                                String existente = Lote + Tipo;
+                                lblexistentes.setText(lblexistentes.getText() + existente + "\n");
+                            }
+                        }
+                        contador++;
+                        barraProgresso.setValue(contador);
                     }
+
+                    nomeDosArquivos.clear();
+                    imagens.clear();
+                    JOptionPane.showMessageDialog(rootPane, "Imagens enviadas com sucesso");
+
+                } catch (IOException ex) {
+                    Logger.getLogger(UploadFotos.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (SQLException ex) {
+                    Logger.getLogger(UploadFotos.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                
-                else if (caminhofinal.contains("MP_")) 
-                {
-                    Lote = caminhofinal.substring(caminhofinal.lastIndexOf("\\") + 1, caminhofinal.lastIndexOf("MP_"));
-                    Tipo = caminhofinal.substring(caminhofinal.lastIndexOf("MP"), caminhofinal.lastIndexOf("MP_") + 3);
-                   
-                   
-                    String sql1 = "select * from fotos where caminho=?";
-                    PreparedStatement st = Conexao.getConnection().prepareStatement(sql1);
-                    st.setString(1, diretoriofinal + Lote + Tipo + ".jpg");
-                    ResultSet rs = st.executeQuery();
 
-                    if (!rs.next()) {
-                        File outputfile = new File(diretoriofinal + Lote + Tipo + ".jpg");
-                        ImageIO.write(i, "jpg", outputfile);
-                        FotoB.setCaminho(caminhofinal); 
-                        FotoB.setLote(Lote);
-                        FotoB.setTipo(Tipo);
-                        FotoC.InserirFotos(FotoB);
-                        String existente = Lote + Tipo;
-                        lblatualizados.setText(lblatualizados.getText() + existente + "\n");
-                    } else {
-                        String existente = Lote + Tipo;
-                        lblexistentes.setText(lblexistentes.getText() + existente + "\n");
-                    }
-                } else if (caminhofinal.contains("MF_")) {
-                    Lote = caminhofinal.substring(caminhofinal.lastIndexOf("\\") + 1, caminhofinal.lastIndexOf("MF_"));
-                    Tipo = caminhofinal.substring(caminhofinal.lastIndexOf("MF"), caminhofinal.lastIndexOf("MF_") + 3);
-                   
-                   
-                    String sql1 = "select * from fotos where caminho=?";
-                    PreparedStatement st = Conexao.getConnection().prepareStatement(sql1);
-                    st.setString(1, diretoriofinal + Lote + Tipo + ".jpg");
-                    ResultSet rs = st.executeQuery();
-
-                    if (!rs.next()) {
-                        File outputfile = new File(diretoriofinal + Lote + Tipo + ".jpg");
-                        ImageIO.write(i, "jpg", outputfile);
-
-                        FotoB.setCaminho(caminhofinal); 
-                        FotoB.setLote(Lote);
-                        FotoB.setTipo(Tipo);
-                        FotoC.InserirFotos(FotoB);
-                        
-                        String existente = Lote + Tipo;
-                        lblatualizados.setText(lblatualizados.getText() + existente + "\n");
-                    } else {
-                        String existente = Lote + Tipo;
-                        lblexistentes.setText(lblexistentes.getText() + existente + "\n");
-                    }
-                } else if (caminhofinal.contains("CH_")) {
-                    Lote = caminhofinal.substring(caminhofinal.lastIndexOf("\\") + 1, caminhofinal.lastIndexOf("CH_"));
-                    Tipo = caminhofinal.substring(caminhofinal.lastIndexOf("CH"), caminhofinal.lastIndexOf("CH_") + 3);
-                    
-                   
-                    String sql1 = "select * from fotos where caminho=?";
-                    PreparedStatement st = Conexao.getConnection().prepareStatement(sql1);
-                    st.setString(1, diretoriofinal + Lote + Tipo + ".jpg");
-                    ResultSet rs = st.executeQuery();
-
-                    if (!rs.next()) {
-                        File outputfile = new File(diretoriofinal + Lote + Tipo + ".jpg");
-                        ImageIO.write(i, "jpg", outputfile);
-
-                        FotoB.setCaminho(caminhofinal); 
-                        FotoB.setLote(Lote);
-                        FotoB.setTipo(Tipo);
-                        FotoC.InserirFotos(FotoB);
-                        String existente = Lote + Tipo;
-                        lblatualizados.setText(lblatualizados.getText() + existente + "\n");
-                    } else {
-                        String existente = Lote + Tipo;
-                        lblexistentes.setText(lblexistentes.getText() + existente + "\n");
-                    }
-                } else if (caminhofinal.contains("E")) {
-                    
-                   
-                    Lote = caminhofinal.substring(caminhofinal.lastIndexOf("\\") + 1, caminhofinal.lastIndexOf(".jpg")-2);                
-                    Tipo = caminhofinal.substring(caminhofinal.indexOf(".jpg")-2, caminhofinal.lastIndexOf(".jpg"));
-                    
-                   
-                    String sql1 = "select * from fotos where caminho=?";
-                    PreparedStatement st = Conexao.getConnection().prepareStatement(sql1);
-                    st.setString(1, diretoriofinal + Lote + Tipo + ".jpg");
-                    ResultSet rs = st.executeQuery();
-
-                    if (!rs.next()) {
-                        File outputfile = new File(diretoriofinal + Lote + Tipo + ".jpg");
-                        ImageIO.write(i, "jpg", outputfile);
-
-                        FotoB.setCaminho(caminhofinal); 
-                        FotoB.setLote(Lote);
-                        FotoB.setTipo(Tipo);
-                        FotoC.InserirFotos(FotoB);
-                        String existente = Lote + Tipo;
-                        lblatualizados.setText(lblatualizados.getText() + existente + "\n");
-                    } else {
-                        String existente = Lote + Tipo;
-                        lblexistentes.setText(lblexistentes.getText() + existente + "\n");
-                    }
-                }
-                else if (caminhofinal.contains("F_")) 
-                {
-                    Lote = caminhofinal.substring(caminhofinal.lastIndexOf("\\") + 1, caminhofinal.lastIndexOf("F_"));
-                    Tipo = caminhofinal.substring(caminhofinal.lastIndexOf("F_"), caminhofinal.lastIndexOf("F_") + 2);
-                                    
-                    String sql1 = "select * from fotos where caminho=?";
-                    PreparedStatement st = Conexao.getConnection().prepareStatement(sql1);
-                    st.setString(1, diretoriofinal + Lote + Tipo + ".jpg");
-                    ResultSet rs = st.executeQuery();
-                    
-                    if (!rs.next()) {
-                        File outputfile = new File(diretoriofinal + Lote + Tipo + ".jpg");
-                        ImageIO.write(i, "jpg", outputfile);
-
-                        FotoB.setCaminho(caminhofinal); 
-                        FotoB.setLote(Lote);
-                        FotoB.setTipo(Tipo);
-                        FotoC.InserirFotos(FotoB);
-                        
-                        String existente = Lote +Tipo;
-                        lblatualizados.setText(lblatualizados.getText() + existente + "\n");
-                    } else {
-                       String existente = Lote + Tipo;
-                       lblexistentes.setText(lblexistentes.getText() + existente + "\n");
-                    }
-                }
-         
-                contador++;
             }
-
-            nomeDosArquivos.clear();
-            imagens.clear();
-            JOptionPane.showMessageDialog(rootPane, "Imagens enviadas com sucesso");
-
-        } catch (IOException ex) {
-            Logger.getLogger(UploadFotos.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(UploadFotos.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        }.start();
     }
-    
+
+
     private void cbleilaoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbleilaoItemStateChanged
         BuscarIdCidade();
-        setarLabel(); 
+        setarLabel();
         limpar();
     }//GEN-LAST:event_cbleilaoItemStateChanged
 
@@ -543,45 +537,43 @@ public class UploadFotos extends javax.swing.JFrame {
         lblfrente.setIcon(null);
         lblchassi.setIcon(null);
         lblmotor.setIcon(null);
-        lblextra1.setIcon(null); 
-        lblextra2.setIcon(null);        
+        lblextra1.setIcon(null);
+        lblextra2.setIcon(null);
     }
-    public void limpar()
-    {
-        txtlote.setText(""); 
+
+    public void limpar() {
+        txtlote.setText("");
     }
     private void btn_OpenFolderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_OpenFolderActionPerformed
-        CaminhoFotos(); 
+        CaminhoFotos();
     }//GEN-LAST:event_btn_OpenFolderActionPerformed
 
     private void btn_ImportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ImportActionPerformed
-        InserirFotos(); 
+        InserirFotos();
+
     }//GEN-LAST:event_btn_ImportActionPerformed
 
     private void btn_BuscarLoteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_BuscarLoteActionPerformed
-       if(txtlote.getText().equals(""))
-        {
-            JOptionPane.showMessageDialog(null, "Informe o lote!", "Buscar Lote",1); 
-        }else
-        {
+        if (txtlote.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Informe o lote!", "Buscar Lote", 1);
+        } else {
             setarLabel();
             carregarfototraseira();
             carregarfotofrente();
             carregarfotochassi();
             carregarfotomotor();
-            carregarfotoextra1(); 
-            carregarfotoextra2(); 
+            carregarfotoextra1();
+            carregarfotoextra2();
         }
     }//GEN-LAST:event_btn_BuscarLoteActionPerformed
 
     private void cbleilaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbleilaoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cbleilaoActionPerformed
-    
-    
+
     public void carregarfototraseira() {
         String sql = "Select * from fotos where lote=" + txtlote.getText() + " and leilao=" + txtIdCid.getText() + " and tipo='T_'";
-        try {        
+        try {
             PreparedStatement st = Conexao.getConnection().prepareStatement(sql);
             ResultSet rs = st.executeQuery();
             String caminhofinal = null;
@@ -596,14 +588,13 @@ public class UploadFotos extends javax.swing.JFrame {
             Conexao.getConnection().commit();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
-           
-            
+
         }
     }
 
     public void carregarfotofrente() {
         String sql = "Select * from fotos where lote=" + txtlote.getText() + " and leilao=" + txtIdCid.getText() + " and tipo='F_'";
-        try {       
+        try {
             PreparedStatement st = Conexao.getConnection().prepareStatement(sql);
             ResultSet rs = st.executeQuery();
             String caminhofinal = null;
@@ -656,7 +647,7 @@ public class UploadFotos extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, e);
         }
     }
-    
+
     public void carregarfotoextra1() {
         String sql = "Select * from fotos where lote=" + txtlote.getText() + " and leilao=" + txtIdCid.getText() + " and tipo='EA'";
         try {
@@ -675,7 +666,7 @@ public class UploadFotos extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, e);
         }
     }
-    
+
     public void carregarfotoextra2() {
         String sql = "Select * from fotos where lote=" + txtlote.getText() + " and leilao=" + txtIdCid.getText() + " and tipo='EB'";
         try {
@@ -694,7 +685,6 @@ public class UploadFotos extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, e);
         }
     }
-
 
     public void BuscarIdCidade() {
         try {
@@ -763,6 +753,7 @@ public class UploadFotos extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JProgressBar barraProgresso;
     private javax.swing.JButton btn_BuscarLote;
     private javax.swing.JButton btn_Import;
     private javax.swing.JButton btn_OpenFolder;
