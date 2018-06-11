@@ -30,7 +30,7 @@ public class EmpresaDao {
             st.setString(3, empresa.getEndereco());
             st.setString(4, empresa.getNumero());
             st.setString(5, empresa.getBairro());
-            st.setInt(6, empresa.getCidade());
+            st.setInt(6, empresa.getCidade().getId());//Cidade é objeto e quero só id desse objeto
             st.setString(7, empresa.getCep());
             st.setString(8, empresa.getTelefone());
             st.setString(9, empresa.getCnpj());
@@ -94,7 +94,7 @@ public class EmpresaDao {
             st.setString(3, empresa.getEndereco());
             st.setString(4, empresa.getNumero());
             st.setString(5, empresa.getBairro());
-            st.setInt(6, empresa.getCidade());
+            st.setInt(6, empresa.getCidade().getId());
             st.setString(7, empresa.getCep());
             st.setString(8, empresa.getTelefone());
             st.setString(9, empresa.getCnpj());
