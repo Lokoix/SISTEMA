@@ -5,11 +5,11 @@
  */
 package importacao.arqtxt.Beans;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 import javax.swing.JOptionPane;
 
 /**
@@ -19,27 +19,26 @@ import javax.swing.JOptionPane;
 public class ManipulaTxt {
 
     public List<String> Leitura(String local, String arquivo) {
-        ArrayList<String> result = new ArrayList();
-        System.out.println("\n------" + arquivo + "-------\n");
         try {
-            Scanner s = new Scanner(new FileReader(local + arquivo));
-            //PrintStream ps = new PrintStream("C:\\Users\\rafae\\Documents\\NetBeansProjects\\Java-III\\src\\Aula4\\Video\\saida.txt");
-            String linha = "";
+            FileReader fileReader = new FileReader(
+                    new File(local, arquivo));
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
 
-            while (s.hasNext()) {
-                linha = s.next();
-                
-                if (!linha.trim().equals("")) {
+            String linha = "";
+            ArrayList<String> result = new ArrayList();
+
+            while ((linha = bufferedReader.readLine()) != null) {
+
+                if (linha != null || !linha.isEmpty() || !linha.equals(" ")) {
                     result.add(linha);
                     System.out.println(linha);
                 }
             }
-            s.close();
-            return result;
+            fileReader.close();
+            bufferedReader.close();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Erro ao ler arquivo:'" + arquivo + "', erro: " + e);
+            JOptionPane.showMessageDialog(null, "Erro " + e);
         }
-
         return null;
     }
 
