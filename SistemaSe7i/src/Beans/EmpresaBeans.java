@@ -17,6 +17,7 @@ public class EmpresaBeans {
     private String endereco;
     private String numero;
     private String bairro;
+    private int cidade;
     private String cep;
     private String telefone;
     private String login;
@@ -109,6 +110,14 @@ public class EmpresaBeans {
 
     public void setSenha(String senha) {
         this.senha = senha;
+    }
+    
+    public int getCidade(){
+        return cidade;
+    }
+    
+    public void setCidade(int cidade){
+        this.cidade = cidade;
     }
 
 }
