@@ -109,7 +109,7 @@ public class EmpresaDao {
         }
     }
 
-    public void buscarTodasEmpresas(String Pesquisa, DefaultTableModel Modelo) {
+    public void buscarTodasEmpresas(DefaultTableModel Modelo) {
         try {
             String sql = "select * from empresas";
             PreparedStatement st = Conexao.getConnection().prepareStatement(sql);
