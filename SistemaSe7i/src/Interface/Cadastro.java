@@ -5,7 +5,9 @@
  */
 package Interface;
 
+import Beans.LoteBeans;
 import Beans.ModeloBeans;
+import Beans.VeiculoBeans;
 import java.util.List;
 
 /**
@@ -13,9 +15,20 @@ import java.util.List;
  * @author rafael Piedade
  */
 public class Cadastro {
+     
     
-    public void getModelo(List<String> result){
-        
-        System.out.println(result.get(10).subSequence(25, 50));
+    public LoteBeans getLote(List<String> result){
+              
     }
+    
+    
+    public VeiculoBeans getVeiculo(List<String> result){
+        VeiculoBeans veic = new VeiculoBeans();
+        veic.setPlaca(result.get(6));
+        veic.setRenavam(result.get(9));
+        veic.setChassiVeiculo(result.get(10));
+        
+        
+    }
+    
 }
