@@ -16,12 +16,11 @@ import javax.swing.JOptionPane;
  */
 public class MarcaDAO {
     
-    public void Cadastrar(MarcaBeans x) {
-        String sqlInsertion = "insert into marcas (id, nome) value (?,?)";
+    public void Cadastrar(String x) {
+        String sqlInsertion = "insert into marcas (nome) value (?)";
         try {
             PreparedStatement st = Conexao.getConnection().prepareStatement(sqlInsertion);
-            st.setInt(1, x.getId());
-            st.setString(2, x.getNome());
+            st.setString(1, x);
             st.execute();
             Conexao.getConnection().commit();
             JOptionPane.showMessageDialog(null, "Registro salvo ");

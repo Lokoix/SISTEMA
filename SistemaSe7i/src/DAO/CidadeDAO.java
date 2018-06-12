@@ -10,8 +10,6 @@ import Beans.EstadoBeans;
 import Utilitarios.Conexao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.ArrayList;
-import java.util.List;
 import javax.swing.JOptionPane;
 
 /**
@@ -42,8 +40,7 @@ public class CidadeDAO {
         return cidade;
     }
 
-    public List<CidadeBeans> carregarCidades(String a) {// retorna uma lista das cidades que inicial com a string
-        List<CidadeBeans> lista = new ArrayList<>();
+    public void carregarCidades(String a) {// retorna uma lista das cidades que inicial com a string
         try {
             String sql = "select cidades.id as idCidade, cidades.nome as nomeCidade, estados.id as idEstado, estados.nome as nomeEstado \n" +
                         " from cidades, estados                \n" +
@@ -56,12 +53,10 @@ public class CidadeDAO {
                 cidade.setId(rs.getInt("idCidade"));
                 cidade.setNome(rs.getString("nomeCidade"));
                 cidade.setEstado(new EstadoBeans(rs.getInt("idEstado"), rs.getString("nomeEstado")));
-                lista.add(cidade);
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro metodo dao carregarCidade: " + e);
         }
-        return lista;
     }
 
 }
