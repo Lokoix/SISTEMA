@@ -3,6 +3,7 @@ package GUI;
 
 import Beans.EmpresaBeans;
 import Controller.EmpresaController;
+import DAO.CidadeDAO;
 import DAO.EmpresaDao;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
@@ -17,6 +18,7 @@ public class Empresa extends javax.swing.JInternalFrame {
     EmpresaController empresaC = new EmpresaController();
     EmpresaDao empresaD = new EmpresaDao();
     DefaultTableModel Modelo;
+    CidadeDAO cidadeD = new CidadeDAO();
 
     public Empresa() {
         initComponents();
@@ -144,6 +146,13 @@ public class Empresa extends javax.swing.JInternalFrame {
         jLabel7.setText("CEP");
 
         jLabel8.setText("Cidade");
+
+        cbox_cidade.setEditable(true);
+        cbox_cidade.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                cbox_cidadeKeyReleased(evt);
+            }
+        });
 
         jLabel9.setText("Tel");
 
@@ -504,6 +513,10 @@ public class Empresa extends javax.swing.JInternalFrame {
 
         }
     }//GEN-LAST:event_btn_deletarActionPerformed
+
+    private void cbox_cidadeKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cbox_cidadeKeyReleased
+        //cidadeD.carregarCidades(cbox_cidade.toString());
+    }//GEN-LAST:event_cbox_cidadeKeyReleased
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
