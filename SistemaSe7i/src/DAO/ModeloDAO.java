@@ -19,12 +19,11 @@ import javax.swing.JOptionPane;
 public class ModeloDAO {
 
     public void Cadastrar(ModeloBeans x) {
-        String sqlInsertion = "insert into modelos (nome, idMarca) value (?,?,?)";
+        String sqlInsertion = "insert into modelos (nome, idMarca) value (?,?)";
         try {
-            PreparedStatement st = Conexao.getConnection().prepareStatement(sqlInsertion);
-            st.setInt(1, x.getId());
-            st.setString(2, x.getNome());
-            st.setInt(3, x.getMarca().getId());
+            PreparedStatement st = Conexao.getConnection().prepareStatement(sqlInsertion);            
+            st.setString(1, x.getNome());
+            st.setInt(2, x.getMarca().getId());
             st.execute();
             Conexao.getConnection().commit();
             JOptionPane.showMessageDialog(null, "Registro salvo ");
@@ -68,7 +67,7 @@ public class ModeloDAO {
             } else {//se não encontrar modelo
                 try {//procura a marca
                     sql = "select marcas.id as idMarca, marcas.nome as nomeMarca\n" +
-"                                   from marcas where  and marcas.nome like ?";
+"                                   from marcas where marcas.nome like ?";
                     pst = Conexao.getConnection().prepareStatement(sql);
                     pst.setString(1, marca);
                     rs = pst.executeQuery();
@@ -82,14 +81,14 @@ public class ModeloDAO {
                         return this.CarregarModelo(modelo, marca);
                     }
                 } catch (Exception e) {
-                    System.out.println("Erro ao buscar/cadastrar marca" + e);
+                    System.out.println("Erro ao buscar/cadastrar marca: " + e);
                 }
 
             }
         } catch (Exception e) {
              System.out.println("Erro ao buscar modelo" + e);
         }
-
+        return null;
     }
 
 }
