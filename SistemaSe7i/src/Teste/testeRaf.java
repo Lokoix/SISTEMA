@@ -39,6 +39,7 @@ public class testeRaf extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jComboBox1.setEditable(true);
         jComboBox1.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 jComboBox1KeyPressed(evt);
@@ -88,28 +89,36 @@ public class testeRaf extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jComboBox1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jComboBox1KeyReleased
-        
-        for (CidadeBeans object : ciD.carregarCidades("SAO")) {
+        for (CidadeBeans object : ciD.carregarCidades(jComboBox1.getSelectedItem().toString())) {
             jComboBox1.addItem(object);
         }
     }//GEN-LAST:event_jComboBox1KeyReleased
 
     private void jComboBox1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jComboBox1KeyPressed
-        for (CidadeBeans object : ciD.carregarCidades("SAO")) {
+        for (CidadeBeans object : ciD.carregarCidades(jComboBox1.getSelectedItem().toString())) {
             jComboBox1.addItem(object);
         }
     }//GEN-LAST:event_jComboBox1KeyPressed
 
     private void jComboBox1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jComboBox1KeyTyped
-        for (CidadeBeans object : ciD.carregarCidades("SAO")) {
+        for (CidadeBeans object : ciD.carregarCidades(jComboBox1.getSelectedItem().toString())) {
             jComboBox1.addItem(object);
         }
     }//GEN-LAST:event_jComboBox1KeyTyped
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-         
+      
+        for (CidadeBeans object : ciD.carregarCidades(jComboBox1.getSelectedItem().toString())) {
+            jComboBox1.addItem(object);
+        } 
+        jComboBox1.removeAll();
+        for (CidadeBeans object : ciD.carregarCidades(jComboBox1.getSelectedItem().toString())) {
+            jComboBox1.addItem(object);
+        } 
+        System.out.println("ok");
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    
     /**
      * @param args the command line arguments
      */
