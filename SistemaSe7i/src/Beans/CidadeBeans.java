@@ -12,7 +12,7 @@ import com.sun.corba.se.impl.oa.toa.TOA;
  * @author Eu
  */
 public class CidadeBeans {
-    
+
     private int id;
     private String nome;
     private EstadoBeans estado;
@@ -40,13 +40,13 @@ public class CidadeBeans {
     public void setEstado(EstadoBeans estado) {
         this.estado = estado;
     }
-    
-    public void exibe(){
-        System.out.println(this.id+" - "+this.getNome()+" - "+this.estado.getId()+" - "+this.estado.getNome());
+
+    public void exibe() {
+        System.out.println(this.id + " - " + this.getNome() + " - " + this.estado.getId() + " - " + this.estado.getNome());
     }
-    
+
     @Override
-    public String toString(){
-        return this.getId()+"-"+this.getNome()+"-"+this.getEstado().getNome();
+    public String toString() {
+        return this.getNome() + " - " + this.getEstado().getNome();
     }
 }

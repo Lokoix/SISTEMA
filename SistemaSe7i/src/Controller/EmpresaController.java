@@ -45,8 +45,8 @@ public class EmpresaController {
             JOptionPane.showMessageDialog(null, "Preencher Campo Senha", "Erro", 0);
             return false;
         }
-
-        if (empresa.getCnpj().equals("")) {
+        //System.out.println(empresa.getCnpj());
+        if (empresa.getCnpj().equals("  .   .   /    -  ")) {
             JOptionPane.showMessageDialog(null, "Preencher Campo CNPJ", "Erro", 0);
             return false;
         }

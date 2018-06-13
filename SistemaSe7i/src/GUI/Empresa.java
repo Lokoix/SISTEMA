@@ -1,5 +1,6 @@
 package GUI;
 
+import Beans.CidadeBeans;
 import Beans.EmpresaBeans;
 import Controller.EmpresaController;
 import DAO.CidadeDAO;
@@ -33,6 +34,11 @@ public class Empresa extends javax.swing.JInternalFrame {
         empresaD.buscarTodasEmpresas(Modelo);
         controlaEsc();
         limparCampos();
+        for (CidadeBeans cidade : cidadeD.carregarCidades()) {
+            cbox_cidade.addItem(cidade);
+            
+            
+        }
 
     }
 
@@ -44,8 +50,10 @@ public class Empresa extends javax.swing.JInternalFrame {
         empresaB.setBairro(txt_bairro.getText());
         empresaB.setCep(txt_cep.getText());
         empresaB.setTelefone(txt_telefone.getText());
+        empresaB.setCnpj(txt_cnpj.getText());
         empresaB.setLogin(txt_login.getText());
         empresaB.setSenha(txt_senha.getText());
+        empresaB.setCidade((CidadeBeans) cbox_cidade.getSelectedItem());
 
     }
 
@@ -57,21 +65,30 @@ public class Empresa extends javax.swing.JInternalFrame {
         txt_bairro.setEnabled(valor);
         txt_cep.setEnabled(valor);
         txt_telefone.setEnabled(valor);
+        txt_cnpj.setEnabled(valor);
         txt_login.setEnabled(valor);
         txt_senha.setEnabled(valor);
     }
 
     final void limparCampos() {
         txt_id.setText("");
-        txt_razao.setText(null);
-        txt_fantasia.setText(null);
-        txt_endereco.setText(null);
-        txt_numero.setText(null);
-        txt_bairro.setText(null);
-        txt_cep.setText(null);
-        txt_telefone.setText(null);
-        txt_login.setText(null);
-        txt_senha.setText(null);
+        txt_razao.setText("");
+        txt_fantasia.setText("");
+        txt_endereco.setText("");
+        txt_numero.setText("");
+        txt_bairro.setText("");
+        txt_cep.setText("");
+        txt_telefone.setText("");
+        txt_login.setText("");
+        txt_senha.setText("");
+        txt_cnpj.setText("");
+
+    }
+    
+        private void cadastrar() {
+        popularEmpresa();
+        System.out.println(empresaB.getRazaoSocial());
+        empresaC.cadastrar(empresaB);
 
     }
 
@@ -123,7 +140,7 @@ public class Empresa extends javax.swing.JInternalFrame {
         btn_deletar = new javax.swing.JButton();
         txt_cep = new javax.swing.JFormattedTextField();
         jLabel13 = new javax.swing.JLabel();
-        jFormattedTextField1 = new javax.swing.JFormattedTextField();
+        txt_cnpj = new javax.swing.JFormattedTextField();
         txt_telefone = new javax.swing.JFormattedTextField();
 
         javax.swing.GroupLayout jLayeredPane1Layout = new javax.swing.GroupLayout(jLayeredPane1);
@@ -136,6 +153,8 @@ public class Empresa extends javax.swing.JInternalFrame {
             jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 100, Short.MAX_VALUE)
         );
+
+        setClosable(true);
 
         lbl_id.setText("ID");
 
@@ -242,7 +261,7 @@ public class Empresa extends javax.swing.JInternalFrame {
         jLabel13.setText("CNPJ");
 
         try {
-            jFormattedTextField1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##.###.###/####-##")));
+            txt_cnpj.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##.###.###/####-##")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
@@ -311,7 +330,7 @@ public class Empresa extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(txt_senha)
-                    .addComponent(jFormattedTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE)))
+                    .addComponent(txt_cnpj, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE)))
             .addGroup(layout.createSequentialGroup()
                 .addGap(10, 10, 10)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -382,7 +401,7 @@ public class Empresa extends javax.swing.JInternalFrame {
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(cbox_cidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel13))
-                    .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_cnpj, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(3, 3, 3)
                         .addComponent(jLabel8)))
@@ -431,7 +450,7 @@ public class Empresa extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btn_novoActionPerformed
 
     private void btn_salvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_salvarActionPerformed
-        int i = JOptionPane.showConfirmDialog(null, "Deseja Salvar Usuário " + txt_razao.getText() + "?", "Cadastrar Usuário", JOptionPane.YES_NO_OPTION);
+        int i = JOptionPane.showConfirmDialog(null, "Deseja Salvar Empresa " + txt_razao.getText() + "?", "Cadastrar Empresa", JOptionPane.YES_NO_OPTION);
         if (i == JOptionPane.YES_OPTION) {
             if (txt_id.getText().equals("")) {
                 System.out.println("passei aqui");
@@ -533,8 +552,7 @@ public class Empresa extends javax.swing.JInternalFrame {
     private javax.swing.JButton btn_deletar;
     private javax.swing.JButton btn_novo;
     private javax.swing.JButton btn_salvar;
-    private javax.swing.JComboBox<String> cbox_cidade;
-    private javax.swing.JFormattedTextField jFormattedTextField1;
+    private javax.swing.JComboBox<Object> cbox_cidade;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
@@ -555,6 +573,7 @@ public class Empresa extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txt_bairro;
     private javax.swing.JTextField txt_buscar;
     private javax.swing.JFormattedTextField txt_cep;
+    private javax.swing.JFormattedTextField txt_cnpj;
     private javax.swing.JTextField txt_endereco;
     private javax.swing.JTextField txt_fantasia;
     private javax.swing.JTextField txt_id;
