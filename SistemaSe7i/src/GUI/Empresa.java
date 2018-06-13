@@ -1,4 +1,3 @@
-
 package GUI;
 
 import Beans.EmpresaBeans;
@@ -12,78 +11,87 @@ import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 import javax.swing.table.DefaultTableModel;
 
-
 public class Empresa extends javax.swing.JInternalFrame {
-    EmpresaBeans empresaB = new EmpresaBeans();
-    EmpresaController empresaC = new EmpresaController();
-    EmpresaDao empresaD = new EmpresaDao();
+
+    EmpresaBeans empresaB;
+    EmpresaController empresaC;
+    EmpresaDao empresaD;
     DefaultTableModel Modelo;
-    CidadeDAO cidadeD = new CidadeDAO();
+    CidadeDAO cidadeD;
 
     public Empresa() {
         initComponents();
-        
-    }
-    
-   public void popularEmpresa(){
-       empresaB.setRazaoSocial(txt_razao.getText());
-       empresaB.setNomeFantasia(txt_fantasia.getText());
-       empresaB.setEndereco(txt_endereco.getText());
-       empresaB.setNumero(txt_numero.getText());
-       empresaB.setBairro(txt_bairro.getText());
-       empresaB.setCep(txt_cep.getText());
-       empresaB.setTelefone(txt_telefone.getText());
-       empresaB.setLogin(txt_login.getText());
-       empresaB.setSenha(txt_senha.getText());
+        empresaB = new EmpresaBeans();
+        empresaC = new EmpresaController();
+        empresaD = new EmpresaDao();
+        cidadeD = new CidadeDAO();
+        txt_id.setVisible(false);
+        lbl_id.setVisible(false);
+        habilitarCampos(false);
+        btn_novo.setEnabled(true);
+        Modelo = (DefaultTableModel) tb_empresa.getModel();
+        empresaD.buscarTodasEmpresas(Modelo);
+        controlaEsc();
+        limparCampos();
 
-   }
-   
-   final void habilitarCampos(boolean valor){
-       txt_razao.setEnabled(valor);
-       txt_fantasia.setEnabled(valor);
-       txt_endereco.setEnabled(valor);
-       txt_numero.setEnabled(valor);
-       txt_bairro.setEnabled(valor);
-       txt_cep.setEnabled(valor);
-       txt_telefone.setEnabled(valor);
-       txt_login.setEnabled(valor);
-       txt_senha.setEnabled(valor);
-   }
-   
-   final void limparCampos(){
-       txt_id.setText("");
-       txt_razao.setText(null);
-       txt_fantasia.setText(null);
-       txt_endereco.setText(null);
-       txt_numero.setText(null);
-       txt_bairro.setText(null);
-       txt_cep.setText(null);
-       txt_telefone.setText(null);
-       txt_login.setText(null);
-       txt_senha.setText(null);
-       
-   }
-   
-        
-   
-       public void controlaEsc() {
+    }
+
+    public void popularEmpresa() {
+        empresaB.setRazaoSocial(txt_razao.getText());
+        empresaB.setNomeFantasia(txt_fantasia.getText());
+        empresaB.setEndereco(txt_endereco.getText());
+        empresaB.setNumero(txt_numero.getText());
+        empresaB.setBairro(txt_bairro.getText());
+        empresaB.setCep(txt_cep.getText());
+        empresaB.setTelefone(txt_telefone.getText());
+        empresaB.setLogin(txt_login.getText());
+        empresaB.setSenha(txt_senha.getText());
+
+    }
+
+    final void habilitarCampos(boolean valor) {
+        txt_razao.setEnabled(valor);
+        txt_fantasia.setEnabled(valor);
+        txt_endereco.setEnabled(valor);
+        txt_numero.setEnabled(valor);
+        txt_bairro.setEnabled(valor);
+        txt_cep.setEnabled(valor);
+        txt_telefone.setEnabled(valor);
+        txt_login.setEnabled(valor);
+        txt_senha.setEnabled(valor);
+    }
+
+    final void limparCampos() {
+        txt_id.setText("");
+        txt_razao.setText(null);
+        txt_fantasia.setText(null);
+        txt_endereco.setText(null);
+        txt_numero.setText(null);
+        txt_bairro.setText(null);
+        txt_cep.setText(null);
+        txt_telefone.setText(null);
+        txt_login.setText(null);
+        txt_senha.setText(null);
+
+    }
+
+    public void controlaEsc() {
         KeyStroke ks = KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0, true);
         getRootPane().getInputMap().put(ks, "esc");
         getRootPane().getActionMap().put("esc", new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent ae) {
                 dispose();
-            } 
+            }
         });
     }
-
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         jLayeredPane1 = new javax.swing.JLayeredPane();
-        jLabel1 = new javax.swing.JLabel();
+        lbl_id = new javax.swing.JLabel();
         txt_id = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         txt_razao = new javax.swing.JTextField();
@@ -129,7 +137,7 @@ public class Empresa extends javax.swing.JInternalFrame {
             .addGap(0, 100, Short.MAX_VALUE)
         );
 
-        jLabel1.setText("ID");
+        lbl_id.setText("ID");
 
         txt_id.setEditable(false);
 
@@ -251,7 +259,7 @@ public class Empresa extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(10, 10, 10)
-                .addComponent(jLabel1)
+                .addComponent(lbl_id)
                 .addGap(70, 70, 70)
                 .addComponent(txt_id, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(layout.createSequentialGroup()
@@ -334,7 +342,7 @@ public class Empresa extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(3, 3, 3)
-                        .addComponent(jLabel1))
+                        .addComponent(lbl_id))
                     .addComponent(txt_id, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(6, 6, 6)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -527,7 +535,6 @@ public class Empresa extends javax.swing.JInternalFrame {
     private javax.swing.JButton btn_salvar;
     private javax.swing.JComboBox<String> cbox_cidade;
     private javax.swing.JFormattedTextField jFormattedTextField1;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
@@ -543,6 +550,7 @@ public class Empresa extends javax.swing.JInternalFrame {
     private javax.swing.JLayeredPane jLayeredPane1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JLabel lbl_id;
     private javax.swing.JTable tb_empresa;
     private javax.swing.JTextField txt_bairro;
     private javax.swing.JTextField txt_buscar;
