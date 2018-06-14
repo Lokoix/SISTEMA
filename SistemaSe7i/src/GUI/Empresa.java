@@ -6,11 +6,14 @@ import Controller.EmpresaController;
 import DAO.CidadeDAO;
 import DAO.EmpresaDao;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import javax.swing.AbstractAction;
 import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.text.JTextComponent;
 
 public class Empresa extends javax.swing.JInternalFrame {
 
@@ -178,6 +181,11 @@ public class Empresa extends javax.swing.JInternalFrame {
         cbox_cidade.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbox_cidadeActionPerformed(evt);
+            }
+        });
+        cbox_cidade.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                cbox_cidadeKeyPressed(evt);
             }
         });
 
@@ -568,14 +576,21 @@ public class Empresa extends javax.swing.JInternalFrame {
         btn_deletar.setEnabled(true);
     }//GEN-LAST:event_tb_empresaMouseClicked
 
+
     private void cbox_cidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbox_cidadeActionPerformed
+
 
     }//GEN-LAST:event_cbox_cidadeActionPerformed
 
     private void txt_buscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_buscarKeyReleased
         Modelo.setNumRows(0);
         empresaC.controlePesquisa(txt_buscar.getText(), Modelo);
+
     }//GEN-LAST:event_txt_buscarKeyReleased
+
+    private void cbox_cidadeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cbox_cidadeKeyPressed
+
+    }//GEN-LAST:event_cbox_cidadeKeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
