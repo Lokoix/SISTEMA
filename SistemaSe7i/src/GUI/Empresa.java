@@ -34,7 +34,7 @@ public class Empresa extends javax.swing.JInternalFrame {
         empresaD.buscarTodasEmpresas(Modelo);
         controlaEsc();
         limparCampos();
-       /* for (CidadeBeans cidade : cidadeD.carregarCidades()) {
+        /* for (CidadeBeans cidade : cidadeD.carregarCidades()) {
             cbox_cidade.addItem(cidade);
 
         }*/
@@ -67,7 +67,7 @@ public class Empresa extends javax.swing.JInternalFrame {
         txt_cnpj.setEnabled(valor);
         txt_login.setEnabled(valor);
         txt_senha.setEnabled(valor);
-        
+
     }
 
     final void limparCampos() {
@@ -83,7 +83,7 @@ public class Empresa extends javax.swing.JInternalFrame {
         txt_senha.setText("");
         txt_cnpj.setText("");
         cbox_cidade.setSelectedItem("");
-   }
+    }
 
     private void cadastrar() {
         popularEmpresa();
@@ -178,17 +178,6 @@ public class Empresa extends javax.swing.JInternalFrame {
         cbox_cidade.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbox_cidadeActionPerformed(evt);
-            }
-        });
-        cbox_cidade.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                cbox_cidadeKeyPressed(evt);
-            }
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                cbox_cidadeKeyReleased(evt);
-            }
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                cbox_cidadeKeyTyped(evt);
             }
         });
 
@@ -563,11 +552,6 @@ public class Empresa extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_btn_deletarActionPerformed
 
-    private void cbox_cidadeKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cbox_cidadeKeyReleased
-        
-        System.out.println("rola");
-    }//GEN-LAST:event_cbox_cidadeKeyReleased
-
     private void tb_empresaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tb_empresaMouseClicked
         empresaB = empresaC.controlePreencherCampos(Integer.parseInt(Modelo.getValueAt(tb_empresa.getSelectedRow(), 0).toString()));
         txt_id.setText(empresaB.getId() + "");
@@ -585,23 +569,13 @@ public class Empresa extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_tb_empresaMouseClicked
 
     private void cbox_cidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbox_cidadeActionPerformed
-        CidadeBeans cc = new CidadeBeans();
-        cbox_cidade.addItem(cc);
-        CidadeBeans c = (CidadeBeans) cbox_cidade.getSelectedItem();
-        System.out.println(c);
+
     }//GEN-LAST:event_cbox_cidadeActionPerformed
 
     private void txt_buscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_buscarKeyReleased
-        //System.out.println(txt_buscar.getText());
+        Modelo.setNumRows(0);
+        empresaC.controlePesquisa(txt_buscar.getText(), Modelo);
     }//GEN-LAST:event_txt_buscarKeyReleased
-
-    private void cbox_cidadeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cbox_cidadeKeyPressed
-        System.out.println("eu");
-    }//GEN-LAST:event_cbox_cidadeKeyPressed
-
-    private void cbox_cidadeKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cbox_cidadeKeyTyped
-        System.out.println("aqui");
-    }//GEN-LAST:event_cbox_cidadeKeyTyped
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
