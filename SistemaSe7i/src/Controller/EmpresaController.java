@@ -17,6 +17,10 @@ public class EmpresaController {
         return empresaD.preencherCampos(id);
     }
 
+    public void controlePesquisa(String Pesquisa, DefaultTableModel Modelo) {
+        empresaD.buscarEmpresa(Pesquisa, Modelo);
+    }
+
     public void editarController(EmpresaBeans empresa) {
         empresaD.editar(empresa);
     }
@@ -40,7 +44,7 @@ public class EmpresaController {
             JOptionPane.showMessageDialog(null, "Preencher Campo Login", "Eroo", 0);
             return false;
         }
-        
+
         if (empresa.getSenha().equals("")) {
             JOptionPane.showMessageDialog(null, "Preencher Campo Senha", "Erro", 0);
             return false;
