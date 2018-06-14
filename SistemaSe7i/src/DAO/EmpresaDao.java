@@ -86,7 +86,7 @@ public class EmpresaDao {
 
     public void editar(EmpresaBeans empresa) {
         String sql = "update empresas set razaoSocial = ?, nomeFantasia = ?, endereco = ?, numero = ?, bairro = ?,"
-                + "cidade = ?, cep = ?, telefone = ?, login = ?, senha = ? where id = ?";
+                + "cidade = ?, cep = ?, telefone = ?, cnpj = ?, login = ?, senha = ? where id = ?";
         try {
             PreparedStatement st = Conexao.getConnection().prepareStatement(sql);
             st.setString(1, empresa.getRazaoSocial());
@@ -94,12 +94,13 @@ public class EmpresaDao {
             st.setString(3, empresa.getEndereco());
             st.setString(4, empresa.getNumero());
             st.setString(5, empresa.getBairro());
-            st.setInt(6, empresa.getCidade().getId());
+            st.setInt(6, empresa.getCidade().getEstado().getId());//Cidade é objeto e quero só id desse objeto
             st.setString(7, empresa.getCep());
             st.setString(8, empresa.getTelefone());
             st.setString(9, empresa.getCnpj());
             st.setString(10, empresa.getLogin());
             st.setString(11, empresa.getSenha());
+            st.setInt(12, empresa.getId());
 
             st.execute();
             Conexao.getConnection().commit();

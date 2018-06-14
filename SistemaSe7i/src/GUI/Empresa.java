@@ -34,11 +34,10 @@ public class Empresa extends javax.swing.JInternalFrame {
         empresaD.buscarTodasEmpresas(Modelo);
         controlaEsc();
         limparCampos();
-        for (CidadeBeans cidade : cidadeD.carregarCidades()) {
+       /* for (CidadeBeans cidade : cidadeD.carregarCidades()) {
             cbox_cidade.addItem(cidade);
-            
-            
-        }
+
+        }*/
 
     }
 
@@ -68,6 +67,7 @@ public class Empresa extends javax.swing.JInternalFrame {
         txt_cnpj.setEnabled(valor);
         txt_login.setEnabled(valor);
         txt_senha.setEnabled(valor);
+        
     }
 
     final void limparCampos() {
@@ -82,10 +82,10 @@ public class Empresa extends javax.swing.JInternalFrame {
         txt_login.setText("");
         txt_senha.setText("");
         txt_cnpj.setText("");
+        cbox_cidade.setSelectedItem("");
+   }
 
-    }
-    
-        private void cadastrar() {
+    private void cadastrar() {
         popularEmpresa();
         System.out.println(empresaB.getRazaoSocial());
         empresaC.cadastrar(empresaB);
@@ -175,9 +175,20 @@ public class Empresa extends javax.swing.JInternalFrame {
         jLabel8.setText("Cidade");
 
         cbox_cidade.setEditable(true);
+        cbox_cidade.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbox_cidadeActionPerformed(evt);
+            }
+        });
         cbox_cidade.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                cbox_cidadeKeyPressed(evt);
+            }
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 cbox_cidadeKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                cbox_cidadeKeyTyped(evt);
             }
         });
 
@@ -188,6 +199,12 @@ public class Empresa extends javax.swing.JInternalFrame {
         jLabel11.setText("Senha");
 
         jLabel12.setText("Busca");
+
+        txt_buscar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txt_buscarKeyReleased(evt);
+            }
+        });
 
         tb_empresa.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -203,6 +220,11 @@ public class Empresa extends javax.swing.JInternalFrame {
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
+            }
+        });
+        tb_empresa.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tb_empresaMouseClicked(evt);
             }
         });
         jScrollPane1.setViewportView(tb_empresa);
@@ -542,8 +564,44 @@ public class Empresa extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btn_deletarActionPerformed
 
     private void cbox_cidadeKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cbox_cidadeKeyReleased
-        //cidadeD.carregarCidades(cbox_cidade.toString());
+        
+        System.out.println("rola");
     }//GEN-LAST:event_cbox_cidadeKeyReleased
+
+    private void tb_empresaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tb_empresaMouseClicked
+        empresaB = empresaC.controlePreencherCampos(Integer.parseInt(Modelo.getValueAt(tb_empresa.getSelectedRow(), 0).toString()));
+        txt_id.setText(empresaB.getId() + "");
+        txt_razao.setText(empresaB.getRazaoSocial());
+        txt_fantasia.setText(empresaB.getNomeFantasia());
+        txt_login.setText(empresaB.getLogin());
+        txt_cnpj.setText(empresaB.getCnpj());
+        txt_senha.setText(empresaB.getSenha());
+        habilitarCampos(false);
+        btn_novo.setEnabled(true);
+        btn_salvar.setEnabled(false);
+        btn_alterar.setEnabled(true);
+        btn_cancelar.setEnabled(false);
+        btn_deletar.setEnabled(true);
+    }//GEN-LAST:event_tb_empresaMouseClicked
+
+    private void cbox_cidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbox_cidadeActionPerformed
+        CidadeBeans cc = new CidadeBeans();
+        cbox_cidade.addItem(cc);
+        CidadeBeans c = (CidadeBeans) cbox_cidade.getSelectedItem();
+        System.out.println(c);
+    }//GEN-LAST:event_cbox_cidadeActionPerformed
+
+    private void txt_buscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_buscarKeyReleased
+        //System.out.println(txt_buscar.getText());
+    }//GEN-LAST:event_txt_buscarKeyReleased
+
+    private void cbox_cidadeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cbox_cidadeKeyPressed
+        System.out.println("eu");
+    }//GEN-LAST:event_cbox_cidadeKeyPressed
+
+    private void cbox_cidadeKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cbox_cidadeKeyTyped
+        System.out.println("aqui");
+    }//GEN-LAST:event_cbox_cidadeKeyTyped
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
