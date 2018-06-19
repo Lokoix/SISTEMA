@@ -182,19 +182,6 @@ public class UploadFotos extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(51, 51, 51)
-                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(119, 119, 119)
-                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(88, 88, 88)
-                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(46, 46, 46)
-                        .addComponent(jLabel1)
-                        .addGap(243, 243, 243)
-                        .addComponent(jLabel2)
-                        .addGap(221, 221, 221)
-                        .addComponent(jLabel9))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(20, 20, 20)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -219,29 +206,42 @@ public class UploadFotos extends javax.swing.JFrame {
                                 .addGap(2, 2, 2)
                                 .addComponent(jLabel4))
                             .addComponent(lblmotor, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblextra2, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblextra1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(lblextra1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblextra2, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(51, 51, 51)
+                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(119, 119, 119)
+                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(88, 88, 88)
+                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(46, 46, 46)
+                        .addComponent(jLabel1)
+                        .addGap(243, 243, 243)
+                        .addComponent(jLabel2)
+                        .addGap(221, 221, 221)
+                        .addComponent(jLabel9))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(19, 19, 19)
-                        .addComponent(txtIdCid, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(10, 10, 10)
-                        .addComponent(cbleilao, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(10, 10, 10)
-                        .addComponent(btn_OpenFolder)
-                        .addGap(18, 18, 18)
-                        .addComponent(btn_Import)
-                        .addGap(303, 303, 303)
-                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(10, 10, 10)
-                        .addComponent(txtlote, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(6, 6, 6)
-                        .addComponent(btn_BuscarLote, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(29, 29, 29)
-                        .addComponent(barraProgresso, javax.swing.GroupLayout.PREFERRED_SIZE, 1314, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(17, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(barraProgresso, javax.swing.GroupLayout.PREFERRED_SIZE, 1307, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(txtIdCid, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(10, 10, 10)
+                                .addComponent(cbleilao, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(10, 10, 10)
+                                .addComponent(btn_OpenFolder)
+                                .addGap(18, 18, 18)
+                                .addComponent(btn_Import)
+                                .addGap(303, 303, 303)
+                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(10, 10, 10)
+                                .addComponent(txtlote, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(6, 6, 6)
+                                .addComponent(btn_BuscarLote, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -306,11 +306,12 @@ public class UploadFotos extends javax.swing.JFrame {
                             .addComponent(lblfrente, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblextra1, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(10, 10, 10)
-                        .addComponent(jLabel4)
-                        .addGap(3, 3, 3)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblextra2, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblmotor, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel4)
+                                .addGap(3, 3, 3)
+                                .addComponent(lblmotor, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(lblextra2, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(108, 108, 108))
         );
 
@@ -352,29 +353,41 @@ public class UploadFotos extends javax.swing.JFrame {
                     barraProgresso.setMaximum(imagens.size());
                     for (BufferedImage i : imagens) {
 
-                        String leilao = cbleilao.getSelectedItem().toString();
+        //se a pasta não existir, o seguinte codigo cria a pasta                
                         java.io.File diretorio1 = new java.io.File("C:\\Users\\joaoh\\Desktop\\Leilões");
                         boolean statusDir1 = diretorio1.mkdir();
+                        
+        //Em seguida, é criado uma pasta dentro no diretorio criado anteriormente com o nome do leilao selecionado na combobox
+                        String leilao = cbleilao.getSelectedItem().toString();
                         java.io.File diretorio2 = new java.io.File(diretorio1 + "\\" + leilao + "\\");
                         boolean statusDir2 = diretorio2.mkdir();
+                        
+        //Depois, uma outra pasta é criada para salvar as imagens inseridas pelo usuário Ex. Leiloes\CET36\Fotos\               
                         java.io.File diretorio3 = new java.io.File(diretorio2 + "\\Fotos\\");
                         boolean statusDir3 = diretorio3.mkdir();
 
+                        
+        //Uma string armazenará os nomes doas arquivos presentes na pasta 
                         String caminhofinal = diretorio3 + "\\" + nomeDosArquivos.get(contador);
+                        
+        //A string diretorio final vai receber o diretorio 3 com todas as pastas criadas anteriormente             
                         String diretoriofinal = diretorio3 + "\\";
 
                         String Lote, Tipo;
-
+        //abaixo os tratamentos das imagens                
                         if (caminhofinal.contains("T_")) {
                             Lote = caminhofinal.substring(caminhofinal.lastIndexOf("\\") + 1, caminhofinal.lastIndexOf("T_"));
                             Tipo = caminhofinal.substring(caminhofinal.lastIndexOf("T_"), caminhofinal.lastIndexOf("T_") + 2);
 
+        //Uma string sql vai buscar no banco de dados para saber se a imagem já existe                     
                             String sql1 = "select * from fotos where caminho=?";
                             PreparedStatement st = Conexao.getConnection().prepareStatement(sql1);
                             st.setString(1, diretoriofinal + Lote + Tipo + ".jpg");
                             ResultSet rs = st.executeQuery();
 
                             if (!rs.next()) {
+        
+        //O seguinte código cria uma cópia das imagens no diretorio final. 
                                 File outputfile = new File(diretoriofinal + Lote + Tipo + ".jpg");
                                 ImageIO.write(i, "jpg", outputfile);
 
@@ -508,10 +521,12 @@ public class UploadFotos extends javax.swing.JFrame {
                                 lblexistentes.setText(lblexistentes.getText() + existente + "\n");
                             }
                         }
+                        //o contador vai ser somado, e irá pra uma próxima imagem
                         contador++;
+                        //a barra de progresso é atualizada conforme o contador aumenta. 
                         barraProgresso.setValue(contador);
                     }
-
+                    //depois da inserção as strings usadas para encontrar os caminhos são limpas. 
                     nomeDosArquivos.clear();
                     imagens.clear();
                     JOptionPane.showMessageDialog(rootPane, "Imagens enviadas com sucesso");

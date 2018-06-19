@@ -10,5 +10,159 @@ package Beans;
  * @author rafae
  */
 public class VeiculoBeans {
-    
+
+    private int id;
+    private String placa;
+    private String renavam;
+    private String chassiVeiculo;
+    private String motorVeiculo;
+    private ModeloBeans modelo;
+    private String cor;
+    private String anoFab;
+    private String anoMod;
+    private String combustivel;
+    private String categoria;
+    private String tipo;
+    private String especie;
+    private String potencia;
+    private String cilidrada;
+    private String licenciamento;
+    private CidadeBeans cidade;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getPlaca() {
+        return placa;
+    }
+
+    public void setPlaca(String placa) {
+        this.placa = placa;
+    }
+
+    public String getRenavam() {
+        return renavam;
+    }
+
+    public void setRenavam(String renavam) {
+        this.renavam = renavam;
+    }
+
+    public String getChassiVeiculo() {
+        return chassiVeiculo;
+    }
+
+    public void setChassiVeiculo(String chassiVeiculo) {
+        this.chassiVeiculo = chassiVeiculo;
+    }
+
+    public String getMotorVeiculo() {
+        return motorVeiculo;
+    }
+
+    public void setMotorVeiculo(String motorVeiculo) {
+        this.motorVeiculo = motorVeiculo;
+    }
+
+    public ModeloBeans getModelo() {
+        return modelo;
+    }
+
+    public void setModelo(ModeloBeans modelo) {
+        this.modelo = modelo;
+    }
+
+    public String getCor() {
+        return cor;
+    }
+
+    public void setCor(String cor) {
+        this.cor = cor;
+    }
+
+    public String getAnoFab() {
+        return anoFab;
+    }
+
+    public void setAnoFab(String anoFab) {
+        this.anoFab = anoFab;
+    }
+
+    public String getAnoMod() {
+        return anoMod;
+    }
+
+    public void setAnoMod(String anoMod) {
+        this.anoMod = anoMod;
+    }
+
+    public String getCombustivel() {
+        return combustivel;
+    }
+
+    public void setCombustivel(String combustivel) {
+        this.combustivel = combustivel;
+    }
+
+    public String getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+
+    public String getEspecie() {
+        return especie;
+    }
+
+    public void setEspecie(String especie) {
+        this.especie = especie;
+    }
+
+    public String getPotencia() {
+        return potencia;
+    }
+
+    public void setPotencia(String potencia) {
+        this.potencia = potencia;
+    }
+
+    public String getCilidrada() {
+        return cilidrada;
+    }
+
+    public void setCilidrada(String cilidrada) {
+        this.cilidrada = cilidrada;
+    }
+
+    public String getLicenciamento() {
+        return licenciamento;
+    }
+
+    public void setLicenciamento(String licenciamento) {
+        this.licenciamento = licenciamento;
+    }
+
+    public CidadeBeans getCidade() {
+        return cidade;
+    }
+
+    public void setCidade(CidadeBeans cidade) {
+        this.cidade = cidade;
+    }
+
 }
