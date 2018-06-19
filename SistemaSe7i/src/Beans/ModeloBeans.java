@@ -15,6 +15,21 @@ public class ModeloBeans {
     private String nome;
     private MarcaBeans marca;
 
+    public ModeloBeans(){
+        
+    }
+    
+    public ModeloBeans(int id,String nome, MarcaBeans marca){
+        this.id = id;
+        this.nome = nome;
+        this.marca = marca;
+    }
+    
+    public ModeloBeans(String nome, MarcaBeans marca){
+        this.nome = nome;
+        this.marca = marca;
+    }
+    
     public int getId() {
         return id;
     }

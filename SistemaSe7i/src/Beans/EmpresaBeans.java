@@ -17,6 +17,7 @@ public class EmpresaBeans {
     private String endereco;
     private String numero;
     private String bairro;
+    private CidadeBeans cidade;
     private String cep;
     private String telefone;
     private String login;
@@ -29,6 +30,14 @@ public class EmpresaBeans {
 
     public void setCep(String cep) {
         this.cep = cep;
+    }
+
+    public CidadeBeans getCidade() {
+        return cidade;
+    }
+
+    public void setCidade(CidadeBeans cidade) {
+        this.cidade = cidade;
     }
 
     public String getCnpj() {
@@ -110,5 +119,7 @@ public class EmpresaBeans {
     public void setSenha(String senha) {
         this.senha = senha;
     }
+    
+    
 
 }
