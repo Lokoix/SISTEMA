@@ -172,7 +172,8 @@ public class UploadFotos extends javax.swing.JFrame {
             }
         });
 
-        barraProgresso.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 255)));
+        barraProgresso.setForeground(new java.awt.Color(0, 0, 255));
+        barraProgresso.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(153, 153, 255), 1, true));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -180,6 +181,35 @@ public class UploadFotos extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(123, 123, 123)
+                                .addComponent(lblImagem))
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(10, 10, 10)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(10, 10, 10)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lbltraseira, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3)
+                            .addComponent(lblchassi, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(12, 12, 12)
+                                .addComponent(lblfrente, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(2, 2, 2)
+                                .addComponent(jLabel4))
+                            .addComponent(lblmotor, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblextra1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblextra2, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(51, 51, 51)
                         .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -194,37 +224,9 @@ public class UploadFotos extends javax.swing.JFrame {
                         .addGap(221, 221, 221)
                         .addComponent(jLabel9))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(123, 123, 123)
-                                .addComponent(lblImagem))
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(10, 10, 10)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(10, 10, 10)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lbltraseira, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3)
-                            .addComponent(lblchassi, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(8, 8, 8)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(12, 12, 12)
-                                .addComponent(lblfrente, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(2, 2, 2)
-                                .addComponent(jLabel4))
-                            .addComponent(lblmotor, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(10, 10, 10)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblextra1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblextra2, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(19, 19, 19)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(barraProgresso, javax.swing.GroupLayout.PREFERRED_SIZE, 1341, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(barraProgresso, javax.swing.GroupLayout.PREFERRED_SIZE, 1307, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(txtIdCid, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(10, 10, 10)
@@ -239,7 +241,7 @@ public class UploadFotos extends javax.swing.JFrame {
                                 .addComponent(txtlote, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(6, 6, 6)
                                 .addComponent(btn_BuscarLote, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addGap(17, 17, 17))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -294,24 +296,23 @@ public class UploadFotos extends javax.swing.JFrame {
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 471, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 471, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(108, 108, 108)
                         .addComponent(lbltraseira, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(10, 10, 10)
                         .addComponent(jLabel3)
                         .addGap(3, 3, 3)
                         .addComponent(lblchassi, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(108, 108, 108)
-                        .addComponent(lblfrente, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblfrente, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblextra1, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(10, 10, 10)
-                        .addComponent(jLabel4)
-                        .addGap(3, 3, 3)
-                        .addComponent(lblmotor, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(108, 108, 108)
-                        .addComponent(lblextra1, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(20, 20, 20)
-                        .addComponent(lblextra2, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel4)
+                                .addGap(3, 3, 3)
+                                .addComponent(lblmotor, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(lblextra2, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(108, 108, 108))
         );
 
         pack();
@@ -352,29 +353,41 @@ public class UploadFotos extends javax.swing.JFrame {
                     barraProgresso.setMaximum(imagens.size());
                     for (BufferedImage i : imagens) {
 
-                        String leilao = cbleilao.getSelectedItem().toString();
+        //se a pasta não existir, o seguinte codigo cria a pasta                
                         java.io.File diretorio1 = new java.io.File("C:\\Users\\joaoh\\Desktop\\Leilões");
                         boolean statusDir1 = diretorio1.mkdir();
+                        
+        //Em seguida, é criado uma pasta dentro no diretorio criado anteriormente com o nome do leilao selecionado na combobox
+                        String leilao = cbleilao.getSelectedItem().toString();
                         java.io.File diretorio2 = new java.io.File(diretorio1 + "\\" + leilao + "\\");
                         boolean statusDir2 = diretorio2.mkdir();
+                        
+        //Depois, uma outra pasta é criada para salvar as imagens inseridas pelo usuário Ex. Leiloes\CET36\Fotos\               
                         java.io.File diretorio3 = new java.io.File(diretorio2 + "\\Fotos\\");
                         boolean statusDir3 = diretorio3.mkdir();
 
+                        
+        //Uma string armazenará os nomes doas arquivos presentes na pasta 
                         String caminhofinal = diretorio3 + "\\" + nomeDosArquivos.get(contador);
+                        
+        //A string diretorio final vai receber o diretorio 3 com todas as pastas criadas anteriormente             
                         String diretoriofinal = diretorio3 + "\\";
 
                         String Lote, Tipo;
-
+        //abaixo os tratamentos das imagens                
                         if (caminhofinal.contains("T_")) {
                             Lote = caminhofinal.substring(caminhofinal.lastIndexOf("\\") + 1, caminhofinal.lastIndexOf("T_"));
                             Tipo = caminhofinal.substring(caminhofinal.lastIndexOf("T_"), caminhofinal.lastIndexOf("T_") + 2);
 
+        //Uma string sql vai buscar no banco de dados para saber se a imagem já existe                     
                             String sql1 = "select * from fotos where caminho=?";
                             PreparedStatement st = Conexao.getConnection().prepareStatement(sql1);
                             st.setString(1, diretoriofinal + Lote + Tipo + ".jpg");
                             ResultSet rs = st.executeQuery();
 
                             if (!rs.next()) {
+        
+        //O seguinte código cria uma cópia das imagens no diretorio final. 
                                 File outputfile = new File(diretoriofinal + Lote + Tipo + ".jpg");
                                 ImageIO.write(i, "jpg", outputfile);
 
@@ -476,6 +489,7 @@ public class UploadFotos extends javax.swing.JFrame {
                                 FotoB.setLote(Lote);
                                 FotoB.setTipo(Tipo);
                                 FotoC.InserirFotos(FotoB);
+                                
                                 String existente = Lote + Tipo;
                                 lblatualizados.setText(lblatualizados.getText() + existente + "\n");
                             } else {
@@ -507,10 +521,12 @@ public class UploadFotos extends javax.swing.JFrame {
                                 lblexistentes.setText(lblexistentes.getText() + existente + "\n");
                             }
                         }
+                        //o contador vai ser somado, e irá pra uma próxima imagem
                         contador++;
+                        //a barra de progresso é atualizada conforme o contador aumenta. 
                         barraProgresso.setValue(contador);
                     }
-
+                    //depois da inserção as strings usadas para encontrar os caminhos são limpas. 
                     nomeDosArquivos.clear();
                     imagens.clear();
                     JOptionPane.showMessageDialog(rootPane, "Imagens enviadas com sucesso");

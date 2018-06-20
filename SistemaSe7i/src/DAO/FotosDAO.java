@@ -8,6 +8,8 @@ package DAO;
 import Beans.FotosBeans;
 import Utilitarios.Conexao;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -24,6 +26,45 @@ public class FotosDAO {
             st.setString(2, Fotos.getLote());
             st.setString(3, Fotos.getTipo());
             st.setInt(4, 1);          
+            st.execute(); 
+            Conexao.getConnection().commit();            
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+    
+    public void BuscarFotos(DefaultTableModel Modelo)
+    {
+        Modelo.setNumRows(0); 
+        String sql = "select distinct lote from fotos order by lote asc"; 
+        try {
+            PreparedStatement st = Conexao.getConnection().prepareStatement(sql); 
+            ResultSet rs = st.executeQuery(); 
+            while(rs.next())
+            { 
+                Modelo.addRow(new Object[]{rs.getString("lote")});
+            }
+            
+            st.execute(); 
+            Conexao.getConnection().commit();            
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+    
+    public void BuscarFoto(DefaultTableModel Modelo, String lote, String leilao)
+    {
+        Modelo.setNumRows(0); 
+        String sql = "select distinct lote from fotos where lote="+lote+" and leilao="+leilao; 
+        try {
+            PreparedStatement st = Conexao.getConnection().prepareStatement(sql); 
+            ResultSet rs = st.executeQuery(); 
+            while(rs.next())
+            {
+               
+                Modelo.addRow(new Object[]{rs.getString("lote")});
+            }
+            
             st.execute(); 
             Conexao.getConnection().commit();            
         } catch (Exception e) {
