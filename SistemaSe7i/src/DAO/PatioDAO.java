@@ -23,7 +23,7 @@ public class PatioDAO {
     public void cadastrar(PatioBeans patio) {
 
         String sql = "insert into patios(nome, endereco, numero, bairro, cep, "
-                + "telefone, responsavel, cidade) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                + "telefone, responsavel, cidade) values(?, ?, ?, ?, ?, ?, ?, ?)";
         try {
             PreparedStatement st = Conexao.getConnection().prepareStatement(sql);
             st.setString(1, patio.getNome());
@@ -66,7 +66,7 @@ public class PatioDAO {
 
     public PatioBeans preencherCampos(int id) {
         PatioBeans patio = new PatioBeans();
-        CidadeBeans cidade = new CidadeBeans();
+        CidadeBeans cidadeB = new CidadeBeans();
         try {
             String sql = "select * from patios where id = ?";
             PreparedStatement st = Conexao.getConnection().prepareStatement(sql);
@@ -77,11 +77,12 @@ public class PatioDAO {
                 patio.setNome(rs.getString("nome"));
                 patio.setEndereco(rs.getString("endereco"));
                 patio.setNumero(rs.getString("numero"));
-                patio.setBairro(rs.getString("bairo"));
+                patio.setBairro(rs.getString("bairro"));
                 patio.setCep(rs.getString("cep"));
                 patio.setTelefone(rs.getString("telefone"));
-                cidade.setId(rs.getInt("cidade"));
-                patio.setCidade(cidade);
+                
+                cidadeB.setId(rs.getInt("cidade"));
+                patio.setCidade(cidadeB);
                 patio.setResponsavel(rs.getString("responsavel"));
 
 
@@ -94,7 +95,7 @@ public class PatioDAO {
 
     public void editar(PatioBeans patio) {
 
-        String sql = "update patios set nome = ?, endereco =?, numero = ? bairro = ? cep = ? "
+        String sql = "update patios set nome = ?, endereco = ?, numero = ?, bairro = ?, cep = ?,"
                 + "telefone = ?, responsavel = ?, cidade = ? where id = ?";
         try {
             PreparedStatement st = Conexao.getConnection().prepareStatement(sql);
@@ -110,6 +111,7 @@ public class PatioDAO {
             } else {
                 st.setInt(8, patio.getCidade().getId());//Cidade é objeto e quero só id desse objeto
             }
+            st.setInt(9, patio.getId());
 
             st.execute();
             Conexao.getConnection().commit();
@@ -123,11 +125,11 @@ public class PatioDAO {
 
     public void buscarTodosPatios(DefaultTableModel Modelo) {
         try {
-            String sql = "select * from patios";
+            String sql = "SELECT patios.* , cidades.nome from patios INNER JOIN cidades ON patios.cidade = cidades.id";
             PreparedStatement st = Conexao.getConnection().prepareStatement(sql);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
-                Modelo.addRow(new Object[]{rs.getString("id"), rs.getString("nome"), rs.getString("responsavel"), rs.getString("cidade")});
+                Modelo.addRow(new Object[]{rs.getString("id"), rs.getString("nome"), rs.getString("responsavel"), rs.getString("cidades.nome")});
             }
 
         } catch (Exception ex) {

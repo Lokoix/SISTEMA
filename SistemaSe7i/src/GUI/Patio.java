@@ -6,11 +6,16 @@
 package GUI;
 
 import Beans.CidadeBeans;
+import Beans.EstadoBeans;
 import Beans.PatioBeans;
 import Controller.PatioController;
 import DAO.CidadeDAO;
 import DAO.PatioDAO;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+import javax.swing.AbstractAction;
 import javax.swing.JOptionPane;
+import javax.swing.KeyStroke;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -34,6 +39,23 @@ public class Patio extends javax.swing.JInternalFrame {
         patioC = new PatioController();
         patioB = new PatioBeans();
         cidadeD = new CidadeDAO();
+        lbl_id.setVisible(false);
+        txt_id.setVisible(false);
+        btn_novo.setEnabled(true);
+        habilitarCampos(false);
+        Modelo = (DefaultTableModel) tb_patio.getModel();
+        patioD.buscarTodosPatios(Modelo);
+        controlaEsc();
+
+        CidadeBeans cidade2 = new CidadeBeans();
+        cidade2.setNome("Selecionar ");
+        cidade2.setEstado(new EstadoBeans("Cidade"));
+        cbox_cidade.addItem(cidade2);
+        for (CidadeBeans cidade : cidadeD.carregarCidades()) {
+            cbox_cidade.addItem(cidade);
+
+        }
+        limparCampos();
 
     }
 
@@ -53,8 +75,8 @@ public class Patio extends javax.swing.JInternalFrame {
         }
 
     }
-    
-    final void habilitarCampos (boolean valor){
+
+    final void habilitarCampos(boolean valor) {
         txt_nome.setEnabled(valor);
         txt_endereco.setEnabled(valor);
         txt_numero.setEnabled(valor);
@@ -62,10 +84,10 @@ public class Patio extends javax.swing.JInternalFrame {
         txt_cep.setEnabled(valor);
         txt_telefone.setEnabled(valor);
         txt_responsa.setEnabled(valor);
-        cbox_cidade.setEnabled(valor);      
+        cbox_cidade.setEnabled(valor);
     }
-    
-    final void limparCampos(){
+
+    final void limparCampos() {
         txt_nome.setText("");
         txt_endereco.setText("");
         txt_numero.setText("");
@@ -73,7 +95,18 @@ public class Patio extends javax.swing.JInternalFrame {
         txt_cep.setText("");
         txt_telefone.setText("");
         txt_responsa.setText("");
-        cbox_cidade.setSelectedItem(0);
+        cbox_cidade.setSelectedIndex(0);
+    }
+
+    public void controlaEsc() {
+        KeyStroke ks = KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0, true);
+        getRootPane().getInputMap().put(ks, "esc");
+        getRootPane().getActionMap().put("esc", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                dispose();
+            }
+        });
     }
 
     @SuppressWarnings("unchecked")
@@ -109,6 +142,8 @@ public class Patio extends javax.swing.JInternalFrame {
         btn_cancelar = new javax.swing.JButton();
         btn_deletar = new javax.swing.JButton();
 
+        setClosable(true);
+
         lbl_id.setText("ID");
 
         jLabel1.setText("Nome");
@@ -139,9 +174,13 @@ public class Patio extends javax.swing.JInternalFrame {
 
         jLabel8.setText("Cidade");
 
-        cbox_cidade.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
         jLabel9.setText("Buscar");
+
+        txt_buscar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txt_buscarKeyReleased(evt);
+            }
+        });
 
         tb_patio.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -159,7 +198,17 @@ public class Patio extends javax.swing.JInternalFrame {
                 return canEdit [columnIndex];
             }
         });
+        tb_patio.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tb_patioMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tb_patio);
+        if (tb_patio.getColumnModel().getColumnCount() > 0) {
+            tb_patio.getColumnModel().getColumn(0).setMinWidth(25);
+            tb_patio.getColumnModel().getColumn(0).setPreferredWidth(25);
+            tb_patio.getColumnModel().getColumn(0).setMaxWidth(25);
+        }
 
         btn_novo.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
         btn_novo.setText("NOVO");
@@ -362,7 +411,7 @@ public class Patio extends javax.swing.JInternalFrame {
                     btn_novo.setEnabled(true);
                     btn_salvar.setEnabled(false);
                     tb_patio.setVisible(true);
-                    habilitarCampos(true);
+                    habilitarCampos(false);
                     limparCampos();
                     txt_buscar.setText("");
 
@@ -394,6 +443,7 @@ public class Patio extends javax.swing.JInternalFrame {
             btn_alterar.setEnabled(false);
             btn_salvar.setEnabled(false);
             btn_novo.setEnabled(true);
+            btn_deletar.setEnabled(false);
             tb_patio.setVisible(true);
             limparCampos();
             habilitarCampos(false);
@@ -415,13 +465,45 @@ public class Patio extends javax.swing.JInternalFrame {
             btn_deletar.setEnabled(false);
             btn_cancelar.setEnabled(false);
             tb_patio.setVisible(true);
-            habilitarCampos(false);
             limparCampos();
+            habilitarCampos(false);
             Modelo.setNumRows(0);
             patioD.buscarTodosPatios(Modelo);
 
         }
     }//GEN-LAST:event_btn_deletarActionPerformed
+
+    private void txt_buscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_buscarKeyReleased
+        Modelo.setNumRows(0);
+        patioC.controlePesquisa(txt_buscar.getText(), Modelo);
+    }//GEN-LAST:event_txt_buscarKeyReleased
+
+    private void tb_patioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tb_patioMouseClicked
+        patioB = patioC.controlePreencherCampos(Integer.parseInt(Modelo.getValueAt(tb_patio.getSelectedRow(), 0).toString()));
+        txt_id.setText(patioB.getId() + "");
+        txt_nome.setText(patioB.getNome());
+        txt_endereco.setText(patioB.getEndereco());
+        txt_numero.setText(patioB.getNumero());
+        txt_bairro.setText(patioB.getBairro());
+        txt_telefone.setText(patioB.getTelefone());
+        txt_cep.setText(patioB.getCep());
+        txt_responsa.setText(patioB.getResponsavel());
+        for (int i = 0; i <= cbox_cidade.getItemCount(); i++) {
+
+            CidadeBeans item = (CidadeBeans) cbox_cidade.getItemAt(i);
+            if (item.getId() == patioB.getCidade().getId()) {
+                cbox_cidade.setSelectedIndex(i);
+                break;
+            }
+        }
+        
+        habilitarCampos(false);
+        btn_novo.setEnabled(false);
+        btn_salvar.setEnabled(false);
+        btn_alterar.setEnabled(true);
+        btn_cancelar.setEnabled(true);
+        btn_deletar.setEnabled(true);
+    }//GEN-LAST:event_tb_patioMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -430,7 +512,7 @@ public class Patio extends javax.swing.JInternalFrame {
     private javax.swing.JButton btn_deletar;
     private javax.swing.JButton btn_novo;
     private javax.swing.JButton btn_salvar;
-    private javax.swing.JComboBox<String> cbox_cidade;
+    private javax.swing.JComboBox<Object> cbox_cidade;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
