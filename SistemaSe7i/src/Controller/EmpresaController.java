@@ -54,6 +54,11 @@ public class EmpresaController {
             JOptionPane.showMessageDialog(null, "Preencher Campo CNPJ", "Erro", 0);
             return false;
         }
+
+        if (empresa.getCidade().getId() == 0) {
+            JOptionPane.showMessageDialog(null, "Preencher Campo Cidade", "Erro", 0);
+            return false;
+        }
         return true;
     }
 }

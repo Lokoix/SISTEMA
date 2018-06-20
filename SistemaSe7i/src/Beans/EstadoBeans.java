@@ -23,6 +23,11 @@ public class EstadoBeans {
        this.nome = nome;
     }
     
+    public EstadoBeans(String nome){
+       
+       this.nome = nome;
+    }
+    
     public int getId() {
         return id;
     }

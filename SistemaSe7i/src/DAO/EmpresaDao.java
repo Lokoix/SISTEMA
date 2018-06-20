@@ -30,7 +30,12 @@ public class EmpresaDao {
             st.setString(3, empresa.getEndereco());
             st.setString(4, empresa.getNumero());
             st.setString(5, empresa.getBairro());
-            st.setInt(6, empresa.getCidade().getEstado().getId());//Cidade é objeto e quero só id desse objeto
+            if (empresa.getCidade() == null) {
+                st.setInt(6, 0);
+            } else {
+                st.setInt(6, empresa.getCidade().getId());//Cidade é objeto e quero só id desse objeto
+            }
+            
             st.setString(7, empresa.getCep());
             st.setString(8, empresa.getTelefone());
             st.setString(9, empresa.getCnpj());
