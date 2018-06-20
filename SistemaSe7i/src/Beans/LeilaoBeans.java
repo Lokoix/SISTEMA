@@ -20,14 +20,31 @@ public class LeilaoBeans {
     private LeiloeiroBeans leiloeiro;
     private String edital;
     private VistoriadoraBeans vistoriadora;
-    private DelegaciaBeans delegacia;
+    private PatioBeans patio; 
     private double custoLaudo;
-    private String tipoPatio;
     private CidadeBeans cidade;
     private double DesvComDoc;
     private double DesvSemDoc;
-    private String nomePatio;
+    private double DesvSucata;
     private String cartaDeNotificacao;
+
+    public PatioBeans getPatio() {
+        return patio;
+    }
+
+    public void setPatio(PatioBeans patio) {
+        this.patio = patio;
+    }
+
+    public double getDesvSucata() {
+        return DesvSucata;
+    }
+
+    public void setDesvSucata(double DesvSucata) {
+        this.DesvSucata = DesvSucata;
+    }
+    
+    
 
     public int getId() {
         return id;
@@ -85,13 +102,6 @@ public class LeilaoBeans {
         this.vistoriadora = vistoriadora;
     }
 
-    public DelegaciaBeans getDelegacia() {
-        return delegacia;
-    }
-
-    public void setDelegacia(DelegaciaBeans delegacia) {
-        this.delegacia = delegacia;
-    }
 
     public double getCustoLaudo() {
         return custoLaudo;
@@ -101,13 +111,6 @@ public class LeilaoBeans {
         this.custoLaudo = custoLaudo;
     }
 
-    public String getTipoPatio() {
-        return tipoPatio;
-    }
-
-    public void setTipoPatio(String tipoPatio) {
-        this.tipoPatio = tipoPatio;
-    }
 
     public CidadeBeans getCidade() {
         return cidade;
@@ -131,14 +134,6 @@ public class LeilaoBeans {
 
     public void setDesvSemDoc(double DesvSemDoc) {
         this.DesvSemDoc = DesvSemDoc;
-    }
-
-    public String getNomePatio() {
-        return nomePatio;
-    }
-
-    public void setNomePatio(String nomePatio) {
-        this.nomePatio = nomePatio;
     }
 
     public String getCartaDeNotificacao() {
