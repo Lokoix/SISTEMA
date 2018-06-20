@@ -5,8 +5,8 @@
  */
 package DAO;
 
+import Beans.CidadeBeans;
 import Beans.EmpresaBeans;
-import Beans.UsuarioBeans;
 import Utilitarios.Conexao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -69,6 +69,7 @@ public class EmpresaDao {
 
     public EmpresaBeans preencherCampos(int id) {
         EmpresaBeans empresa = new EmpresaBeans();
+        CidadeBeans cidade = new CidadeBeans();
         try {
             String sql = "select * from empresas where id = ?";
             PreparedStatement st = Conexao.getConnection().prepareStatement(sql);
@@ -78,6 +79,12 @@ public class EmpresaDao {
                 empresa.setId(rs.getInt("id"));
                 empresa.setRazaoSocial(rs.getString("razaoSocial"));
                 empresa.setNomeFantasia(rs.getString("nomeFantasia"));
+                empresa.setEndereco(rs.getString("endereco"));
+                empresa.setNumero(rs.getString("numero"));
+                empresa.setBairro(rs.getString("bairro"));
+                empresa.setCep(rs.getString("cep"));
+                cidade.setId(rs.getInt("cidade"));
+                empresa.setCidade(cidade);
                 empresa.setCnpj(rs.getString("cnpj"));
                 empresa.setLogin(rs.getString("login"));
                 empresa.setSenha(rs.getString("senha"));
@@ -99,7 +106,11 @@ public class EmpresaDao {
             st.setString(3, empresa.getEndereco());
             st.setString(4, empresa.getNumero());
             st.setString(5, empresa.getBairro());
-            st.setInt(6, empresa.getCidade().getEstado().getId());//Cidade é objeto e quero só id desse objeto
+            if (empresa.getCidade() == null) {
+                st.setInt(6, 0);
+            } else {
+                st.setInt(6, empresa.getCidade().getId());//Cidade é objeto e quero só id desse objeto
+            }
             st.setString(7, empresa.getCep());
             st.setString(8, empresa.getTelefone());
             st.setString(9, empresa.getCnpj());
@@ -109,7 +120,7 @@ public class EmpresaDao {
 
             st.execute();
             Conexao.getConnection().commit();
-            JOptionPane.showMessageDialog(null, "Registro Salvo com Sucesso", "Salvo", 1, new ImageIcon("Imagens/ok.png"));
+            JOptionPane.showMessageDialog(null, "Registro Editado com Sucesso", "Salvo", 1, new ImageIcon("Imagens/ok.png"));
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex);
         }

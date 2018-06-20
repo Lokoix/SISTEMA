@@ -586,6 +586,7 @@ public class Empresa extends javax.swing.JInternalFrame {
         txt_login.setText(empresaB.getLogin());
         txt_cnpj.setText(empresaB.getCnpj());
         txt_senha.setText(empresaB.getSenha());
+        cbox_cidade.setSelectedItem(empresaB.getCidade());
         habilitarCampos(false);
         btn_novo.setEnabled(true);
         btn_salvar.setEnabled(false);

@@ -16,6 +16,14 @@ public class CidadeBeans {
     private int id;
     private String nome;
     private EstadoBeans estado;
+    
+    public CidadeBeans()  {
+        
+}
+    
+    public CidadeBeans(int id){
+        this.id = id;
+    }
 
     public int getId() {
         return id;
