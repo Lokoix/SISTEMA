@@ -588,10 +588,10 @@ public class Empresa extends javax.swing.JInternalFrame {
         txt_senha.setText(empresaB.getSenha());
         cbox_cidade.setSelectedItem(empresaB.getCidade());
         habilitarCampos(false);
-        btn_novo.setEnabled(true);
+        btn_novo.setEnabled(false);
         btn_salvar.setEnabled(false);
         btn_alterar.setEnabled(true);
-        btn_cancelar.setEnabled(false);
+        btn_cancelar.setEnabled(true);
         btn_deletar.setEnabled(true);
     }//GEN-LAST:event_tb_empresaMouseClicked
 

@@ -41,8 +41,8 @@ public class Patio extends javax.swing.JInternalFrame {
         cidadeD = new CidadeDAO();
         lbl_id.setVisible(false);
         txt_id.setVisible(false);
-        btn_novo.setEnabled(true);
         habilitarCampos(false);
+        btn_novo.setEnabled(true);
         Modelo = (DefaultTableModel) tb_patio.getModel();
         patioD.buscarTodosPatios(Modelo);
         controlaEsc();
@@ -85,9 +85,12 @@ public class Patio extends javax.swing.JInternalFrame {
         txt_telefone.setEnabled(valor);
         txt_responsa.setEnabled(valor);
         cbox_cidade.setEnabled(valor);
+        txt_buscar.setEnabled(true);
+        
     }
 
     final void limparCampos() {
+        txt_id.setText("");
         txt_nome.setText("");
         txt_endereco.setText("");
         txt_numero.setText("");
