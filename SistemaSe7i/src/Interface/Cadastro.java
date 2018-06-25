@@ -7,6 +7,7 @@ package Interface;
 
 import Beans.LoteBeans;
 import Beans.ModeloBeans;
+import Beans.ProprietarioBeans;
 import Beans.VeiculoBeans;
 import DAO.CidadeDAO;
 import DAO.ModeloDAO;
@@ -47,6 +48,32 @@ public class Cadastro {
         veic.setCidade(cidD.getCidadeId(Integer.parseInt(result.get(7).toString())));
 
         return veic;
+    }
+    
+    public ProprietarioBeans getProprietario(List<String> result){
+        ProprietarioBeans prop = new ProprietarioBeans();
+        CidadeDAO cidD = new CidadeDAO();
+        String end = "";
+        
+        prop.setNome(result.get(58).toString());
+        
+        if(result.get(69).toString().substring(0, 3).equals("000")){
+            prop.setCpfCpnpj(result.get(69).toString().substring(3));
+        }else{
+            prop.setCpfCpnpj(result.get(69).toString());
+        }
+           
+        end = result.get(60).toString()+", "+result.get(61).toString();
+        if(!result.get(62).toString().equals("")){
+            end += "-"+result.get(62).toString();
+        }
+        prop.setEndereco(end);
+        
+        prop.setBairro(result.get(63).toString());
+        prop.setCep(result.get(64).toString());
+        prop.setCidade(cidD.getCidadeId(Integer.parseInt(result.get(65).toString())));
+        
+        return prop;
     }
 
 }

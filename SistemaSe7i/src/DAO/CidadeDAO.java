@@ -85,5 +85,21 @@ public class CidadeDAO {
         }
         return lista;
     }
+    
+    public boolean ExisteCidade(CidadeBeans a) {
+        String sql = "select * from cidades where id = ?";
+        try {
+            PreparedStatement st = Conexao.getConnection().prepareStatement(sql);
+            st.setInt(1, a.getId());
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                //JOptionPane.showMessageDialog(null, "boolean-municipio ja existe no sistema");
+                return true;
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro o verificar se cidade existe no BD: " + e);
+        }
+        return false;
+    }
 
 }

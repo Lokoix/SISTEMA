@@ -5,6 +5,16 @@
  */
 package GUI;
 
+import Beans.LoteBeans;
+import Beans.ProprietarioBeans;
+import Beans.VeiculoBeans;
+import Interface.Cadastro;
+import importacao.arqtxt.Beans.ManipulaTxt;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author rafae
@@ -14,8 +24,15 @@ public class Pesquisas extends javax.swing.JInternalFrame {
     /**
      * Creates new form Pesquisas
      */
+    ManipulaTxt m;
+    Cadastro cad;
+    ArrayList<Integer> tipoTxt;
+
     public Pesquisas() {
         initComponents();
+        tipoTxt = new ArrayList();
+        m = new ManipulaTxt();
+        cad = new Cadastro();
     }
 
     /**
@@ -29,8 +46,18 @@ public class Pesquisas extends javax.swing.JInternalFrame {
 
         txt_local = new javax.swing.JTextField();
         btn_iniciar = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        cmb_Leilao = new javax.swing.JComboBox<>();
 
         btn_iniciar.setText("Iniciar");
+        btn_iniciar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_iniciarActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel1.setText("Leilão:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -38,27 +65,95 @@ public class Pesquisas extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(txt_local, javax.swing.GroupLayout.PREFERRED_SIZE, 367, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cmb_Leilao, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(txt_local, javax.swing.GroupLayout.PREFERRED_SIZE, 367, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btn_iniciar, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txt_local, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_iniciar))
-                .addContainerGap(427, Short.MAX_VALUE))
+                    .addComponent(jLabel1)
+                    .addComponent(cmb_Leilao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(11, 11, 11)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btn_iniciar)
+                    .addComponent(txt_local, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(400, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btn_iniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_iniciarActionPerformed
+        String local;
+        local = txt_local.getText();
+        List<String> listaDeArquivos = listaDeArquivos(local);
+
+        for (int i = 0; i < listaDeArquivos.size(); i++) {
+            VeiculoBeans veic = new VeiculoBeans();
+            ProprietarioBeans proprietario = new ProprietarioBeans();
+            LoteBeans lote = new LoteBeans();
+            String s;
+            switch (tipoTxt.get(i)) {
+                case 1:
+                    s = listaDeArquivos.get(i);
+                    lote.setNumeroLote(s.substring(0, s.indexOf("CAD.txt")));
+
+                    
+                    lote.se
+                    carro = m.;
+                    proprietario = interface1.cad1Prop(result);
+                    System.out.println("cccc");
+                    loteB = new LoteBeans(lote, carro, proprietario, "");
+                    System.out.println("ccccc");
+                    loteC = new LoteController();
+                    System.out.println("cccccc");
+                    loteC.CorrigirLote(loteB);
+                    System.out.println("cccccc");
+                    break;
+                default:
+                    JOptionPane.showMessageDialog(null, "Opção inválida");
+                    break;
+            }
+        }
+
+
+    }//GEN-LAST:event_btn_iniciarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_iniciar;
+    private javax.swing.JComboBox<Object> cmb_Leilao;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JTextField txt_local;
     // End of variables declaration//GEN-END:variables
+
+    public ArrayList<String> listaDeArquivos(String local) {
+        File dir = new File(local);
+        ArrayList<String> lista = new ArrayList();
+        for (File f : dir.listFiles()) {// lista o que possui no diretorio dir
+            if (f.isDirectory()) {//se for um diretorio/pasta true;
+                //System.out.println(f + " é um diretório");
+            } else if (f.isFile()) {//se for um arquivo true;
+                lista.add(f.getName());
+                if (f.getName().contains("CAD")) {
+                    tipoTxt.add(1);
+                } else if (f.getName().contains("BIN")) {
+                    tipoTxt.add(2);
+                } else if (f.getName().contains("BLO")) {
+                    tipoTxt.add(3);
+                }
+            }
+        }
+        return lista;
+    }
+
 }
