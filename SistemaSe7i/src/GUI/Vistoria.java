@@ -5,14 +5,61 @@
  */
 package GUI;
 
+import Beans.CidadeBeans;
+import Beans.VistoriaBeans;
+import Controller.VistoriaController;
+import DAO.VistoriaDAO;
 
 public class Vistoria extends javax.swing.JInternalFrame {
 
+    VistoriaBeans vistoriaB;
+    VistoriaController vistoriaC;
+    VistoriaDAO vistoriaD;
+    CidadeBeans cidadeB;
 
     public Vistoria() {
         initComponents();
+        vistoriaB = new VistoriaBeans();
+        vistoriaC = new VistoriaController();
+        vistoriaD = new VistoriaDAO();
+        lbl_id.setEnabled(false);
+        txt_id.setEnabled(false);
+
     }
 
+    public void popularVistoria() {
+        vistoriaB.setNome(txt_nome.getText());
+        vistoriaB.setEndereco(txt_endereco.getText());
+        vistoriaB.setNumero(txt_numero.getText());
+        vistoriaB.setBairro(txt_bairro.getText());
+        vistoriaB.setCep(txt_cep.getText());
+        if (cbox_cidade.getSelectedItem().equals("")) {
+            cbox_cidade.setSelectedItem("");
+
+        } else {
+            vistoriaB.setCidade((CidadeBeans) cbox_cidade.getSelectedItem());
+        }
+
+    }
+
+    final void habilitarCampos(boolean valor) {
+        txt_nome.setEnabled(valor);
+        txt_endereco.setEnabled(valor);
+        txt_numero.setEnabled(valor);
+        txt_bairro.setEnabled(valor);
+        txt_cep.setEnabled(valor);
+        cbox_cidade.setEnabled(valor);
+        }
+    
+    final void limparCampos(){
+        txt_id.setText("");
+        txt_nome.setText("");
+        txt_endereco.setText("");
+        txt_numero.setText("");
+        txt_bairro.setText("");
+        txt_cep.setText("");
+        cbox_cidade.setSelectedIndex(0);
+    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -34,14 +81,14 @@ public class Vistoria extends javax.swing.JInternalFrame {
         jLabel4 = new javax.swing.JLabel();
         txt_bairro = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        jFormattedTextField1 = new javax.swing.JFormattedTextField();
+        txt_cep = new javax.swing.JFormattedTextField();
         jLabel6 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        cbox_cidade = new javax.swing.JComboBox<>();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel7 = new javax.swing.JLabel();
         txt_buscar = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tb_vistoria = new javax.swing.JTable();
 
         setClosable(true);
 
@@ -103,7 +150,7 @@ public class Vistoria extends javax.swing.JInternalFrame {
         jLabel5.setText("CEP");
 
         try {
-            jFormattedTextField1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##.###-###")));
+            txt_cep.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##.###-###")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
@@ -112,7 +159,7 @@ public class Vistoria extends javax.swing.JInternalFrame {
 
         jLabel7.setText("Buscar");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tb_vistoria.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -128,11 +175,11 @@ public class Vistoria extends javax.swing.JInternalFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setMinWidth(25);
-            jTable1.getColumnModel().getColumn(0).setPreferredWidth(25);
-            jTable1.getColumnModel().getColumn(0).setMaxWidth(25);
+        jScrollPane1.setViewportView(tb_vistoria);
+        if (tb_vistoria.getColumnModel().getColumnCount() > 0) {
+            tb_vistoria.getColumnModel().getColumn(0).setMinWidth(25);
+            tb_vistoria.getColumnModel().getColumn(0).setPreferredWidth(25);
+            tb_vistoria.getColumnModel().getColumn(0).setMaxWidth(25);
         }
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -162,7 +209,7 @@ public class Vistoria extends javax.swing.JInternalFrame {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(jLabel5)
                                         .addGap(18, 18, 18)
-                                        .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                        .addComponent(txt_cep, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
@@ -186,7 +233,7 @@ public class Vistoria extends javax.swing.JInternalFrame {
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jLabel6)
                                         .addGap(18, 18, 18)
-                                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addComponent(cbox_cidade, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addGap(0, 0, Short.MAX_VALUE))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(32, 32, 32)
@@ -220,11 +267,11 @@ public class Vistoria extends javax.swing.JInternalFrame {
                     .addComponent(jLabel4)
                     .addComponent(txt_bairro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5)
-                    .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txt_cep, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbox_cidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -256,7 +303,7 @@ public class Vistoria extends javax.swing.JInternalFrame {
         txt_buscar.setEnabled(false);
         limparCampos();
         btn_novo.setEnabled(false);
-        tb_patio.setVisible(false);
+        tb_vistoria.setVisible(false);
     }//GEN-LAST:event_btn_novoActionPerformed
 
     private void btn_salvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_salvarActionPerformed
@@ -356,8 +403,7 @@ public class Vistoria extends javax.swing.JInternalFrame {
     private javax.swing.JButton btn_deletar;
     private javax.swing.JButton btn_novo;
     private javax.swing.JButton btn_salvar;
-    private javax.swing.JComboBox<Object> jComboBox1;
-    private javax.swing.JFormattedTextField jFormattedTextField1;
+    private javax.swing.JComboBox<Object> cbox_cidade;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -367,10 +413,11 @@ public class Vistoria extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JLabel lbl_id;
+    private javax.swing.JTable tb_vistoria;
     private javax.swing.JTextField txt_bairro;
     private javax.swing.JTextField txt_buscar;
+    private javax.swing.JFormattedTextField txt_cep;
     private javax.swing.JTextField txt_endereco;
     private javax.swing.JTextField txt_id;
     private javax.swing.JTextField txt_nome;
