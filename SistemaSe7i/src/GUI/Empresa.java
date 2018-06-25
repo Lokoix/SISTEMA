@@ -23,7 +23,6 @@ public class Empresa extends javax.swing.JInternalFrame {
     EmpresaDao empresaD;
     DefaultTableModel Modelo;
     CidadeDAO cidadeD;
-    
 
     public Empresa() {
         initComponents();
@@ -38,7 +37,7 @@ public class Empresa extends javax.swing.JInternalFrame {
         Modelo = (DefaultTableModel) tb_empresa.getModel();
         empresaD.buscarTodasEmpresas(Modelo);
         controlaEsc();
-        
+
         CidadeBeans cidade2 = new CidadeBeans();
         cidade2.setNome("Selecionar ");
         cidade2.setEstado(new EstadoBeans("Cidade"));
@@ -586,7 +585,15 @@ public class Empresa extends javax.swing.JInternalFrame {
         txt_login.setText(empresaB.getLogin());
         txt_cnpj.setText(empresaB.getCnpj());
         txt_senha.setText(empresaB.getSenha());
-        cbox_cidade.setSelectedItem(empresaB.getCidade());
+        for (int i = 0; i <= cbox_cidade.getItemCount(); i++) {
+
+            CidadeBeans item = (CidadeBeans) cbox_cidade.getItemAt(i);
+            if (item.getId() == empresaB.getCidade().getId()) {
+                cbox_cidade.setSelectedIndex(i);
+                break;
+            }
+        }
+
         habilitarCampos(false);
         btn_novo.setEnabled(false);
         btn_salvar.setEnabled(false);

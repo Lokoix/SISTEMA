@@ -128,7 +128,7 @@ public class EmpresaDao {
 
     public void buscarTodasEmpresas(DefaultTableModel Modelo) {
         try {
-            String sql = "select * from empresas";
+            String sql = "SELECT empresas.* , cidades.nome from empresas INNER JOIN cidades ON empresas.cidade = cidades.id";
             PreparedStatement st = Conexao.getConnection().prepareStatement(sql);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
