@@ -19,7 +19,7 @@ public class LeilaoBeans {
     private Date dataPrevista;
     private LeiloeiroBeans leiloeiro;
     private String edital;
-    private VistoriadoraBeans vistoriadora;
+    private VistoriaBeans vistoriadora;
     private PatioBeans patio; 
     private double custoLaudo;
     private CidadeBeans cidade;
@@ -94,11 +94,11 @@ public class LeilaoBeans {
         this.edital = edital;
     }
 
-    public VistoriadoraBeans getVistoriadora() {
+    public VistoriaBeans getVistoriadora() {
         return vistoriadora;
     }
 
-    public void setVistoriadora(VistoriadoraBeans vistoriadora) {
+    public void setVistoriadora(VistoriaBeans vistoriadora) {
         this.vistoriadora = vistoriadora;
     }
 

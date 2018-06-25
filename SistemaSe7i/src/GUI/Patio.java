@@ -18,10 +18,8 @@ import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author Guilhermengenharia
- */
+
+
 public class Patio extends javax.swing.JInternalFrame {
 
     PatioBeans patioB;
