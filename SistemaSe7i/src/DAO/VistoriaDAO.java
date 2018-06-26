@@ -22,7 +22,7 @@ public class VistoriaDAO {
     public void cadastrar(VistoriaBeans vistoria){
     
     String sql = "insert into vistoriadoras(nome, endereco, numero, bairro, cep, "
-                + "cidade) values(?, ?, ?, ?, ?, ?)";
+                + "idCidade) values(?, ?, ?, ?, ?, ?)";
         try {
             PreparedStatement st = Conexao.getConnection().prepareStatement(sql);
             st.setString(1, vistoria.getNome());
@@ -52,7 +52,7 @@ public class VistoriaDAO {
             PreparedStatement st = Conexao.getConnection().prepareStatement(sql);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
-                Modelo.addRow(new Object[]{rs.getString("id"), rs.getString("nome"), rs.getString("endereço"), rs.getString("cidade")});
+                Modelo.addRow(new Object[]{rs.getString("id"), rs.getString("nome"), rs.getString("endereco"), rs.getString("idCidade")});
             }
 
         } catch (Exception ex) {
@@ -76,7 +76,7 @@ public class VistoriaDAO {
                 vistoria.setNumero(rs.getString("numero"));
                 vistoria.setBairro(rs.getString("bairro"));
                 vistoria.setCep(rs.getString("cep"));
-                cidadeB.setId(rs.getInt("cidade"));
+                cidadeB.setId(rs.getInt("idCidade"));
                 vistoria.setCidade(cidadeB);
 
 
@@ -90,7 +90,7 @@ public class VistoriaDAO {
     public void editar(VistoriaBeans vistoria) {
 
         String sql = "update vistoriadoras set nome = ?, endereco = ?, numero = ?, bairro = ?, cep = ?,"
-                + "cidade = ? where id = ?";
+                + "idCidade = ? where id = ?";
         try {
             PreparedStatement st = Conexao.getConnection().prepareStatement(sql);
             st.setString(1, vistoria.getNome());
@@ -117,11 +117,11 @@ public class VistoriaDAO {
 
     public void buscarTodasVistorias(DefaultTableModel Modelo) {
         try {
-            String sql = "SELECT vistoriadoras.* , cidades.nome from vistoriadoras INNER JOIN cidades ON vistoriadoras.cidade = cidades.id";
+            String sql = "SELECT vistoriadoras.* , cidades.nome from vistoriadoras INNER JOIN cidades ON vistoriadoras.idCidade = cidades.id";
             PreparedStatement st = Conexao.getConnection().prepareStatement(sql);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
-                Modelo.addRow(new Object[]{rs.getString("id"), rs.getString("nome"), rs.getString("responsavel"), rs.getString("cidades.nome")});
+                Modelo.addRow(new Object[]{rs.getString("id"), rs.getString("nome"), rs.getString("endereco"), rs.getString("cidades.nome")});
             }
 
         } catch (Exception ex) {

@@ -385,7 +385,7 @@ public class Patio extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btn_novoActionPerformed
 
     private void btn_salvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_salvarActionPerformed
-        int i = JOptionPane.showConfirmDialog(null, "Deseja Salvar Empresa " + txt_nome.getText() + "?", "Cadastrar Pátio", JOptionPane.YES_NO_OPTION);
+        int i = JOptionPane.showConfirmDialog(null, "Deseja Salvar Pátio " + txt_nome.getText() + "?", "Cadastrar Pátio", JOptionPane.YES_NO_OPTION);
         if (i == JOptionPane.YES_OPTION) {
             if (txt_id.getText().equals("")) {
                 popularPatio();

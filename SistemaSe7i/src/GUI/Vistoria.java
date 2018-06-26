@@ -23,7 +23,7 @@ public class Vistoria extends javax.swing.JInternalFrame {
     VistoriaBeans vistoriaB;
     VistoriaController vistoriaC;
     VistoriaDAO vistoriaD;
-    CidadeBeans cidadeB;
+    //CidadeBeans cidadeB;
     DefaultTableModel Modelo;
     CidadeDAO cidadeD;
 
@@ -32,14 +32,15 @@ public class Vistoria extends javax.swing.JInternalFrame {
         vistoriaB = new VistoriaBeans();
         vistoriaC = new VistoriaController();
         vistoriaD = new VistoriaDAO();
-        lbl_id.setEnabled(false);
-        txt_id.setEnabled(false);
+        cidadeD = new CidadeDAO();
+        lbl_id.setVisible(false);
+        txt_id.setVisible(false);
         habilitarCampos(false);
         btn_novo.setEnabled(true);
         Modelo = (DefaultTableModel) tb_vistoria.getModel();
         vistoriaD.buscarTodasVistorias(Modelo);
         controlaEsc();
-        
+
         CidadeBeans cidade2 = new CidadeBeans();
         cidade2.setNome("Selecionar ");
         cidade2.setEstado(new EstadoBeans("Cidade"));
@@ -74,6 +75,7 @@ public class Vistoria extends javax.swing.JInternalFrame {
         txt_bairro.setEnabled(valor);
         txt_cep.setEnabled(valor);
         cbox_cidade.setEnabled(valor);
+        txt_buscar.setEnabled(true);
     }
 
     final void limparCampos() {
@@ -195,6 +197,12 @@ public class Vistoria extends javax.swing.JInternalFrame {
 
         jLabel7.setText("Buscar");
 
+        txt_buscar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txt_buscarKeyReleased(evt);
+            }
+        });
+
         tb_vistoria.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -209,6 +217,11 @@ public class Vistoria extends javax.swing.JInternalFrame {
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
+            }
+        });
+        tb_vistoria.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tb_vistoriaMouseClicked(evt);
             }
         });
         jScrollPane1.setViewportView(tb_vistoria);
@@ -382,7 +395,7 @@ public class Vistoria extends javax.swing.JInternalFrame {
 
         }
         Modelo.setNumRows(0);
-        vistoriaD.buscarTodosPatios(Modelo);
+        vistoriaD.buscarTodasVistorias(Modelo);
     }//GEN-LAST:event_btn_salvarActionPerformed
 
     private void btn_alterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_alterarActionPerformed
@@ -403,7 +416,7 @@ public class Vistoria extends javax.swing.JInternalFrame {
             btn_salvar.setEnabled(false);
             btn_novo.setEnabled(true);
             btn_deletar.setEnabled(false);
-            tb_patio.setVisible(true);
+            tb_vistoria.setVisible(true);
             limparCampos();
             habilitarCampos(false);
 
@@ -415,22 +428,52 @@ public class Vistoria extends javax.swing.JInternalFrame {
     private void btn_deletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_deletarActionPerformed
         int i = JOptionPane.showConfirmDialog(null, "Deseja Excluir Registro" + "?", "Excluir Registro", JOptionPane.YES_NO_OPTION);
         if (i == JOptionPane.YES_OPTION) {
-            popularPatio();
-            patioB.setId(Integer.parseInt(txt_id.getText()));
-            patioC.deletarController(patioB);
+            popularVistoria();
+            vistoriaB.setId(Integer.parseInt(txt_id.getText()));
+            vistoriaC.deletarController(vistoriaB);
             btn_novo.setEnabled(true);
             btn_salvar.setEnabled(false);
             btn_alterar.setEnabled(false);
             btn_deletar.setEnabled(false);
             btn_cancelar.setEnabled(false);
-            tb_patio.setVisible(true);
+            tb_vistoria.setVisible(true);
             limparCampos();
             habilitarCampos(false);
             Modelo.setNumRows(0);
-            patioD.buscarTodosPatios(Modelo);
+            vistoriaD.buscarTodasVistorias(Modelo);
 
         }
     }//GEN-LAST:event_btn_deletarActionPerformed
+
+    private void txt_buscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_buscarKeyReleased
+        Modelo.setNumRows(0);
+        vistoriaC.controlePesquisa(txt_buscar.getText(), Modelo);
+    }//GEN-LAST:event_txt_buscarKeyReleased
+
+    private void tb_vistoriaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tb_vistoriaMouseClicked
+        vistoriaB = vistoriaC.controlePreencherCampos(Integer.parseInt(Modelo.getValueAt(tb_vistoria.getSelectedRow(), 0).toString()));
+        txt_id.setText(vistoriaB.getId() + "");
+        txt_nome.setText(vistoriaB.getNome());
+        txt_endereco.setText(vistoriaB.getEndereco());
+        txt_numero.setText(vistoriaB.getNumero());
+        txt_bairro.setText(vistoriaB.getBairro());
+        txt_cep.setText(vistoriaB.getCep());
+        for (int i = 0; i <= cbox_cidade.getItemCount(); i++) {
+
+            CidadeBeans item = (CidadeBeans) cbox_cidade.getItemAt(i);
+            if (item.getId() == vistoriaB.getCidade().getId()) {
+                cbox_cidade.setSelectedIndex(i);
+                break;
+            }
+        }
+
+        habilitarCampos(false);
+        btn_novo.setEnabled(false);
+        btn_salvar.setEnabled(false);
+        btn_alterar.setEnabled(true);
+        btn_cancelar.setEnabled(true);
+        btn_deletar.setEnabled(true);        // TODO add your handling code here:
+    }//GEN-LAST:event_tb_vistoriaMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
