@@ -20,6 +20,7 @@ public class LeiloeiroBeans {
     private String telefone;
     private String celular;
     private String email;
+    private String jucesp;
     private CidadeBeans cidade;
     private EmpresaBeans empresa;
 
@@ -101,6 +102,14 @@ public class LeiloeiroBeans {
 
     public void setCelular(String celular) {
         this.celular = celular;
+    }
+
+    public String getJucesp() {
+        return jucesp;
+    }
+
+    public void setJucesp(String jucesp) {
+        this.jucesp = jucesp;
     }
 
     public String getEmail() {

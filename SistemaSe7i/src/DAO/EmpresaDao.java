@@ -44,7 +44,7 @@ public class EmpresaDao {
 
             st.execute();
             Conexao.getConnection().commit();
-            JOptionPane.showMessageDialog(null, "Registro Salvo com Sucesso", "Salvo", 1, new ImageIcon("Imagens/ok.png"));
+            JOptionPane.showMessageDialog(null, "Registro Salvo com Sucesso");
 
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex);
