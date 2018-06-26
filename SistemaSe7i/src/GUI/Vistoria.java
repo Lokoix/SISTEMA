@@ -9,6 +9,10 @@ import Beans.CidadeBeans;
 import Beans.VistoriaBeans;
 import Controller.VistoriaController;
 import DAO.VistoriaDAO;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+import javax.swing.AbstractAction;
+import javax.swing.KeyStroke;
 
 public class Vistoria extends javax.swing.JInternalFrame {
 
@@ -61,6 +65,16 @@ public class Vistoria extends javax.swing.JInternalFrame {
         cbox_cidade.setSelectedIndex(0);
     }
 
+        public void controlaEsc() {
+        KeyStroke ks = KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0, true);
+        getRootPane().getInputMap().put(ks, "esc");
+        getRootPane().getActionMap().put("esc", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                dispose();
+            }
+        });
+    }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
