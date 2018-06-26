@@ -6,13 +6,17 @@
 package GUI;
 
 import Beans.CidadeBeans;
+import Beans.EstadoBeans;
 import Beans.VistoriaBeans;
 import Controller.VistoriaController;
+import DAO.CidadeDAO;
 import DAO.VistoriaDAO;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import javax.swing.AbstractAction;
+import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
+import javax.swing.table.DefaultTableModel;
 
 public class Vistoria extends javax.swing.JInternalFrame {
 
@@ -20,6 +24,8 @@ public class Vistoria extends javax.swing.JInternalFrame {
     VistoriaController vistoriaC;
     VistoriaDAO vistoriaD;
     CidadeBeans cidadeB;
+    DefaultTableModel Modelo;
+    CidadeDAO cidadeD;
 
     public Vistoria() {
         initComponents();
@@ -28,6 +34,21 @@ public class Vistoria extends javax.swing.JInternalFrame {
         vistoriaD = new VistoriaDAO();
         lbl_id.setEnabled(false);
         txt_id.setEnabled(false);
+        habilitarCampos(false);
+        btn_novo.setEnabled(true);
+        Modelo = (DefaultTableModel) tb_vistoria.getModel();
+        vistoriaD.buscarTodasVistorias(Modelo);
+        controlaEsc();
+        
+        CidadeBeans cidade2 = new CidadeBeans();
+        cidade2.setNome("Selecionar ");
+        cidade2.setEstado(new EstadoBeans("Cidade"));
+        cbox_cidade.addItem(cidade2);
+        for (CidadeBeans cidade : cidadeD.carregarCidades()) {
+            cbox_cidade.addItem(cidade);
+
+        }
+        limparCampos();
 
     }
 
@@ -53,9 +74,9 @@ public class Vistoria extends javax.swing.JInternalFrame {
         txt_bairro.setEnabled(valor);
         txt_cep.setEnabled(valor);
         cbox_cidade.setEnabled(valor);
-        }
-    
-    final void limparCampos(){
+    }
+
+    final void limparCampos() {
         txt_id.setText("");
         txt_nome.setText("");
         txt_endereco.setText("");
@@ -65,7 +86,7 @@ public class Vistoria extends javax.swing.JInternalFrame {
         cbox_cidade.setSelectedIndex(0);
     }
 
-        public void controlaEsc() {
+    public void controlaEsc() {
         KeyStroke ks = KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0, true);
         getRootPane().getInputMap().put(ks, "esc");
         getRootPane().getActionMap().put("esc", new AbstractAction() {
@@ -75,6 +96,7 @@ public class Vistoria extends javax.swing.JInternalFrame {
             }
         });
     }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -321,33 +343,33 @@ public class Vistoria extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btn_novoActionPerformed
 
     private void btn_salvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_salvarActionPerformed
-        int i = JOptionPane.showConfirmDialog(null, "Deseja Salvar Empresa " + txt_nome.getText() + "?", "Cadastrar Pátio", JOptionPane.YES_NO_OPTION);
+        int i = JOptionPane.showConfirmDialog(null, "Deseja Salvar Vistoriadora " + txt_nome.getText() + "?", "Cadastrar Vistoriadora", JOptionPane.YES_NO_OPTION);
         if (i == JOptionPane.YES_OPTION) {
             if (txt_id.getText().equals("")) {
-                popularPatio();
-                if (patioC.verificarDados(patioB)) {
+                popularVistoria();
+                if (vistoriaC.verificarDados(vistoriaB)) {
                     btn_salvar.setEnabled(false);
                     btn_cancelar.setEnabled(false);
                     btn_alterar.setEnabled(false);
                     btn_deletar.setEnabled(false);
                     btn_novo.setEnabled(true);
-                    tb_patio.setVisible(true);
+                    tb_vistoria.setVisible(true);
                     habilitarCampos(false);
                     limparCampos();
-                    patioC.cadastrar(patioB);
+                    vistoriaC.cadastrar(vistoriaB);
 
                 }
             } else {
-                patioB.setId(Integer.parseInt(txt_id.getText()));
-                popularPatio();
-                if (patioC.verificarDados(patioB)) {
-                    patioC.editarController(patioB);
+                vistoriaB.setId(Integer.parseInt(txt_id.getText()));
+                popularVistoria();
+                if (vistoriaC.verificarDados(vistoriaB)) {
+                    vistoriaC.editarController(vistoriaB);
                     btn_alterar.setEnabled(false);
                     btn_cancelar.setEnabled(false);
                     btn_deletar.setEnabled(false);
                     btn_novo.setEnabled(true);
                     btn_salvar.setEnabled(false);
-                    tb_patio.setVisible(true);
+                    tb_vistoria.setVisible(true);
                     habilitarCampos(false);
                     limparCampos();
                     txt_buscar.setText("");
@@ -360,7 +382,7 @@ public class Vistoria extends javax.swing.JInternalFrame {
 
         }
         Modelo.setNumRows(0);
-        patioD.buscarTodosPatios(Modelo);
+        vistoriaD.buscarTodosPatios(Modelo);
     }//GEN-LAST:event_btn_salvarActionPerformed
 
     private void btn_alterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_alterarActionPerformed
