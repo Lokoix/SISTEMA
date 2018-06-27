@@ -120,6 +120,15 @@ public class EmpresaBeans {
         this.senha = senha;
     }
     
+        public void exibe() {
+        System.out.println(this.id + " - " + this.getRazaoSocial());
+    }
+
+    @Override
+    public String toString() {
+        return getRazaoSocial();
+    }
+
     
 
 }

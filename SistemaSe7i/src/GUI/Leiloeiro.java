@@ -7,6 +7,7 @@ package GUI;
 
 import Beans.CidadeBeans;
 import Beans.EmpresaBeans;
+import Beans.EstadoBeans;
 import Beans.LeiloeiroBeans;
 import Controller.LeiloeiroController;
 import DAO.CidadeDAO;
@@ -41,6 +42,29 @@ public class Leiloeiro extends javax.swing.JInternalFrame {
         empresaD = new EmpresaDao();
         lbl_id.setVisible(false);
         txt_id.setVisible(false);
+        habilitarCampos(false);
+        btn_novo.setEnabled(true);
+        Modelo = (DefaultTableModel) tb_leiloeiro.getModel();
+        leiloeiroD.buscarTodosLeiloeiros(Modelo);
+        controlaEsc();
+
+        CidadeBeans cidade2 = new CidadeBeans();
+        cidade2.setNome("Selecionar ");
+        cidade2.setEstado(new EstadoBeans("Cidade"));
+        cbox_cidade.addItem(cidade2);
+        for (CidadeBeans cidade : cidadeD.carregarCidades()) {
+            cbox_cidade.addItem(cidade);
+
+        }
+        
+        EmpresaBeans empresa2 = new EmpresaBeans();
+        empresa2.setRazaoSocial("Selecionar Empresa");
+        cbox_empresa.addItem(empresa2);
+        for (EmpresaBeans empresa : empresaD.carregarEmpresas()){
+            cbox_empresa.addItem(empresa);
+        }
+        
+        limparCampos();
     }
 
     public void popularLeiloeiro() {
@@ -575,11 +599,11 @@ public class Leiloeiro extends javax.swing.JInternalFrame {
                 break;
             }
         }
-        
-        for(int j = 0; j <= cbox_empresa.getItemCount(); j++){
-            
+
+        for (int j = 0; j <= cbox_empresa.getItemCount(); j++) {
+
             EmpresaBeans Item = (EmpresaBeans) cbox_empresa.getItemAt(j);
-            if(Item.getId() == leiloeiroB.getEmpresa().getId()){
+            if (Item.getId() == leiloeiroB.getEmpresa().getId()) {
                 cbox_empresa.setSelectedIndex(j);
                 break;
             }

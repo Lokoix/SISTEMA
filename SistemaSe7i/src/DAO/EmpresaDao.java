@@ -10,6 +10,7 @@ import Beans.EmpresaBeans;
 import Utilitarios.Conexao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -19,6 +20,7 @@ import javax.swing.table.DefaultTableModel;
  * @author Guilhermengenharia
  */
 public class EmpresaDao {
+    private EmpresaBeans empresa;
 
     public void cadastrar(EmpresaBeans empresa) {
         String sql = "insert into empresas(razaoSocial, nomeFantasia, endereco, numero, bairro, cidade, cep, "
@@ -154,5 +156,25 @@ public class EmpresaDao {
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex);
         }
+    }
+    
+        public ArrayList<EmpresaBeans> carregarEmpresas() {// retorna uma lista das cidades que inicial com a string
+        ArrayList<EmpresaBeans> lista = new ArrayList<>();
+        try {
+            String sql = "select * from empresas order by empresas.razaoSocial ASC";
+            PreparedStatement pst = Conexao.getConnection().prepareStatement(sql);
+
+            ResultSet rs = pst.executeQuery();
+            while (rs.next()) {
+                empresa = new EmpresaBeans();
+                empresa.setId(rs.getInt("id"));
+                empresa.setRazaoSocial(rs.getString("razaoSocial"));
+                lista.add(empresa);
+                empresa.exibe();
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro método dao carregarEmpresa: " + e);
+        }
+        return lista;
     }
 }

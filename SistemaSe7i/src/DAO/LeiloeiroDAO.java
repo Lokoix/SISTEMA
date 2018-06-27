@@ -81,6 +81,7 @@ public class LeiloeiroDAO {
             } else {
                 st.setInt(11, leiloeiro.getEmpresa().getId());
             }
+            st.setInt(12, leiloeiro.getId());
 
             st.execute();
             Conexao.getConnection().commit();
