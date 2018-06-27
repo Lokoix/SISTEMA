@@ -27,7 +27,7 @@ public class LeiloeiroController {
     }
 
     public void controlePesquisa(String Pesquisa, DefaultTableModel Modelo) {
-        leiloeiroD.buscarEmpresa(Pesquisa, Modelo);
+        leiloeiroD.buscarLeiloeiro(Pesquisa, Modelo);
     }
 
     public void editarController(LeiloeiroBeans leiloeiro) {
@@ -49,25 +49,15 @@ public class LeiloeiroController {
             return false;
         }
 
-        if (empresa.getLogin().equals("")) {
-            JOptionPane.showMessageDialog(null, "Preencher Campo Login", "Eroo", 0);
+        if (leiloeiro.getCidade().getId() == 0) {
+            JOptionPane.showMessageDialog(null, "Selecionar Cidade", "Erro", 0);
             return false;
         }
-
-        if (empresa.getSenha().equals("")) {
-            JOptionPane.showMessageDialog(null, "Preencher Campo Senha", "Erro", 0);
-            return false;
+        
+        if(leiloeiro.getEmpresa().getId() == 0){
+            JOptionPane.showMessageDialog(null, "Selecionar Empresa");
         }
-        //System.out.println(empresa.getCnpj());
-        if (empresa.getCnpj().equals("  .   .   /    -  ")) {
-            JOptionPane.showMessageDialog(null, "Preencher Campo CNPJ", "Erro", 0);
-            return false;
-        }
-
-        if (empresa.getCidade().getId() == 0) {
-            JOptionPane.showMessageDialog(null, "Preencher Campo Cidade", "Erro", 0);
-            return false;
-        }
+        
         return true;
     }
     

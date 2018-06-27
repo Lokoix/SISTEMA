@@ -57,6 +57,58 @@ public class LeiloeiroDAO {
 
     }
 
+    public void editar(LeiloeiroBeans leiloeiro) {
+        String sql = "update leiloeiros set nome = ?, endereco = ?, numero = ?, bairro = ?, cep = ?, telefone = ?, "
+                + "celular = ?, email = ?, jucesp = ?, idCidade = ?, idEmpresa = ? where id = ?";
+        try {
+            PreparedStatement st = Conexao.getConnection().prepareStatement(sql);
+            st.setString(1, leiloeiro.getNome());
+            st.setString(2, leiloeiro.getEndereco());
+            st.setString(3, leiloeiro.getNumero());
+            st.setString(4, leiloeiro.getBairro());
+            st.setString(5, leiloeiro.getCep());
+            st.setString(6, leiloeiro.getTelefone());
+            st.setString(7, leiloeiro.getCelular());
+            st.setString(8, leiloeiro.getEmail());
+            st.setString(9, leiloeiro.getJucesp());
+            if (leiloeiro.getCidade() == null) {
+                st.setInt(10, 0);
+            } else {
+                st.setInt(10, leiloeiro.getCidade().getId());//Cidade é objeto e quero só id desse objeto
+            }
+            if (leiloeiro.getEmpresa() == null) {
+                st.setInt(11, 0);
+            } else {
+                st.setInt(11, leiloeiro.getEmpresa().getId());
+            }
+
+            st.execute();
+            Conexao.getConnection().commit();
+            JOptionPane.showMessageDialog(null, "Registro Editado com Sucesso");
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Não foi possível editar registro");
+        }
+
+    }
+    
+    public void deletar(LeiloeiroBeans leiloeiro){
+                String sql = "delete from leiloeiros where id = ?";
+        try {
+            PreparedStatement st = Conexao.getConnection().prepareStatement(sql);
+            st.setInt(1, leiloeiro.getId());
+            st.executeUpdate();
+
+            JOptionPane.showMessageDialog(null, "Registro Deletado com Sucesso");
+            Conexao.getConnection().commit();
+
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Não foi possível deletar registro");
+        }
+    }
+        
+    
+
     public void buscarLeiloeiro(String Pesquisa, DefaultTableModel Modelo) {
         try {
             String sql = "select * from leiloeiros where nome like '%" + Pesquisa + "%' ";
@@ -111,8 +163,6 @@ public class LeiloeiroDAO {
                 leiloeiro.setCidade(cidade);
                 empresa.setId(rs.getInt("idEmpresa"));
                 leiloeiro.setEmpresa(empresa);
-                
-                
 
             }
         } catch (Exception ex) {
