@@ -174,6 +174,8 @@ public class Leiloeiro extends javax.swing.JInternalFrame {
         jLabel14 = new javax.swing.JLabel();
         txt_jucesp = new javax.swing.JTextField();
 
+        setClosable(true);
+
         btn_novo.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
         btn_novo.setText("NOVO");
         btn_novo.setEnabled(false);
