@@ -18,6 +18,10 @@ public class EstadoBeans {
         this.id = id;
         this.nome = nome;
     }
+    
+     public EstadoBeans(String nome) {
+        this.nome = nome;
+    }
 
     public EstadoBeans() {
     }
