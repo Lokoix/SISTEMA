@@ -10,31 +10,16 @@ package Beans;
  * @author rafael Piedade
  */
 public class ModeloBeans {
-    
-    private int id;
-    private String nome;
-    private MarcaBeans marca;
 
-    public ModeloBeans(){
-        
-    }
-    
-    public ModeloBeans(int id,String nome, MarcaBeans marca){
-        this.id = id;
-        this.nome = nome;
-        this.marca = marca;
-    }
-    
-    public ModeloBeans(String nome, MarcaBeans marca){
-        this.nome = nome;
-        this.marca = marca;
-    }
-    
-    public int getId() {
+    private Integer id;
+    private String nome;
+    private MarcaBeans marca = new MarcaBeans();
+
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -53,10 +38,8 @@ public class ModeloBeans {
     public void setMarca(MarcaBeans marca) {
         this.marca = marca;
     }
-    
-    public void exibe(){
-        System.out.println(this.id +"-"+ this.nome +"-"+ this.marca.getId() +"-"+ this.marca.getNome());
+
+    public void exibe() {
+        System.out.println(this.id + "-" + this.nome + "-" + this.marca.getId() + "-" + this.marca.getNome());
     }
-    
-    
 }

@@ -5,22 +5,21 @@
  */
 package Teste;
 
+import Beans.CidadeBeans;
+import Controller.CidadeController;
+
+
 /**
  *
  * @author rafae
  */
 public class testeRaf2 {
-    public static void main(String[] args) {
-        String a = "00006726449836";
-        
-        System.out.println(a.substring(0, 3));
-        if(a.substring(0, 3).equals("000")){
-            System.out.println("é cpf");
-            System.out.println(a.substring(3));
-        }else{
-            System.out.println("E cnpj");
-            System.out.println(a);
-        }
 
+    public static void main(String[] args) {
+        CidadeController cont = new CidadeController();
+        CidadeBeans cidade = new CidadeBeans();
+        
+        System.out.println(cidade.getNome());
+        
     }
 }

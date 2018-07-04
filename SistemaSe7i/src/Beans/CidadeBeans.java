@@ -13,25 +13,15 @@ import com.sun.corba.se.impl.oa.toa.TOA;
  */
 public class CidadeBeans {
 
-    private int id;
+    private Integer id;
     private String nome;
-    private EstadoBeans estado;
-    
-    public CidadeBeans()  {
-        
-}
-    
-    public CidadeBeans(int id){
-        this.id = id;
-    }
+    private EstadoBeans estado = new EstadoBeans();
+       
+    //public CidadeBeans(int id){
+    //    this.id = id;
+    //}
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
+    
 
     public String getNome() {
         return nome;
@@ -53,8 +43,16 @@ public class CidadeBeans {
         System.out.println(this.id + " - " + this.getNome() + " - " + this.estado.getId() + " - " + this.estado.getNome());
     }
 
-    @Override
-    public String toString() {
-        return this.getNome() + " - " + this.getEstado().getNome();
+    //@Override
+    //public String toString() {
+    //    return this.getNome() + " - " + this.getEstado().getNome();
+    //}
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 }

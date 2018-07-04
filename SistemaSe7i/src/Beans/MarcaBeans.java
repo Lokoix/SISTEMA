@@ -10,23 +10,15 @@ package Beans;
  * @author rafael Piedade
  */
 public class MarcaBeans {
-    private int id;
+
+    private Integer id;
     private String nome;
 
-    public MarcaBeans(int id, String nome){
-        this.id = id;
-        this.nome = nome;
-    }
-    
-    public MarcaBeans(){
-        
-    }
-    
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -37,6 +29,5 @@ public class MarcaBeans {
     public void setNome(String nome) {
         this.nome = nome;
     }
-    
-    
+
 }

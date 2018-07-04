@@ -17,7 +17,6 @@ public class CidadeController {
     CidadeDAO cidD = new CidadeDAO();
 
     public CidadeBeans CorrigirCidade(CidadeBeans a) {
-
         if (cidD.ExisteCidade(a)) {
             return cidD.getCidadeId(a.getId());
         } else {
@@ -25,7 +24,7 @@ public class CidadeController {
             //a.setId(munD.BuscarMunicipio(a));
             return null;
         }
-    }
+    }// fim do metodo
 
     public CidadeBeans CarregarCidade(int id) {
         return cidD.getCidadeId(id);
