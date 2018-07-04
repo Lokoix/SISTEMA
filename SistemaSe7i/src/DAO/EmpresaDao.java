@@ -56,7 +56,7 @@ public class EmpresaDao {
 
     public void buscarEmpresa(String Pesquisa, DefaultTableModel Modelo) {
         try {
-            String sql = "select * from empresas where nome like '%" + Pesquisa + "%' ";
+            String sql = "select * from empresas where razaoSocial like '%" + Pesquisa + "%' ";
             PreparedStatement st = Conexao.getConnection().prepareStatement(sql);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
