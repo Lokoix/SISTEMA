@@ -35,27 +35,29 @@ public class FotosDAO {
     
     public void BuscarFotos(DefaultTableModel Modelo)
     {
-        Modelo.setNumRows(0); 
-        String sql = "select distinct lote from fotos order by lote asc"; 
+        
+        Modelo.setNumRows(0);
+        String sql = "select distinct lote from fotos order by lote";
         try {
-            PreparedStatement st = Conexao.getConnection().prepareStatement(sql); 
-            ResultSet rs = st.executeQuery(); 
-            while(rs.next())
-            { 
+            PreparedStatement st = Conexao.getConnection().prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
                 Modelo.addRow(new Object[]{rs.getString("lote")});
             }
-            
-            st.execute(); 
-            Conexao.getConnection().commit();            
+
+            st.execute();
+            Conexao.getConnection().commit();
         } catch (Exception e) {
             System.out.println(e);
-        }
+        }   
     }
     
-    public void BuscarFoto(DefaultTableModel Modelo, String lote, String leilao)
+    
+    
+    public void BuscarIntervaloFoto(DefaultTableModel Modelo, String lote,String lote2, String leilao)
     {
         Modelo.setNumRows(0); 
-        String sql = "select distinct lote from fotos where lote="+lote+" and leilao="+leilao; 
+        String sql = "select distinct lote from fotos where lote between "+lote+" and "+lote2+" and leilao="+leilao; 
         try {
             PreparedStatement st = Conexao.getConnection().prepareStatement(sql); 
             ResultSet rs = st.executeQuery(); 
@@ -71,4 +73,6 @@ public class FotosDAO {
             System.out.println(e);
         }
     }
+    
+    
 }
