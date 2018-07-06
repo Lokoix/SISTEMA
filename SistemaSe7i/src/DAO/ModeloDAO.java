@@ -18,10 +18,12 @@ import javax.swing.JOptionPane;
  */
 public class ModeloDAO {
 
+    MarcaDAO marcaDAO = new MarcaDAO();
+
     public void Cadastrar(ModeloBeans x) {
         String sqlInsertion = "insert into modelos (nome, idMarca) value (?,?)";
         try {
-            PreparedStatement st = Conexao.getConnection().prepareStatement(sqlInsertion);            
+            PreparedStatement st = Conexao.getConnection().prepareStatement(sqlInsertion);
             st.setString(1, x.getNome());
             st.setInt(2, x.getMarca().getId());
             st.execute();
@@ -32,7 +34,7 @@ public class ModeloDAO {
         }
     }
 
-    public ModeloBeans BuscarPorId(int x) {
+    /*public ModeloBeans BuscarPorId(int x) {
         String sqlSelect = "SELECT  modelos.id as modeloId, modelos.nome as modeloNome, marcas.id as marcaId, marcas.nome as marcaNome \n"
                 + "	FROM modelos, marcas WHERE modelos.idMarca = marcas.id AND modelos.id = ?; ";
         ModeloBeans modelo = null;
@@ -51,44 +53,41 @@ public class ModeloDAO {
             JOptionPane.showMessageDialog(null, "Erro metodo dao getCidadeId: " + e);
         }
         return null;
-    }
+    }*/
 
-    public ModeloBeans CarregarModelo(String modelo, String marca) {
-
-        try {//procura o modelo
-            String sql = "select marcas.id as idMarca, marcas.nome as nomeMarca, modelos.id as idModelo, modelos.nome as nomeModelo\n"
-                    + "	from marcas, modelos where modelos.idMarca=marcas.id and modelos.nome like ?";
-            PreparedStatement pst = Conexao.getConnection().prepareStatement(sql);
-            pst.setString(1, modelo);
-            ResultSet rs = pst.executeQuery();
-            if (rs.next()) {//retorna o modelo encontrado
-                ModeloBeans modeloB = new ModeloBeans(rs.getInt("idModelo"), rs.getString("nomeModelo"), new MarcaBeans(rs.getInt("idMarca"), rs.getString("nomeMarca")));
-                return modeloB;
-            } else {//se não encontrar modelo
-                try {//procura a marca
-                    sql = "select marcas.id as idMarca, marcas.nome as nomeMarca\n" +
-"                                   from marcas where marcas.nome like ?";
-                    pst = Conexao.getConnection().prepareStatement(sql);
-                    pst.setString(1, marca);
-                    rs = pst.executeQuery();
-                    if(rs.next()){//se existe a marca, então cadastra o modelo E retorna a mesma função
-                        MarcaBeans marcaB = new MarcaBeans(rs.getInt("idMarca"), rs.getString("nomeMarca"));
-                        this.Cadastrar(new ModeloBeans(modelo, marcaB));
-                        return this.CarregarModelo(modelo, marca);
-                    }else{// se não existe a marca então cadastra, E retorna a mesma função procurando o modelo
-                        MarcaDAO marcaDAO = new MarcaDAO();
-                        marcaDAO.Cadastrar(marca);
-                        return this.CarregarModelo(modelo, marca);
-                    }
-                } catch (Exception e) {
-                    System.out.println("Erro ao buscar/cadastrar marca: " + e);
-                }
-
+    public boolean Existe(ModeloBeans x) {
+        String sql = "select * from modelos where nome like ?";
+        try {
+            PreparedStatement st = Conexao.getConnection().prepareStatement(sql);
+            st.setString(1, x.getNome());
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                return true;
             }
         } catch (Exception e) {
-             System.out.println("Erro ao buscar modelo" + e);
+            JOptionPane.showMessageDialog(null, "Erro o verificar se cidade existe no BD: " + e);
         }
-        return null;
+        return false;
+    }
+
+    public ModeloBeans CarregarModelo(ModeloBeans x) {
+        String sql = "select * from modelos inner join marcas on modelos.idMarca=marcas.id where modelos.nome like ?";
+        try {//prsocura o modelo         
+            PreparedStatement pst = Conexao.getConnection().prepareStatement(sql);
+            pst.setString(1, x.getNome());
+            ResultSet rs = pst.executeQuery();
+            if (rs.next()) {//retorna o modelo encontrado
+                ModeloBeans modeloBs = new ModeloBeans(rs.getInt("modelos.id"), rs.getString("modelos.nome"));
+                modeloBs.setMarca(new MarcaBeans(rs.getInt("idMarca"), rs.getString("marcas.nome")));
+                return modeloBs;
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro ao Carregar modelo" + e);
+        }
+        //se não encontrar modelo, Carrega a marca e cadastra o modelo , retorna a função                                                
+        x.setMarca(marcaDAO.CarregarMarca(x.getMarca()));
+        this.Cadastrar(x);
+        return this.CarregarModelo(x);
     }
 
 }

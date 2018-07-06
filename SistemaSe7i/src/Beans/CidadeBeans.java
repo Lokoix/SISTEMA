@@ -20,6 +20,11 @@ public class CidadeBeans {
     public CidadeBeans(int id){
        this.id = id;
     }
+
+    public CidadeBeans(Integer id, String nome) {
+        this.id = id;
+        this.nome = nome;
+    }
     
     public CidadeBeans(){
        

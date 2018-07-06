@@ -8,6 +8,7 @@ package DAO;
 import Beans.CidadeBeans;
 import Beans.VeiculoBeans;
 import Controller.CidadeController;
+import Controller.ModeloController;
 import Utilitarios.Conexao;
 import Utilitarios.Corretores;
 import java.sql.PreparedStatement;
@@ -23,8 +24,8 @@ import javax.swing.JOptionPane;
 public class VeiculoDAO {
 
     CidadeController munC;
-    ModeloDAO modD = new ModeloDAO();
-    CidadeDAO cidD;
+    ModeloDAO modeloDAO = new ModeloDAO();
+    CidadeDAO cidD;   
 
     public void CadastrarVeiculo(VeiculoBeans automovel) {
         String sqlInsertion = "insert into veiculos(placa, renavam, idModelo, cor, anoFabricacao, anoModelo, combustivel, categoria, tipo, especie, potencia, cilindrada,licenciamento, idCidade, dataCad)\n"
@@ -33,8 +34,8 @@ public class VeiculoDAO {
         try {
             PreparedStatement st = Conexao.getConnection().prepareStatement(sqlInsertion);
             st.setString(1, automovel.getPlaca());
-            st.setString(2, automovel.getRenavam());
-            st.setInt(3, automovel.getModelo().getId());
+            st.setString(2, automovel.getRenavam());                        
+            st.setInt(3,(modeloDAO.CarregarModelo(automovel.getModelo())).getId());          
             st.setString(4, automovel.getCor());
             st.setString(5, automovel.getAnoFab());
             st.setString(6, automovel.getAnoMod());
@@ -46,9 +47,6 @@ public class VeiculoDAO {
             st.setString(12, automovel.getCilidrada());
             st.setString(13, Corretores.ConverterParaSQL(automovel.getLicenciamento()));
 
-            
-            
-            
             if (automovel.getCidade() == null) {
                 st.setString(14, null);
             } else {
