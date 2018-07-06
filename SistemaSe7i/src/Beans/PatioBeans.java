@@ -10,7 +10,7 @@ package Beans;
  * @author Eu
  */
 public class PatioBeans {
-    
+
     private int id;
     private String nome;
     private String endereco;
@@ -92,7 +92,16 @@ public class PatioBeans {
     public void setCidade(CidadeBeans cidade) {
         this.cidade = cidade;
     }
+
+    public void exibe() {
+        System.out.println(this.id + " - " + this.getNome());
+    }
+
+    @Override
+    public String toString() {
+        return getNome();
+    }
     
     
-    
+
 }

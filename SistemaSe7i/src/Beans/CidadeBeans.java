@@ -17,10 +17,13 @@ public class CidadeBeans {
     private String nome;
     private EstadoBeans estado = new EstadoBeans();
        
-    //public CidadeBeans(int id){
-    //    this.id = id;
-    //}
-
+    public CidadeBeans(int id){
+       this.id = id;
+    }
+    
+    public CidadeBeans(){
+       
+    }
     
 
     public String getNome() {
@@ -43,10 +46,10 @@ public class CidadeBeans {
         System.out.println(this.id + " - " + this.getNome() + " - " + this.estado.getId() + " - " + this.estado.getNome());
     }
 
-    //@Override
-    //public String toString() {
-    //    return this.getNome() + " - " + this.getEstado().getNome();
-    //}
+    @Override
+    public String toString() {
+        return this.getNome() + " - " + this.getEstado().getNome();
+    }
 
     public Integer getId() {
         return id;

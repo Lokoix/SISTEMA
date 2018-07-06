@@ -50,17 +50,20 @@ public class Leiloeiro extends javax.swing.JInternalFrame {
 
         CidadeBeans cidade2 = new CidadeBeans();
         cidade2.setNome("Selecionar ");
-        cidade2.setEstado(new EstadoBeans("Cidade"));
+        cidade2.getEstado().setNome("Cidade");
+        cidade2.setId(0);
+        //cidade2.setEstado(new EstadoBeans("Cidade"));
         cbox_cidade.addItem(cidade2);
         for (CidadeBeans cidade : cidadeD.carregarCidades()) {
             cbox_cidade.addItem(cidade);
 
         }
-        
+
         EmpresaBeans empresa2 = new EmpresaBeans();
         empresa2.setRazaoSocial("Selecionar Empresa");
+        empresa2.setId(0);
         cbox_empresa.addItem(empresa2);
-        for (EmpresaBeans empresa : empresaD.carregarEmpresas()){
+        for (EmpresaBeans empresa : empresaD.carregarEmpresas()) {
             cbox_empresa.addItem(empresa);
         }
         
@@ -587,8 +590,10 @@ public class Leiloeiro extends javax.swing.JInternalFrame {
         for (int i = 0; i <= cbox_cidade.getItemCount(); i++) {
 
             CidadeBeans item = (CidadeBeans) cbox_cidade.getItemAt(i);
-            if (item.getId() == leiloeiroB.getCidade().getId()) {
+
+            if ((int) item.getId() == leiloeiroB.getCidade().getId()) {
                 cbox_cidade.setSelectedIndex(i);
+
                 break;
             }
         }
@@ -596,7 +601,7 @@ public class Leiloeiro extends javax.swing.JInternalFrame {
         for (int j = 0; j <= cbox_empresa.getItemCount(); j++) {
 
             EmpresaBeans Item = (EmpresaBeans) cbox_empresa.getItemAt(j);
-            if (Item.getId() == leiloeiroB.getEmpresa().getId()) {
+            if ((int)Item.getId() == leiloeiroB.getEmpresa().getId()) {
                 cbox_empresa.setSelectedIndex(j);
                 break;
             }

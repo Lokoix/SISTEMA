@@ -10,6 +10,10 @@ import Beans.PatioBeans;
 import Utilitarios.Conexao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -80,11 +84,10 @@ public class PatioDAO {
                 patio.setBairro(rs.getString("bairro"));
                 patio.setCep(rs.getString("cep"));
                 patio.setTelefone(rs.getString("telefone"));
-                
+
                 cidadeB.setId(rs.getInt("cidade"));
                 patio.setCidade(cidadeB);
                 patio.setResponsavel(rs.getString("responsavel"));
-
 
             }
         } catch (Exception ex) {
@@ -137,8 +140,8 @@ public class PatioDAO {
         }
 
     }
-    
-        public void deletar(PatioBeans patio) {
+
+    public void deletar(PatioBeans patio) {
         String sql = "delete from patios where id = ?";
         try {
             PreparedStatement st = Conexao.getConnection().prepareStatement(sql);
@@ -153,4 +156,39 @@ public class PatioDAO {
         }
     }
 
+    public ArrayList<PatioBeans> carregarPatios() {// retorna uma lista das cidades que inicial com a string
+        ArrayList<PatioBeans> lista = new ArrayList<>();
+        try {
+            String sql = "select * from patios order by patios.nome ASC";
+            PreparedStatement pst = Conexao.getConnection().prepareStatement(sql);
+
+            ResultSet rs = pst.executeQuery();
+            while (rs.next()) {
+                PatioBeans patio = new PatioBeans();
+                patio.setId(rs.getInt("id"));
+                patio.setNome(rs.getString("nome"));
+                lista.add(patio);
+                patio.exibe();
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro método dao carregar Patio: " + e);
+        }
+        return lista;
+    }
+
+    public int carregarComboPatio() {
+        String sql = "select max(id) from patios";
+        try {
+            PreparedStatement st = Conexao.getConnection().prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                System.out.println(rs.getInt("max(id)"));
+                return rs.getInt("max(id)");
+                
+            }
+        } catch (SQLException ex) {
+
+        }
+        return 0;
+    }
 }
