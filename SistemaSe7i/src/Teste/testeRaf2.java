@@ -6,7 +6,9 @@
 package Teste;
 
 import Beans.CidadeBeans;
+import Beans.ModeloBeans;
 import Controller.CidadeController;
+import Controller.ModeloController;
 
 
 /**
@@ -16,10 +18,13 @@ import Controller.CidadeController;
 public class testeRaf2 {
 
     public static void main(String[] args) {
-        CidadeController cont = new CidadeController();
-        CidadeBeans cidade = new CidadeBeans();
+        ModeloBeans m = new ModeloBeans(1, "UNO");
+        m.getMarca().setNome("FIAT");
         
-        System.out.println(cidade.getNome());
+        
+        ModeloController con = new ModeloController();
+        
+        con.CorrigirModelo(m);
         
     }
 }

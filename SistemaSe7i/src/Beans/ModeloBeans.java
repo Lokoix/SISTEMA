@@ -15,6 +15,15 @@ public class ModeloBeans {
     private String nome;
     private MarcaBeans marca = new MarcaBeans();
 
+    public ModeloBeans(Integer id, String nome) {
+        this.id = id;
+        this.nome = nome;
+    }
+    
+    public ModeloBeans(){
+        
+    }
+
     public Integer getId() {
         return id;
     }

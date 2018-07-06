@@ -104,5 +104,26 @@ public class CidadeDAO {
         }
         return false;
     }
+    
+    
+    public ModeloBeans CarregarModelo(ModeloBeans x) {
+        String sql = "select * from cidades inner join estados on cidades.idEstado=estados.id where cidade.nome like ?";
+        try {//prsocura o modelo         
+            PreparedStatement pst = Conexao.getConnection().prepareStatement(sql);
+            pst.setString(1, x.getNome());
+            ResultSet rs = pst.executeQuery();
+            if (rs.next()) {//retorna o modelo encontrado
+                ModeloBeans modeloBs = new ModeloBeans(rs.getInt("modelos.id"), rs.getString("modelos.nome"));
+                modeloBs.setMarca(new MarcaBeans(rs.getInt("idMarca"), rs.getString("marcas.nome")));
+                return modeloBs;
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro ao Carregar modelo" + e);
+        }
+        //se não encontrar modelo, Carrega a marca e cadastra o modelo , retorna a função                                                
+        x.setMarca(marcaDAO.CarregarMarca(x.getMarca()));
+        this.Cadastrar(x);
+        return this.CarregarModelo(x);
+    }
 
 }

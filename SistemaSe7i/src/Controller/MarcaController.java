@@ -5,19 +5,19 @@
  */
 package Controller;
 
-import Beans.ModeloBeans;
-import DAO.ModeloDAO;
+import Beans.MarcaBeans;
+import DAO.MarcaDAO;
 
 /**
  *
  * @author rafae
  */
-public class ModeloController {
+public class MarcaController {
+
+    MarcaDAO marcaDAO = new MarcaDAO();
     
-    ModeloDAO modeloD = new ModeloDAO();
-    
-    public ModeloBeans CorrigirModelo(ModeloBeans x){        
-        return modeloD.CarregarModelo(x);
+    public MarcaBeans CorrigirMarca(MarcaBeans x) {
+         
         
         
     }

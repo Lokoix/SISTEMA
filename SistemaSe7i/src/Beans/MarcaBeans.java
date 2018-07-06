@@ -14,6 +14,15 @@ public class MarcaBeans {
     private Integer id;
     private String nome;
 
+    public MarcaBeans(Integer id, String nome) {
+        this.id = id;
+        this.nome = nome;
+    }
+    
+    public MarcaBeans(){
+        
+    }
+
     public Integer getId() {
         return id;
     }
