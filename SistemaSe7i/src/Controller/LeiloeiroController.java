@@ -45,7 +45,7 @@ public class LeiloeiroController {
         }
 
         if (leiloeiro.getEmail().equals("")) {
-            JOptionPane.showMessageDialog(null, "Preencher Campo Nome Fantasia", "Eroo", 0);
+            JOptionPane.showMessageDialog(null, "Preencher Campo Email", "Eroo", 0);
             return false;
         }
 
