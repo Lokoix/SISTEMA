@@ -15,9 +15,10 @@ public class EstadoBeans {
     private String nome;
     private String uf;
 
-    public EstadoBeans(Integer id, String nome) {
+    public EstadoBeans(Integer id, String nome, String uf) {
         this.id = id;
         this.nome = nome;
+        this.uf = uf;
     }
     
      public EstadoBeans(String nome) {

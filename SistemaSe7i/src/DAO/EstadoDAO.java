@@ -18,20 +18,22 @@ public class EstadoDAO {
     
     private EstadoBeans estado = new EstadoBeans();
     
-    public EstadoBeans getEstadoId(int id){
-        String sql = "Select * from estados where id = ?";
+    public EstadoBeans getEstadoId(EstadoBeans x){
+        String sql = "Select * from estados where uf like ?";
         try {
             PreparedStatement pst = Conexao.getConnection().prepareStatement(sql);
-            pst.setInt(1, id);
+            pst.setString(1, x.getUf());
             ResultSet rs = pst.executeQuery();
             if(rs.next()){
-                estado.setId(rs.getInt("id"));
-                estado.setNome(rs.getString("nome"));
+                x.setId(rs.getInt("id"));               
+                x.setNome(rs.getString("nome"));
+                return x;
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro ao usar getEstado: " + e);
         }
-        return estado;
+        JOptionPane.showMessageDialog(null, "PROBLEMA FATAL, UF DE ESTADO NAO LOCALIZADO ");
+        return null;
     }
     
     
