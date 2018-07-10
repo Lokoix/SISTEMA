@@ -5,8 +5,11 @@
  */
 package GUI;
 
+import Beans.CidadeBeans;
 import Beans.LeilaoBeans;
+import Beans.LeiloeiroBeans;
 import Beans.PatioBeans;
+import Beans.VistoriaBeans;
 import Controller.LeilaoController;
 import DAO.LeilaoDAO;
 import DAO.LeiloeiroDAO;
@@ -14,6 +17,7 @@ import DAO.PatioDAO;
 import DAO.VistoriaDAO;
 import javax.swing.JDesktopPane;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 public class Leilao extends javax.swing.JInternalFrame {
 
@@ -23,6 +27,7 @@ public class Leilao extends javax.swing.JInternalFrame {
     LeilaoDAO leilaoD;
     LeiloeiroDAO leiloeiroD;
     VistoriaDAO vistoriaD;
+    DefaultTableModel Modelo;
 
     JDesktopPane desk;
 
@@ -38,15 +43,46 @@ public class Leilao extends javax.swing.JInternalFrame {
         initComponents();
 
         PatioBeans patio2 = new PatioBeans();
-        patio2.setNome("Selecionar Patio"); 
+        patio2.setNome("Selecionar Patio");
         cbox_patio.addItem(patio2);
         for (PatioBeans patio : patioD.carregarPatios()) {
             cbox_patio.addItem(patio);
         }
 
-        
     }
 
+    public void popularLeilao() {
+        leilaoB.setDescricao(txt_descricao.getText());
+        leilaoB.setDataInicio(data_inicio.getDate());
+        leilaoB.setDataPrevista(data_termino.getDate());
+        leilaoB.setCustoLaudo(Double.parseDouble(txt_custo.getText()));
+        leilaoB.setDesvComDoc(Double.parseDouble(txt_doc.getText()));
+        leilaoB.setDesvSemDoc(Double.parseDouble(txt_noDoc.getText()));
+        leilaoB.setDesvSucata(Double.parseDouble(txt_sucata.getText()));
+        leilaoB.setEdital(txt_edital.getText());
+        if (cbox_cidade.getSelectedItem().equals("")) {
+            cbox_cidade.setSelectedItem("");
+
+        } else {
+            leilaoB.setCidade((CidadeBeans) cbox_cidade.getSelectedItem());
+        }
+        if (cbox_leiloeiro.getSelectedItem().equals("")) {
+            cbox_leiloeiro.setSelectedItem("");
+        } else {
+            leilaoB.setLeiloeiro((LeiloeiroBeans) cbox_leiloeiro.getSelectedItem());
+        }
+        if(cbox_vistoria.getSelectedItem().equals("")){
+            cbox_vistoria.setSelectedItem("");
+        } else{
+            leilaoB.setVistoriadora((VistoriaBeans)cbox_vistoria.getSelectedItem());
+        }
+        if(cbox_patio.getSelectedItem().equals("")){
+            cbox_patio.setSelectedItem("");
+        }else{
+            leilaoB.setPatio((PatioBeans) cbox_patio.getSelectedItem());
+        }
+
+    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -752,7 +788,7 @@ public class Leilao extends javax.swing.JInternalFrame {
 
     private void txt_buscar1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_buscar1KeyReleased
         Modelo.setNumRows(0);
-        empresaC.controlePesquisa(txt_buscar.getText(), Modelo);
+        Leilao.controlePesquisa(txt_buscar.getText(), Modelo);
     }//GEN-LAST:event_txt_buscar1KeyReleased
 
     private void tb_empresaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tb_empresaMouseClicked

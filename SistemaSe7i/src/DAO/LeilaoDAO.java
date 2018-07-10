@@ -11,4 +11,5 @@ package DAO;
  */
 public class LeilaoDAO {
     
+    
 }
