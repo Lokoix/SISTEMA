@@ -93,7 +93,7 @@
                                               </Group>
                                               <EmptySpace max="32767" attributes="0"/>
                                               <Group type="103" groupAlignment="0" attributes="0">
-                                                  <Component id="txt_custo" min="-2" pref="108" max="-2" attributes="0"/>
+                                                  <Component id="txt_custoLaudo" min="-2" pref="108" max="-2" attributes="0"/>
                                                   <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
                                               </Group>
                                           </Group>
@@ -207,7 +207,7 @@
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="cbox_vistoria" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="cbox_patio" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="txt_custo" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="txt_custoLaudo" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Component id="btn_newPatio" min="-2" max="-2" attributes="0"/>
               </Group>
@@ -349,7 +349,7 @@
         <Property name="text" type="java.lang.String" value="P&#xe1;tio"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="txt_custo">
+    <Component class="javax.swing.JTextField" name="txt_custoLaudo">
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel9">
       <Properties>
