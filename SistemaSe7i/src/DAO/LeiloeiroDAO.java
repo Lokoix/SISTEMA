@@ -22,7 +22,7 @@ public class LeiloeiroDAO {
 
     public void cadastrar(LeiloeiroBeans leiloeiro) {
 
-        String sql = "insert into leiloeiros(nome, endereco, numero, bairro, cep, telefone, "
+        String sql = "insert into leiloeiros(nome, endereco, numero, bairro, cep, telefone,"
                 + "celular, email, jucesp, idCidade, idEmpresa) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try {
             PreparedStatement st = Conexao.getConnection().prepareStatement(sql);
@@ -127,7 +127,8 @@ public class LeiloeiroDAO {
 
     public void buscarTodosLeiloeiros(DefaultTableModel Modelo) {
         try {
-            String sql = "SELECT leiloeiros.* , cidades.nome, empresas.razaoSocial from leiloeiros INNER JOIN cidades ON leiloeiros.idCidade = cidades.id INNER JOIN empresas ON leiloeiros.idEmpresa = empresas.id";
+            String sql = "SELECT leiloeiros.* , cidades.nome, empresas.razaoSocial from leiloeiros INNER JOIN cidades ON leiloeiros.idCidade = cidades.id "
+                    + "INNER JOIN empresas ON leiloeiros.idEmpresa = empresas.id";
             PreparedStatement st = Conexao.getConnection().prepareStatement(sql);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {

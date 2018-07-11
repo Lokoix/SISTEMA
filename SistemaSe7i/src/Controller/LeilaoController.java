@@ -27,7 +27,7 @@ public class LeilaoController {
     }
 
     public void controlePesquisa(String Pesquisa, DefaultTableModel Modelo) {
-        leilaoD.buscarEmpresa(Pesquisa, Modelo);
+        leilaoD.buscarLeilao(Pesquisa, Modelo);
     }
 
     public void editarController(LeilaoBeans leilao) {
