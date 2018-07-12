@@ -5,8 +5,11 @@
  */
 package GUI;
 
+import Beans.CidadeBeans;
 import Beans.LeilaoBeans;
+import Beans.LeiloeiroBeans;
 import Beans.PatioBeans;
+import Beans.VistoriaBeans;
 import Controller.LeilaoController;
 import DAO.LeilaoDAO;
 import DAO.LeiloeiroDAO;
@@ -14,6 +17,7 @@ import DAO.PatioDAO;
 import DAO.VistoriaDAO;
 import javax.swing.JDesktopPane;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 public class Leilao extends javax.swing.JInternalFrame {
 
@@ -23,10 +27,12 @@ public class Leilao extends javax.swing.JInternalFrame {
     LeilaoDAO leilaoD;
     LeiloeiroDAO leiloeiroD;
     VistoriaDAO vistoriaD;
+    DefaultTableModel Modelo;
 
     JDesktopPane desk;
 
     public Leilao(JDesktopPane desktop) {
+        initComponents();
         desk = desktop;
         patioD = new PatioDAO();
         leilaoB = new LeilaoBeans();
@@ -34,20 +40,63 @@ public class Leilao extends javax.swing.JInternalFrame {
         leilaoD = new LeilaoDAO();
         leiloeiroD = new LeiloeiroDAO();
         vistoriaD = new VistoriaDAO();
-
-        initComponents();
+        lbl_id.setVisible(false);
+        txt_id.setVisible(false);
+        
 
         PatioBeans patio2 = new PatioBeans();
-        patio2.setNome("Selecionar Patio"); 
+        patio2.setNome("Selecionar Patio");
         cbox_patio.addItem(patio2);
         for (PatioBeans patio : patioD.carregarPatios()) {
             cbox_patio.addItem(patio);
         }
 
-        
     }
 
+    public void popularLeilao() {
+        leilaoB.setDescricao(txt_descricao.getText());
+        leilaoB.setDataInicio(data_inicio.getDate());
+        leilaoB.setDataPrevista(data_termino.getDate());
+        leilaoB.setCustoLaudo(Double.parseDouble(txt_custoLaudo.getText()));
+        leilaoB.setDesvComDoc(Double.parseDouble(txt_doc.getText()));
+        leilaoB.setDesvSemDoc(Double.parseDouble(txt_noDoc.getText()));
+        leilaoB.setDesvSucata(Double.parseDouble(txt_sucata.getText()));
+        leilaoB.setEdital(txt_edital.getText());
+        if (cbox_cidade.getSelectedItem().equals("")) {
+            cbox_cidade.setSelectedItem("");
 
+        } else {
+            leilaoB.setCidade((CidadeBeans) cbox_cidade.getSelectedItem());
+        }
+        if (cbox_leiloeiro.getSelectedItem().equals("")) {
+            cbox_leiloeiro.setSelectedItem("");
+        } else {
+            leilaoB.setLeiloeiro((LeiloeiroBeans) cbox_leiloeiro.getSelectedItem());
+        }
+        if(cbox_vistoria.getSelectedItem().equals("")){
+            cbox_vistoria.setSelectedItem("");
+        } else{
+            leilaoB.setVistoriadora((VistoriaBeans)cbox_vistoria.getSelectedItem());
+        }
+        if(cbox_patio.getSelectedItem().equals("")){
+            cbox_patio.setSelectedItem("");
+        }else{
+            leilaoB.setPatio((PatioBeans) cbox_patio.getSelectedItem());
+        }
+
+    }
+
+    final void habilitarCampos(boolean valor){
+        txt_descricao.setEnabled(valor);
+        data_inicio.setEnabled(valor);
+        data_termino.setEnabled(valor);
+        txt_custoLaudo.setEnabled(valor);
+        txt_edital.setEnabled(valor);
+        txt_doc.setEnabled(valor);
+        txt_noDoc.setEnabled(valor);
+        txt_sucata.setEnabled(valor);
+        
+    }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -68,7 +117,7 @@ public class Leilao extends javax.swing.JInternalFrame {
         jLabel7 = new javax.swing.JLabel();
         cbox_patio = new javax.swing.JComboBox<>();
         jLabel8 = new javax.swing.JLabel();
-        txt_custo = new javax.swing.JTextField();
+        txt_custoLaudo = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
         cbox_cidade = new javax.swing.JComboBox<>();
         jLabel10 = new javax.swing.JLabel();
@@ -599,7 +648,7 @@ public class Leilao extends javax.swing.JInternalFrame {
                                                                     .addComponent(btn_newPatio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addComponent(txt_custo, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addComponent(txt_custoLaudo, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                     .addComponent(jLabel9)))
                                             .addGroup(layout.createSequentialGroup()
                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -683,7 +732,7 @@ public class Leilao extends javax.swing.JInternalFrame {
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(cbox_vistoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(cbox_patio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(txt_custo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txt_custoLaudo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(btn_newPatio))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -752,7 +801,7 @@ public class Leilao extends javax.swing.JInternalFrame {
 
     private void txt_buscar1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_buscar1KeyReleased
         Modelo.setNumRows(0);
-        empresaC.controlePesquisa(txt_buscar.getText(), Modelo);
+        Leilao.controlePesquisa(txt_buscar.getText(), Modelo);
     }//GEN-LAST:event_txt_buscar1KeyReleased
 
     private void tb_empresaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tb_empresaMouseClicked
@@ -1051,7 +1100,7 @@ public class Leilao extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txt_buscar1;
     private javax.swing.JFormattedTextField txt_cep;
     private javax.swing.JFormattedTextField txt_cnpj;
-    private javax.swing.JTextField txt_custo;
+    private javax.swing.JTextField txt_custoLaudo;
     private javax.swing.JTextField txt_descricao;
     private javax.swing.JTextField txt_doc;
     private javax.swing.JTextField txt_edital;

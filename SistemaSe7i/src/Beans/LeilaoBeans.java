@@ -144,5 +144,4 @@ public class LeilaoBeans {
         this.cartaDeNotificacao = cartaDeNotificacao;
     }
     
-    
 }

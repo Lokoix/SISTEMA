@@ -76,7 +76,7 @@ public class CidadeDAO {
                 cidade = new CidadeBeans(rs.getInt("cidades.id"),rs.getString("cidades.nome"));
                 cidade.getEstado().setId(rs.getInt("estados.id"));
                 cidade.getEstado().setNome(rs.getString("estados.nome"));
-                cidade.getEstado().setUf(rs.getString("estados.uf")); 
+                //cidade.getEstado().setUf(rs.getString("estados.uf")); 
                 lista.add(cidade);
                 cidade.exibe();
             }
