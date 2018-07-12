@@ -5,32 +5,31 @@
  */
 package Interface;
 
-import Beans.LoteBeans;
-import Beans.ModeloBeans;
 import Beans.ProprietarioBeans;
 import Beans.VeiculoBeans;
 import DAO.CidadeDAO;
 import DAO.ModeloDAO;
-import java.util.List;
+import java.util.ArrayList;
 
 /**
  *
- * @author rafael Piedade
+ * @author rafae
  */
-public class Cadastro {
+public class BaseNacional {
 
     private VeiculoBeans veic = new VeiculoBeans();
     private ModeloDAO modD = new ModeloDAO();
     private CidadeDAO cidD = new CidadeDAO();
-
-    public VeiculoBeans getVeiculo(List<String> result) {
+    
+    
+    public VeiculoBeans getVeiculo(ArrayList<String> result){
         VeiculoBeans veic = new VeiculoBeans();
         ModeloDAO modD = new ModeloDAO();
         CidadeDAO cidD = new CidadeDAO();
 
         //Placa
-        if (!result.get(6).toString().equals("")) {
-            veic.setPlaca(result.get(6).toString());
+        if (!result.get(4).toString().equals("")) {
+            veic.setPlaca(result.get(4).toString());
         }
 
         //Renavam
@@ -39,24 +38,24 @@ public class Cadastro {
         }
 
         //Modelo
-        if (!result.get(14).toString().equals("")) {
-            veic.getModelo().setNome(result.get(14).toString().substring(result.get(14).indexOf("/") + 1));
-            veic.getModelo().getMarca().setNome(result.get(14).toString().substring(0, result.get(14).indexOf("/")));
+        if (!result.get(11).toString().equals("")) {
+            veic.getModelo().setNome(result.get(11).toString().substring(result.get(11).indexOf("/") + 1));
+            veic.getModelo().getMarca().setNome(result.get(11).toString().substring(0, result.get(11).indexOf("/")));
         }
 
         //Cor
-        if (!result.get(15).toString().equals("")) {
-            veic.setCor(result.get(15).toString());
+        if (!result.get(14).toString().equals("")) {
+            veic.setCor(result.get(14).toString());
         }
 
         //Ano Fabricacao
-        if (!result.get(17).toString().equals("")) {
-            veic.setAnoFab(result.get(17).toString());
+        if (!result.get(16).toString().equals("")) {
+            veic.setAnoFab(result.get(16).toString());
         }
 
         //Ano Modelo
-        if (!result.get(16).toString().equals("")) {
-            veic.setAnoMod(result.get(16).toString());
+        if (!result.get(17).toString().equals("")) {
+            veic.setAnoMod(result.get(17).toString());
         }
 
         //Combustivel
@@ -65,56 +64,62 @@ public class Cadastro {
         }
 
         //Categoria
-        if (!result.get(19).toString().equals("")) {
-            veic.setCategoria(result.get(19).toString());
-        }
+       // if (!result.get(19).toString().equals("")) {
+       //     veic.setCategoria(result.get(19).toString());
+       // }
 
         //Tipo
-        if (!result.get(20).toString().equals("")) {
-            veic.setTipo(result.get(20).toString());
-        }
+        //if (!result.get(20).toString().equals("")) {
+        //    veic.setTipo(result.get(20).toString());
+        //}
 
         //Especie
-        if (!result.get(22).toString().equals("")) {
-            veic.setEspecie(result.get(22).toString());
-        }
+        //if (!result.get(22).toString().equals("")) {
+        //    veic.setEspecie(result.get(22).toString());
+        //}
 
         //Potencia
-        if (!result.get(27).toString().equals("")) {
-            veic.setPotencia(result.get(27).toString());
+        if (!result.get(20).toString().equals("")) {
+            veic.setPotencia(result.get(20).toString());
         }
 
         //Cilindrada
-        if (!result.get(28).toString().equals("")) {
-            veic.setCilidrada(result.get(28).toString());
+        if (!result.get(21).toString().equals("")) {
+            veic.setCilidrada(result.get(21).toString());
         }
 
         //Licenciamento
-        if (!result.get(37).toString().equals("")) {
-            veic.setLicenciamento(result.get(37).toString());
-        }
+        //if (!result.get(37).toString().equals("")) {
+        //    veic.setLicenciamento(result.get(37).toString());
+        //}
 
         //Cidade id
-        if (!result.get(7).toString().equals("")) {
-            veic.getCidade().setId(Integer.parseInt(result.get(7).toString()));
-        }
+        //if (!result.get(7).toString().equals("")) {
+        //    veic.getCidade().setId(Integer.parseInt(result.get(7).toString()));
+        //}
 
         //Cidade nome
-        if (!result.get(8).toString().equals("")) {
-            veic.getCidade().setNome(result.get(8).toString());
+        if (!result.get(5).toString().equals("")) {
+            veic.getCidade().setNome(result.get(5).toString());
         }
         //Cidade estado uf
-        if (!result.get(68).toString().equals("")) {
-            veic.getCidade().getEstado().setUf(result.get(68).toString());
+        if (!result.get(6).toString().equals("")) {
+            veic.getCidade().getEstado().setUf(result.get(6).toString());
         }
-
         return veic;
     }
-
-    public ProprietarioBeans getProprietario(List<String> result) {
+    
+    public ProprietarioBeans getProprietario(ArrayList<String> result) {
         ProprietarioBeans prop = new ProprietarioBeans();
 
-        //Nome
+        //cpf ou cnpj
+        if (result.get(46).toString().substring(0, 3).equals("000")) {
+            prop.setCpfCpnpj(result.get(46).toString().substring(3));
+        } else {
+            prop.setCpfCpnpj(result.get(46).toString());
+        }
+        
+        /*//Nome
         if (!result.get(58).toString().equals("")) {
             prop.setNome(result.get(58).toString());
         }
@@ -163,9 +168,11 @@ public class Cadastro {
         //bairro
         if (!result.get(63).toString().equals("")) {
             prop.setBairro(result.get(63).toString());
-        }
+        }*/
         
         return prop;
     }
-
+    
+    
+    
 }

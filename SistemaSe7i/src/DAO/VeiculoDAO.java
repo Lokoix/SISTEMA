@@ -25,38 +25,41 @@ public class VeiculoDAO {
 
     CidadeController munC;
     ModeloDAO modeloDAO = new ModeloDAO();
-    CidadeDAO cidD;   
+    CidadeDAO cidadeDAO = new CidadeDAO();   
 
     public void CadastrarVeiculo(VeiculoBeans automovel) {
         String sqlInsertion = "insert into veiculos(placa, renavam, idModelo, cor, anoFabricacao, anoModelo, combustivel, categoria, tipo, especie, potencia, cilindrada,licenciamento, idCidade, dataCad)\n"
                 + " values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-        automovel.exibe();
+        //automovel.exibe();
+        System.out.println("CADASTRANDO VEICULO");
         try {
             PreparedStatement st = Conexao.getConnection().prepareStatement(sqlInsertion);
+            System.out.println("1111111");
             st.setString(1, automovel.getPlaca());
             st.setString(2, automovel.getRenavam());                        
             st.setInt(3,(modeloDAO.CarregarModelo(automovel.getModelo())).getId());          
             st.setString(4, automovel.getCor());
             st.setString(5, automovel.getAnoFab());
+            System.out.println("2222222");
             st.setString(6, automovel.getAnoMod());
             st.setString(7, automovel.getCombustivel());
             st.setString(8, automovel.getCategoria());
             st.setString(9, automovel.getTipo());
             st.setString(10, automovel.getEspecie());
             st.setString(11, automovel.getPotencia());
+            System.out.println("33333333");
             st.setString(12, automovel.getCilidrada());
             st.setString(13, Corretores.ConverterParaSQL(automovel.getLicenciamento()));
-
-            if (automovel.getCidade() == null) {
-                st.setString(14, null);
-            } else {
-                st.setInt(14, automovel.getCidade().getId());
-            }
-
+            System.out.println("444444444444");
+            //automovel.exibe();
+            automovel.getCidade().exibe();
+            st.setInt(14, (cidadeDAO.carregarCidade(automovel.getCidade())).getId());
+            System.out.println("55555555555555");
             st.setString(15, Corretores.DataAtual());
+            System.out.println("66666666666");
             st.execute();
             Conexao.getConnection().commit();
-            JOptionPane.showMessageDialog(null, "Registro salvo ");
+            //JOptionPane.showMessageDialog(null, "Registro salvo ");
         } catch (Exception e) {
 
             JOptionPane.showMessageDialog(null, "Erro ao cadastrar Automovel no banco: " + e);
@@ -106,7 +109,7 @@ public class VeiculoDAO {
                 veiculo.setChassiVeiculo(rs.getString("chassiVeiculo"));
                 System.out.println("!!!!22222");
                 veiculo.setMotorVeiculo(rs.getString("motorVeiculo"));
-                veiculo.setModelo(modD.BuscarPorId(rs.getInt("idModelo")));
+                veiculo.setModelo(modeloDAO.BuscarPorId(rs.getInt("idModelo")));
                 veiculo.setCor(rs.getString("cor"));
                 veiculo.setAnoFab(rs.getString("anoFabricacao"));
                 veiculo.setAnoMod(rs.getString("anoModelo"));
@@ -200,4 +203,7 @@ public class VeiculoDAO {
             JOptionPane.showMessageDialog(null, "Erro ao Editar Automovel no banco: " + e);
         }
     }
+    
+    
+    
 }

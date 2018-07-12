@@ -20,19 +20,18 @@ public class VeiculoController {
 
     public VeiculoBeans CorrigirAutomovel(VeiculoBeans a) {
         if (veiD.ExisteVeiculo(a)) {
+            System.out.println("VEICULO EXISTE");
             int id = veiD.BuscarVeiculo(a);
             VeiculoBeans b = new VeiculoBeans();
             b = veiD.getVeiculo(id);
             b = CompararAutomovel(a, b);
             veiD.AlterarVeiculo(b);
             return b;
-        } else {
-            
-            a.setCidade(cidC.CorrigirCidade(a.getCidade()));
-            
+        } else {        
+            System.out.println("VEICULO NÃO EXISTE");
             veiD.CadastrarVeiculo(a);
-            a.setId(veiD.BuscarVeiculo(a));
-            return a;
+            
+            return null;
         }
     }
 

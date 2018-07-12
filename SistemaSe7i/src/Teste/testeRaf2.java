@@ -9,6 +9,7 @@ import Beans.CidadeBeans;
 import Beans.ModeloBeans;
 import Controller.CidadeController;
 import Controller.ModeloController;
+import importacao.arqtxt.Beans.ManipulaTxt;
 
 
 /**
@@ -18,13 +19,9 @@ import Controller.ModeloController;
 public class testeRaf2 {
 
     public static void main(String[] args) {
-        ModeloBeans m = new ModeloBeans(1, "UNO");
-        m.getMarca().setNome("FIAT");
+        ManipulaTxt m = new ManipulaTxt();
         
-        
-        ModeloController con = new ModeloController();
-        
-        con.CorrigirModelo(m);
+        m.Leitura("C:\\Users\\rafae\\Desktop\\interface\\ttt\\", "8CAD.txt");
         
     }
 }

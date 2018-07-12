@@ -48,7 +48,7 @@ public class CidadeBeans {
     }
 
     public void exibe() {
-        System.out.println(this.id + " - " + this.getNome() + " - " + this.estado.getId() + " - " + this.estado.getNome());
+        System.out.println(this.id + " - " + this.getNome() + " - " + this.estado.getId() + " - " + this.estado.getNome() + " - " + this.estado.getUf());
     }
 
     @Override

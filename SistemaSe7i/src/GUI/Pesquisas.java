@@ -8,10 +8,13 @@ package GUI;
 import Beans.LoteBeans;
 import Beans.ProprietarioBeans;
 import Beans.VeiculoBeans;
+import Controller.ProprietarioController;
 import Controller.VeiculoController;
+import Interface.BaseNacional;
 import Interface.Cadastro;
 import importacao.arqtxt.Beans.ManipulaTxt;
 import java.io.File;
+import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -27,7 +30,9 @@ public class Pesquisas extends javax.swing.JInternalFrame {
      */
     ManipulaTxt m;
     Cadastro cad;
+    BaseNacional bin;
     VeiculoController veiC;
+    ProprietarioController proC = new ProprietarioController();
     ArrayList<Integer> tipoTxt;
 
     public Pesquisas() {
@@ -35,7 +40,9 @@ public class Pesquisas extends javax.swing.JInternalFrame {
         tipoTxt = new ArrayList();
         m = new ManipulaTxt();
         cad = new Cadastro();
+        bin = new BaseNacional();
         veiC = new VeiculoController();
+       
     }
 
     /**
@@ -52,7 +59,7 @@ public class Pesquisas extends javax.swing.JInternalFrame {
         jLabel1 = new javax.swing.JLabel();
         cmb_Leilao = new javax.swing.JComboBox<>();
 
-        txt_local.setText("C:\\Users\\rafae\\Desktop\\interface\\teste\\");
+        txt_local.setText("C:\\Users\\rafae\\Desktop\\interface\\END\\");
 
             btn_iniciar.setText("Iniciar");
             btn_iniciar.addActionListener(new java.awt.event.ActionListener() {
@@ -103,21 +110,32 @@ public class Pesquisas extends javax.swing.JInternalFrame {
         List<String> listaDeArquivos = listaDeArquivos(local);
 
         for (int i = 0; i < listaDeArquivos.size(); i++) {
-            VeiculoBeans veic = new VeiculoBeans();
-            ProprietarioBeans proprietario = new ProprietarioBeans();
+            VeiculoBeans veic;// = new VeiculoBeans();
+            ProprietarioBeans proprietario;
             LoteBeans lote = new LoteBeans();
+            ArrayList<String> result = new ArrayList<>();
+            
             String s;
             switch (tipoTxt.get(i)) {
                 case 1:
-                    s = listaDeArquivos.get(i);
-                    lote.setNumeroLote(s.substring(0, s.indexOf("CAD.txt")));
-
-                    veic = cad.getVeiculo(m.Leitura(local, listaDeArquivos.get(i)));
-                    veiC.CorrigirAutomovel(veic);
-
-                    JOptionPane.showMessageDialog(null, "Adicionado o veiculo");
-
+                    s = listaDeArquivos.get(i);                                         //Nome do arquivo
+                    lote.setNumeroLote(s.substring(0, s.indexOf("CAD.txt")));           //PEGA NUMERO DO LOTE            
+                    result = m.Leitura(local, s);                                       //CARREGAR NA LISTA, O CONTEUDO DA PESQUISA
+                    proprietario = cad.getProprietario(result);                         //PEGA O PROPRIETARIO DA LISTA
+                    proC.CorrigirProprietarioPesquisa(proprietario);                    //CORRIGE O PROPRIETARIO                    
+                   // veic = cad.getVeiculo(m.Leitura(local, listaDeArquivos.get(i)));  //Pega o veiculo da lista
+                   // veiC.CorrigirAutomovel(veic);                                     //Corrige o veiculo
                     break;
+                case 2:
+                    s = listaDeArquivos.get(i);
+                    lote.setNumeroLote(s.substring(0, s.indexOf("BIN.txt")));
+                    result = m.Leitura(local, s);
+                    proprietario = bin.getProprietario(result);
+                    proC.CorrigirProprietarioPesquisa(proprietario);
+                    
+                    break;
+                    
+                    
                 default:
                     JOptionPane.showMessageDialog(null, "Opção inválida");
                     break;
@@ -147,6 +165,7 @@ public class Pesquisas extends javax.swing.JInternalFrame {
                     tipoTxt.add(1);
                 } else if (f.getName().contains("BIN")) {
                     tipoTxt.add(2);
+                    System.out.println("TIPO 22222222222222222222222222");
                 } else if (f.getName().contains("BLO")) {
                     tipoTxt.add(3);
                 }

@@ -117,15 +117,23 @@ public class CidadeDAO {
     }
     
     public CidadeBeans carregarCidade(CidadeBeans x) {
-        String sql = "select * from cidades inner join estados on cidades.idEstado=estados.id where cidade.nome like ? and estados.uf like ?";
+        String sql = "select cidades.*,estados.* from cidades inner join estados on cidades.idEstado=estados.id where cidades.nome like ?";
+        x.exibe();        
         try {//prsocura o modelo         
             PreparedStatement pst = Conexao.getConnection().prepareStatement(sql);
-            pst.setString(1, x.getNome() + '%');
-            pst.setString(2, x.getEstado().getUf());
+            pst.setString(1, '%'+x.getNome() + '%');            
+            //pst.setString(2, x.getEstado().getUf());
+            x.exibe();
             ResultSet rs = pst.executeQuery();
             if (rs.next()) {//retorna a cidade encontrada
+                System.out.println("AQUIII");
                 CidadeBeans cidadeBs = new CidadeBeans(rs.getInt("cidades.id"), rs.getString("cidades.nome"));
                 cidadeBs.setEstado(new EstadoBeans(rs.getInt("estados.id"), rs.getString("estados.nome"), rs.getString("estados.uf")));
+                cidadeBs.exibe();
+                return cidadeBs;
+            }else{
+                CidadeBeans cidadeBs = new CidadeBeans();
+                cidadeBs.setEstado(new EstadoBeans());
                 return cidadeBs;
             }
         } catch (Exception e) {
