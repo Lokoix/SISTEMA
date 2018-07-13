@@ -120,10 +120,13 @@ public class LeiloeiroBeans {
         this.email = email;
     }
 
+    public void exibe() {
+        System.out.println(this.id + " - " + this.getNome());
+    }
+
     @Override
     public String toString() {
         return getNome();
     }
-    
-    
+
 }

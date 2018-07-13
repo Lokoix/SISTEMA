@@ -11,6 +11,8 @@ import Beans.LeiloeiroBeans;
 import Utilitarios.Conexao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -174,4 +176,39 @@ public class LeiloeiroDAO {
 
     }
 
+        public ArrayList<LeiloeiroBeans> carregarLeiloeiros() {// retorna uma lista das cidades que inicial com a string
+        ArrayList<LeiloeiroBeans> lista = new ArrayList<>();
+        try {
+            String sql = "select * from leiloeiros order by leiloeiros.nome ASC";
+            PreparedStatement pst = Conexao.getConnection().prepareStatement(sql);
+
+            ResultSet rs = pst.executeQuery();
+            while (rs.next()) {
+                LeiloeiroBeans leiloeiro = new LeiloeiroBeans();
+                leiloeiro.setId(rs.getInt("id"));
+                leiloeiro.setNome(rs.getString("nome"));
+                lista.add(leiloeiro);
+                leiloeiro.exibe();
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro método dao carregar Patio: " + e);
+        }
+        return lista;
+    }
+    
+            public int carregarComboLeiloeiro() {
+        String sql = "select max(id) from leiloeiros";
+        try {
+            PreparedStatement st = Conexao.getConnection().prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                System.out.println(rs.getInt("max(id)"));
+                return rs.getInt("max(id)");
+                
+            }
+        } catch (SQLException ex) {
+
+        }
+        return 0;
+    }
 }

@@ -11,12 +11,17 @@ import Beans.LeiloeiroBeans;
 import Beans.PatioBeans;
 import Beans.VistoriaBeans;
 import Controller.LeilaoController;
+import DAO.CidadeDAO;
 import DAO.LeilaoDAO;
 import DAO.LeiloeiroDAO;
 import DAO.PatioDAO;
 import DAO.VistoriaDAO;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+import javax.swing.AbstractAction;
 import javax.swing.JDesktopPane;
 import javax.swing.JOptionPane;
+import javax.swing.KeyStroke;
 import javax.swing.table.DefaultTableModel;
 
 public class Leilao extends javax.swing.JInternalFrame {
@@ -27,6 +32,7 @@ public class Leilao extends javax.swing.JInternalFrame {
     LeilaoDAO leilaoD;
     LeiloeiroDAO leiloeiroD;
     VistoriaDAO vistoriaD;
+    CidadeDAO cidadeD;
     DefaultTableModel Modelo;
 
     JDesktopPane desk;
@@ -40,9 +46,15 @@ public class Leilao extends javax.swing.JInternalFrame {
         leilaoD = new LeilaoDAO();
         leiloeiroD = new LeiloeiroDAO();
         vistoriaD = new VistoriaDAO();
+        cidadeD = new CidadeDAO();
         lbl_id.setVisible(false);
         txt_id.setVisible(false);
-        
+        habilitarCampos(false);
+        btn_novo1.setEnabled(true);
+
+        Modelo = (DefaultTableModel) tb_leilao.getModel();
+        leiloeiroD.buscarTodosLeiloeiros(Modelo);
+        controlaEsc();
 
         PatioBeans patio2 = new PatioBeans();
         patio2.setNome("Selecionar Patio");
@@ -51,16 +63,50 @@ public class Leilao extends javax.swing.JInternalFrame {
             cbox_patio.addItem(patio);
         }
 
+        LeiloeiroBeans leiloeiro2 = new LeiloeiroBeans();
+        leiloeiro2.setNome("Selecionar Leiloeiro");
+        cbox_leiloeiro.addItem(leiloeiro2);
+        for (LeiloeiroBeans leiloeiro : leiloeiroD.carregarLeiloeiros()) {
+            cbox_leiloeiro.addItem(leiloeiro);
+        }
+
+        VistoriaBeans vistoria2 = new VistoriaBeans();
+        vistoria2.setNome("Selecionar Vistoriadora");
+        cbox_vistoria.addItem(vistoria2);
+        for (VistoriaBeans vistoria : vistoriaD.carregarVistoria()) {
+            cbox_vistoria.addItem(vistoria);
+        }
+
+        CidadeBeans cidade2 = new CidadeBeans();
+        cidade2.setNome("Selecionar ");
+        cidade2.getEstado().setNome("Cidade");
+        cidade2.setId(0);
+        //cidade2.setEstado(new EstadoBeans("Cidade"));
+        cbox_cidade.addItem(cidade2);
+        for (CidadeBeans cidade : cidadeD.carregarCidades()) {
+            cbox_cidade.addItem(cidade);
+
+        }
+
     }
 
     public void popularLeilao() {
         leilaoB.setDescricao(txt_descricao.getText());
         leilaoB.setDataInicio(data_inicio.getDate());
         leilaoB.setDataPrevista(data_termino.getDate());
-        leilaoB.setCustoLaudo(Double.parseDouble(txt_custoLaudo.getText()));
-        leilaoB.setDesvComDoc(Double.parseDouble(txt_doc.getText()));
-        leilaoB.setDesvSemDoc(Double.parseDouble(txt_noDoc.getText()));
-        leilaoB.setDesvSucata(Double.parseDouble(txt_sucata.getText()));
+        if (!txt_custoLaudo.getText().equals("")) {
+            leilaoB.setCustoLaudo(Double.parseDouble(txt_custoLaudo.getText()));
+        }
+        if (!txt_doc.getText().equals("")) {
+            leilaoB.setDesvComDoc(Double.parseDouble(txt_doc.getText()));
+        }
+        if (!txt_noDoc.getText().equals("")) {
+            leilaoB.setDesvSemDoc(Double.parseDouble(txt_noDoc.getText()));
+        }
+        if (!txt_sucata.getText().equals("")) {
+            leilaoB.setDesvSucata(Double.parseDouble(txt_sucata.getText()));
+        }
+
         leilaoB.setEdital(txt_edital.getText());
         if (cbox_cidade.getSelectedItem().equals("")) {
             cbox_cidade.setSelectedItem("");
@@ -73,20 +119,20 @@ public class Leilao extends javax.swing.JInternalFrame {
         } else {
             leilaoB.setLeiloeiro((LeiloeiroBeans) cbox_leiloeiro.getSelectedItem());
         }
-        if(cbox_vistoria.getSelectedItem().equals("")){
+        if (cbox_vistoria.getSelectedItem().equals("")) {
             cbox_vistoria.setSelectedItem("");
-        } else{
-            leilaoB.setVistoriadora((VistoriaBeans)cbox_vistoria.getSelectedItem());
+        } else {
+            leilaoB.setVistoriadora((VistoriaBeans) cbox_vistoria.getSelectedItem());
         }
-        if(cbox_patio.getSelectedItem().equals("")){
+        if (cbox_patio.getSelectedItem().equals("")) {
             cbox_patio.setSelectedItem("");
-        }else{
+        } else {
             leilaoB.setPatio((PatioBeans) cbox_patio.getSelectedItem());
         }
 
     }
 
-    final void habilitarCampos(boolean valor){
+    final void habilitarCampos(boolean valor) {
         txt_descricao.setEnabled(valor);
         data_inicio.setEnabled(valor);
         data_termino.setEnabled(valor);
@@ -95,8 +141,40 @@ public class Leilao extends javax.swing.JInternalFrame {
         txt_doc.setEnabled(valor);
         txt_noDoc.setEnabled(valor);
         txt_sucata.setEnabled(valor);
-        
+        txt_notificacao.setEnabled(valor);
+        cbox_leiloeiro.setEnabled(valor);
+        cbox_vistoria.setEnabled(valor);
+        cbox_cidade.setEnabled(valor);
+        cbox_patio.setEnabled(valor);
     }
+
+    final void limparCampos() {
+        txt_descricao.setText("");
+        data_inicio.setDate(null);
+        data_termino.setDate(null);
+        txt_custoLaudo.setText("");
+        txt_edital.setText("");
+        txt_doc.setText("");
+        txt_noDoc.setText("");
+        txt_sucata.setText("");
+        txt_notificacao.setText("");
+        cbox_leiloeiro.setSelectedIndex(0);
+        cbox_vistoria.setSelectedIndex(0);
+        cbox_cidade.setSelectedIndex(0);
+        cbox_patio.setSelectedIndex(0);
+    }
+
+    public void controlaEsc() {
+        KeyStroke ks = KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0, true);
+        getRootPane().getInputMap().put(ks, "esc");
+        getRootPane().getActionMap().put("esc", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                dispose();
+            }
+        });
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -128,9 +206,9 @@ public class Leilao extends javax.swing.JInternalFrame {
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txt_notificacao = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tb_leilao = new javax.swing.JTable();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel15 = new javax.swing.JLabel();
         txt_buscar = new javax.swing.JTextField();
@@ -207,7 +285,7 @@ public class Leilao extends javax.swing.JInternalFrame {
 
         jLabel14.setText("Observações Carta de Notificação - Frente");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tb_leilao.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -223,17 +301,28 @@ public class Leilao extends javax.swing.JInternalFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setMinWidth(30);
-            jTable1.getColumnModel().getColumn(0).setPreferredWidth(30);
-            jTable1.getColumnModel().getColumn(0).setMaxWidth(30);
-            jTable1.getColumnModel().getColumn(5).setMinWidth(100);
-            jTable1.getColumnModel().getColumn(5).setPreferredWidth(100);
-            jTable1.getColumnModel().getColumn(5).setMaxWidth(100);
+        tb_leilao.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tb_leilaoMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tb_leilao);
+        if (tb_leilao.getColumnModel().getColumnCount() > 0) {
+            tb_leilao.getColumnModel().getColumn(0).setMinWidth(30);
+            tb_leilao.getColumnModel().getColumn(0).setPreferredWidth(30);
+            tb_leilao.getColumnModel().getColumn(0).setMaxWidth(30);
+            tb_leilao.getColumnModel().getColumn(5).setMinWidth(100);
+            tb_leilao.getColumnModel().getColumn(5).setPreferredWidth(100);
+            tb_leilao.getColumnModel().getColumn(5).setMaxWidth(100);
         }
 
         jLabel15.setText("Buscar");
+
+        txt_buscar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txt_buscarKeyReleased(evt);
+            }
+        });
 
         btn_newPatio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/if_1_41688.png"))); // NOI18N
         btn_newPatio.addActionListener(new java.awt.event.ActionListener() {
@@ -692,7 +781,7 @@ public class Leilao extends javax.swing.JInternalFrame {
                                 .addComponent(jLabel1)
                                 .addGap(18, 18, 18)
                                 .addComponent(txt_id, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(txt_notificacao, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING))))
                 .addContainerGap())
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -751,7 +840,7 @@ public class Leilao extends javax.swing.JInternalFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jLabel14)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txt_notificacao, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -771,7 +860,7 @@ public class Leilao extends javax.swing.JInternalFrame {
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(btn_cancelar1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btn_deletar1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(24, Short.MAX_VALUE))
+                .addContainerGap(28, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(0, 464, Short.MAX_VALUE)
@@ -800,185 +889,77 @@ public class Leilao extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_cbox_cidade1KeyPressed
 
     private void txt_buscar1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_buscar1KeyReleased
-        Modelo.setNumRows(0);
-        Leilao.controlePesquisa(txt_buscar.getText(), Modelo);
+
     }//GEN-LAST:event_txt_buscar1KeyReleased
 
     private void tb_empresaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tb_empresaMouseClicked
-        empresaB = empresaC.controlePreencherCampos(Integer.parseInt(Modelo.getValueAt(tb_empresa.getSelectedRow(), 0).toString()));
-        txt_id.setText(empresaB.getId() + "");
-        txt_razao.setText(empresaB.getRazaoSocial());
-        txt_fantasia.setText(empresaB.getNomeFantasia());
-        txt_endereco.setText(empresaB.getEndereco());
-        txt_numero.setText(empresaB.getNumero());
-        txt_bairro.setText(empresaB.getBairro());
-        txt_telefone.setText(empresaB.getTelefone());
-        txt_cep.setText(empresaB.getCep());
-        txt_login.setText(empresaB.getLogin());
-        txt_cnpj.setText(empresaB.getCnpj());
-        txt_senha.setText(empresaB.getSenha());
-        for (int i = 0; i <= cbox_cidade.getItemCount(); i++) {
 
-            CidadeBeans item = (CidadeBeans) cbox_cidade.getItemAt(i);
-            if (item.getId() == empresaB.getCidade().getId()) {
-                cbox_cidade.setSelectedIndex(i);
-                break;
-            }
-        }
-
-        habilitarCampos(false);
-        btn_novo.setEnabled(false);
-        btn_salvar.setEnabled(false);
-        btn_alterar.setEnabled(true);
-        btn_cancelar.setEnabled(true);
-        btn_deletar.setEnabled(true);
     }//GEN-LAST:event_tb_empresaMouseClicked
 
     private void btn_novoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_novoActionPerformed
-        habilitarCampos(true);
-        btn_salvar.setEnabled(true);
-        btn_deletar.setEnabled(false);
-        btn_alterar.setEnabled(false);
-        btn_cancelar.setEnabled(true);
-        txt_buscar.setEnabled(false);
-        limparCampos();
-        btn_novo.setEnabled(false);
-        tb_empresa.setVisible(false);
+
     }//GEN-LAST:event_btn_novoActionPerformed
 
     private void btn_salvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_salvarActionPerformed
-        int i = JOptionPane.showConfirmDialog(null, "Deseja Salvar Empresa " + txt_razao.getText() + "?", "Cadastrar Empresa", JOptionPane.YES_NO_OPTION);
-        if (i == JOptionPane.YES_OPTION) {
-            if (txt_id.getText().equals("")) {
-                popularEmpresa();
-                if (empresaC.verificarDados(empresaB)) {
-                    btn_salvar.setEnabled(false);
-                    btn_cancelar.setEnabled(false);
-                    btn_alterar.setEnabled(false);
-                    btn_deletar.setEnabled(false);
-                    btn_novo.setEnabled(true);
-                    tb_empresa.setVisible(true);
-                    habilitarCampos(false);
-                    limparCampos();
-                    empresaC.cadastrar(empresaB);
 
-                }
-            } else {
-                empresaB.setId(Integer.parseInt(txt_id.getText()));
-                popularEmpresa();
-                if (empresaC.verificarDados(empresaB)) {
-                    empresaC.editarController(empresaB);
-                    btn_alterar.setEnabled(false);
-                    btn_cancelar.setEnabled(false);
-                    btn_deletar.setEnabled(false);
-                    btn_novo.setEnabled(true);
-                    btn_salvar.setEnabled(false);
-                    tb_empresa.setVisible(true);
-                    habilitarCampos(true);
-                    limparCampos();
-                    txt_buscar.setText("");
-
-                }
-
-            }
-
-        } else {
-
-        }
-        Modelo.setNumRows(0);
-        empresaD.buscarTodasEmpresas(Modelo);
     }//GEN-LAST:event_btn_salvarActionPerformed
 
     private void btn_alterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_alterarActionPerformed
-        btn_salvar.setEnabled(true);
-        btn_novo.setEnabled(false);
-        btn_cancelar.setEnabled(true);
-        btn_alterar.setEnabled(false);
-        btn_deletar.setEnabled(false);
-        //tb_usuario.setVisible(false);
-        habilitarCampos(true);
+
     }//GEN-LAST:event_btn_alterarActionPerformed
 
     private void btn_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cancelarActionPerformed
-        int i = JOptionPane.showConfirmDialog(null, "Deseja cancelar esta operação" + "?", "Cancelar Operação", JOptionPane.YES_NO_OPTION);
-        if (i == JOptionPane.YES_OPTION) {
-            btn_cancelar.setEnabled(false);
-            btn_alterar.setEnabled(false);
-            btn_salvar.setEnabled(false);
-            btn_novo.setEnabled(true);
-            tb_empresa.setVisible(true);
-            limparCampos();
-            habilitarCampos(false);
 
-        } else {
-
-        }
     }//GEN-LAST:event_btn_cancelarActionPerformed
 
     private void btn_deletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_deletarActionPerformed
-        int i = JOptionPane.showConfirmDialog(null, "Deseja Excluir Registro" + "?", "Excluir Registro", JOptionPane.YES_NO_OPTION);
-        if (i == JOptionPane.YES_OPTION) {
-            popularEmpresa();
-            empresaB.setId(Integer.parseInt(txt_id.getText()));
-            empresaC.deletarController(empresaB);
-            btn_novo.setEnabled(true);
-            btn_salvar.setEnabled(false);
-            btn_alterar.setEnabled(false);
-            btn_deletar.setEnabled(false);
-            btn_cancelar.setEnabled(false);
-            tb_empresa.setVisible(true);
-            habilitarCampos(false);
-            limparCampos();
-            Modelo.setNumRows(0);
-            empresaD.buscarTodasEmpresas(Modelo);
 
-        }
     }//GEN-LAST:event_btn_deletarActionPerformed
 
     private void btn_novo1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_novo1ActionPerformed
 
         habilitarCampos(true);
-        btn_salvar.setEnabled(true);
-        btn_deletar.setEnabled(false);
-        btn_alterar.setEnabled(false);
-        btn_cancelar.setEnabled(true);
-        txt_buscar.setEnabled(false);
+        btn_salvar1.setEnabled(true);
+        btn_deletar1.setEnabled(false);
+        btn_alterar1.setEnabled(false);
+        btn_cancelar1.setEnabled(true);
+        txt_buscar1.setEnabled(false);
         limparCampos();
-        btn_novo.setEnabled(false);
-        tb_patio.setVisible(false);
+        btn_novo1.setEnabled(false);
+        tb_leilao.setVisible(false);
     }//GEN-LAST:event_btn_novo1ActionPerformed
 
     private void btn_salvar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_salvar1ActionPerformed
-        int i = JOptionPane.showConfirmDialog(null, "Deseja Salvar Pátio " + txt_nome.getText() + "?", "Cadastrar Pátio", JOptionPane.YES_NO_OPTION);
+        int i = JOptionPane.showConfirmDialog(null, "Deseja Salvar Leilão " + txt_descricao.getText() + "?", "Cadastrar Leilão", JOptionPane.YES_NO_OPTION);
         if (i == JOptionPane.YES_OPTION) {
             if (txt_id.getText().equals("")) {
-                popularPatio();
-                if (patioC.verificarDados(patioB)) {
-                    btn_salvar.setEnabled(false);
-                    btn_cancelar.setEnabled(false);
-                    btn_alterar.setEnabled(false);
-                    btn_deletar.setEnabled(false);
-                    btn_novo.setEnabled(true);
-                    tb_patio.setVisible(true);
+                popularLeilao();
+                if (leilaoC.verificarDados(leilaoB)) {
+                    btn_salvar1.setEnabled(false);
+                    btn_cancelar1.setEnabled(false);
+                    btn_alterar1.setEnabled(false);
+                    btn_deletar1.setEnabled(false);
+                    btn_novo1.setEnabled(true);
+                    tb_leilao.setVisible(true);
                     habilitarCampos(false);
                     limparCampos();
-                    patioC.cadastrar(patioB);
+                    leilaoC.cadastrar(leilaoB);
 
                 }
             } else {
-                patioB.setId(Integer.parseInt(txt_id.getText()));
-                popularPatio();
-                if (patioC.verificarDados(patioB)) {
-                    patioC.editarController(patioB);
-                    btn_alterar.setEnabled(false);
-                    btn_cancelar.setEnabled(false);
-                    btn_deletar.setEnabled(false);
-                    btn_novo.setEnabled(true);
-                    btn_salvar.setEnabled(false);
-                    tb_patio.setVisible(true);
+                leilaoB.setId(Integer.parseInt(txt_id.getText()));
+                popularLeilao();
+                if (leilaoC.verificarDados(leilaoB)) {
+                    leilaoC.editarController(leilaoB);
+                    btn_alterar1.setEnabled(false);
+                    btn_cancelar1.setEnabled(false);
+                    btn_deletar1.setEnabled(false);
+                    btn_novo1.setEnabled(true);
+                    btn_salvar1.setEnabled(false);
+                    tb_leilao.setVisible(true);
                     habilitarCampos(false);
                     limparCampos();
-                    txt_buscar.setText("");
+                    txt_buscar1.setText("");
 
                 }
 
@@ -992,11 +973,11 @@ public class Leilao extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btn_salvar1ActionPerformed
 
     private void btn_alterar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_alterar1ActionPerformed
-        btn_salvar.setEnabled(true);
-        btn_novo.setEnabled(false);
-        btn_cancelar.setEnabled(true);
-        btn_alterar.setEnabled(false);
-        btn_deletar.setEnabled(false);
+        btn_salvar1.setEnabled(true);
+        btn_novo1.setEnabled(false);
+        btn_cancelar1.setEnabled(true);
+        btn_alterar1.setEnabled(false);
+        btn_deletar1.setEnabled(false);
         //tb_usuario.setVisible(false);
         habilitarCampos(true);
     }//GEN-LAST:event_btn_alterar1ActionPerformed
@@ -1004,12 +985,12 @@ public class Leilao extends javax.swing.JInternalFrame {
     private void btn_cancelar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cancelar1ActionPerformed
         int i = JOptionPane.showConfirmDialog(null, "Deseja cancelar esta operação" + "?", "Cancelar Operação", JOptionPane.YES_NO_OPTION);
         if (i == JOptionPane.YES_OPTION) {
-            btn_cancelar.setEnabled(false);
-            btn_alterar.setEnabled(false);
-            btn_salvar.setEnabled(false);
-            btn_novo.setEnabled(true);
-            btn_deletar.setEnabled(false);
-            tb_patio.setVisible(true);
+            btn_cancelar1.setEnabled(false);
+            btn_alterar1.setEnabled(false);
+            btn_salvar1.setEnabled(false);
+            btn_novo1.setEnabled(true);
+            btn_deletar1.setEnabled(false);
+            tb_leilao.setVisible(true);
             limparCampos();
             habilitarCampos(false);
 
@@ -1021,22 +1002,74 @@ public class Leilao extends javax.swing.JInternalFrame {
     private void btn_deletar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_deletar1ActionPerformed
         int i = JOptionPane.showConfirmDialog(null, "Deseja Excluir Registro" + "?", "Excluir Registro", JOptionPane.YES_NO_OPTION);
         if (i == JOptionPane.YES_OPTION) {
-            popularPatio();
-            patioB.setId(Integer.parseInt(txt_id.getText()));
-            patioC.deletarController(patioB);
-            btn_novo.setEnabled(true);
-            btn_salvar.setEnabled(false);
-            btn_alterar.setEnabled(false);
-            btn_deletar.setEnabled(false);
-            btn_cancelar.setEnabled(false);
-            tb_patio.setVisible(true);
-            limparCampos();
+            popularLeilao();
+            leilaoB.setId(Integer.parseInt(txt_id.getText()));
+            leilaoC.deletarController(leilaoB);
+            btn_novo1.setEnabled(true);
+            btn_salvar1.setEnabled(false);
+            btn_alterar1.setEnabled(false);
+            btn_deletar1.setEnabled(false);
+            btn_cancelar1.setEnabled(false);
+            tb_leilao.setVisible(true);
             habilitarCampos(false);
+            limparCampos();
             Modelo.setNumRows(0);
-            patioD.buscarTodosPatios(Modelo);
+            leilaoD.buscarTodosLeiloes(Modelo);
 
         }
     }//GEN-LAST:event_btn_deletar1ActionPerformed
+
+    private void tb_leilaoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tb_leilaoMouseClicked
+        leilaoB = leilaoC.controlePreencherCampos(Integer.parseInt(Modelo.getValueAt(tb_empresa.getSelectedRow(), 0).toString()));
+        txt_id.setText(leilaoB.getId() + "");
+        txt_descricao.setText(leilaoB.getDescricao());
+        data_inicio.setDate(leilaoB.getDataInicio());
+        data_termino.setDate(leilaoB.getDataPrevista());
+        txt_custoLaudo.setText(Double.toString(leilaoB.getCustoLaudo()));
+        txt_edital.setText(leilaoB.getEdital());
+        txt_doc.setText(Double.toString(leilaoB.getDesvComDoc()));
+        txt_noDoc.setText(Double.toString(leilaoB.getDesvSemDoc()));
+        txt_sucata.setText(Double.toString(leilaoB.getDesvSucata()));
+        txt_notificacao.setText(leilaoB.getCartaDeNotificacao());
+        for (int i = 0; i <= cbox_cidade.getItemCount(); i++) {
+
+            CidadeBeans item = (CidadeBeans) cbox_cidade.getItemAt(i);
+            if (item.getId() == leilaoB.getCidade().getId()) {
+                cbox_cidade.setSelectedIndex(i);
+                break;
+            }
+
+            for (int j = 0; j <= cbox_patio.getItemCount(); j++) {
+                PatioBeans item2 = (PatioBeans) cbox_patio.getItemAt(j);
+                cbox_patio.setSelectedItem(j);
+                break;
+            }
+
+            for (int k = 0; k <= cbox_vistoria.getItemCount(); k++) {
+                VistoriaBeans item3 = (VistoriaBeans) cbox_vistoria.getItemAt(k);
+                cbox_vistoria.setSelectedItem(k);
+                break;
+            }
+
+            for (int l = 0; l <= cbox_leiloeiro.getItemCount(); l++) {
+                LeiloeiroBeans item4 = (LeiloeiroBeans) cbox_leiloeiro.getItemAt(l);
+                cbox_leiloeiro.setSelectedItem(l);
+                break;
+            }
+        }
+
+        habilitarCampos(false);
+        btn_novo1.setEnabled(false);
+        btn_salvar1.setEnabled(false);
+        btn_alterar1.setEnabled(true);
+        btn_cancelar1.setEnabled(true);
+        btn_deletar1.setEnabled(true);
+    }//GEN-LAST:event_tb_leilaoMouseClicked
+
+    private void txt_buscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_buscarKeyReleased
+        Modelo.setNumRows(0);
+        leilaoC.controlePesquisa(txt_buscar1.getText(), Modelo);
+    }//GEN-LAST:event_txt_buscarKeyReleased
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -1091,10 +1124,9 @@ public class Leilao extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel lbl_id;
     private javax.swing.JTable tb_empresa;
+    private javax.swing.JTable tb_leilao;
     private javax.swing.JTextField txt_bairro;
     private javax.swing.JTextField txt_buscar;
     private javax.swing.JTextField txt_buscar1;
@@ -1110,6 +1142,7 @@ public class Leilao extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txt_id1;
     private javax.swing.JTextField txt_login;
     private javax.swing.JTextField txt_noDoc;
+    private javax.swing.JTextField txt_notificacao;
     private javax.swing.JTextField txt_numero;
     private javax.swing.JTextField txt_razao;
     private javax.swing.JPasswordField txt_senha;
