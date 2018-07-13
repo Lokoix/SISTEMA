@@ -16,8 +16,13 @@ import DAO.LeilaoDAO;
 import DAO.LeiloeiroDAO;
 import DAO.PatioDAO;
 import DAO.VistoriaDAO;
+import Utilitarios.Corretores;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.AbstractAction;
 import javax.swing.JDesktopPane;
 import javax.swing.JOptionPane;
@@ -36,6 +41,8 @@ public class Leilao extends javax.swing.JInternalFrame {
     DefaultTableModel Modelo;
 
     JDesktopPane desk;
+    
+    SimpleDateFormat spf;
 
     public Leilao(JDesktopPane desktop) {
         initComponents();
@@ -47,13 +54,14 @@ public class Leilao extends javax.swing.JInternalFrame {
         leiloeiroD = new LeiloeiroDAO();
         vistoriaD = new VistoriaDAO();
         cidadeD = new CidadeDAO();
+        spf = new SimpleDateFormat("dd/MM/YYYY");
         lbl_id.setVisible(false);
         txt_id.setVisible(false);
         habilitarCampos(false);
         btn_novo1.setEnabled(true);
 
         Modelo = (DefaultTableModel) tb_leilao.getModel();
-        leiloeiroD.buscarTodosLeiloeiros(Modelo);
+        leilaoD.buscarTodosLeiloes(Modelo);
         controlaEsc();
 
         PatioBeans patio2 = new PatioBeans();
@@ -92,8 +100,8 @@ public class Leilao extends javax.swing.JInternalFrame {
 
     public void popularLeilao() {
         leilaoB.setDescricao(txt_descricao.getText());
-        leilaoB.setDataInicio(data_inicio.getDate());
-        leilaoB.setDataPrevista(data_termino.getDate());
+        leilaoB.setDataInicio(spf.format(data_inicio.getDate()));
+        leilaoB.setDataPrevista(spf.format(data_termino.getDate()));
         if (!txt_custoLaudo.getText().equals("")) {
             leilaoB.setCustoLaudo(Double.parseDouble(txt_custoLaudo.getText()));
         }
@@ -129,6 +137,7 @@ public class Leilao extends javax.swing.JInternalFrame {
         } else {
             leilaoB.setPatio((PatioBeans) cbox_patio.getSelectedItem());
         }
+        leilaoB.setCartaDeNotificacao(txt_notificacao.getText());
 
     }
 
@@ -969,7 +978,7 @@ public class Leilao extends javax.swing.JInternalFrame {
 
         }
         Modelo.setNumRows(0);
-        patioD.buscarTodosPatios(Modelo);
+        leilaoD.buscarTodosLeiloes(Modelo);
     }//GEN-LAST:event_btn_salvar1ActionPerformed
 
     private void btn_alterar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_alterar1ActionPerformed
@@ -1020,50 +1029,54 @@ public class Leilao extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btn_deletar1ActionPerformed
 
     private void tb_leilaoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tb_leilaoMouseClicked
-        leilaoB = leilaoC.controlePreencherCampos(Integer.parseInt(Modelo.getValueAt(tb_empresa.getSelectedRow(), 0).toString()));
-        txt_id.setText(leilaoB.getId() + "");
-        txt_descricao.setText(leilaoB.getDescricao());
-        data_inicio.setDate(leilaoB.getDataInicio());
-        data_termino.setDate(leilaoB.getDataPrevista());
-        txt_custoLaudo.setText(Double.toString(leilaoB.getCustoLaudo()));
-        txt_edital.setText(leilaoB.getEdital());
-        txt_doc.setText(Double.toString(leilaoB.getDesvComDoc()));
-        txt_noDoc.setText(Double.toString(leilaoB.getDesvSemDoc()));
-        txt_sucata.setText(Double.toString(leilaoB.getDesvSucata()));
-        txt_notificacao.setText(leilaoB.getCartaDeNotificacao());
-        for (int i = 0; i <= cbox_cidade.getItemCount(); i++) {
-
-            CidadeBeans item = (CidadeBeans) cbox_cidade.getItemAt(i);
-            if (item.getId() == leilaoB.getCidade().getId()) {
-                cbox_cidade.setSelectedIndex(i);
-                break;
+        try {
+            leilaoB = leilaoC.controlePreencherCampos(Integer.parseInt(Modelo.getValueAt(tb_leilao.getSelectedRow(), 0).toString()));
+            txt_id.setText(leilaoB.getId() + "");
+            txt_descricao.setText(leilaoB.getDescricao());
+            data_inicio.setDate(spf.parse(Corretores.ConverterParaJava(leilaoB.getDataInicio())));
+            data_termino.setDate(spf.parse(Corretores.ConverterParaJava(leilaoB.getDataPrevista())));
+            txt_custoLaudo.setText(Double.toString(leilaoB.getCustoLaudo()));
+            txt_edital.setText(leilaoB.getEdital());
+            txt_doc.setText(Double.toString(leilaoB.getDesvComDoc()));
+            txt_noDoc.setText(Double.toString(leilaoB.getDesvSemDoc()));
+            txt_sucata.setText(Double.toString(leilaoB.getDesvSucata()));
+            txt_notificacao.setText(leilaoB.getCartaDeNotificacao());
+            for (int i = 0; i <= cbox_cidade.getItemCount(); i++) {
+                
+                CidadeBeans item = (CidadeBeans) cbox_cidade.getItemAt(i);
+                if (item.getId() == leilaoB.getCidade().getId()) {
+                    cbox_cidade.setSelectedIndex(i);
+                    break;
+                }
+                
+                for (int j = 0; j <= cbox_patio.getItemCount(); j++) {
+                    PatioBeans item2 = (PatioBeans) cbox_patio.getItemAt(j);
+                    cbox_patio.setSelectedItem(j);
+                    break;
+                }
+                
+                for (int k = 0; k <= cbox_vistoria.getItemCount(); k++) {
+                    VistoriaBeans item3 = (VistoriaBeans) cbox_vistoria.getItemAt(k);
+                    cbox_vistoria.setSelectedItem(k);
+                    break;
+                }
+                
+                for (int l = 0; l <= cbox_leiloeiro.getItemCount(); l++) {
+                    LeiloeiroBeans item4 = (LeiloeiroBeans) cbox_leiloeiro.getItemAt(l);
+                    cbox_leiloeiro.setSelectedItem(l);
+                    break;
+                }
             }
-
-            for (int j = 0; j <= cbox_patio.getItemCount(); j++) {
-                PatioBeans item2 = (PatioBeans) cbox_patio.getItemAt(j);
-                cbox_patio.setSelectedItem(j);
-                break;
-            }
-
-            for (int k = 0; k <= cbox_vistoria.getItemCount(); k++) {
-                VistoriaBeans item3 = (VistoriaBeans) cbox_vistoria.getItemAt(k);
-                cbox_vistoria.setSelectedItem(k);
-                break;
-            }
-
-            for (int l = 0; l <= cbox_leiloeiro.getItemCount(); l++) {
-                LeiloeiroBeans item4 = (LeiloeiroBeans) cbox_leiloeiro.getItemAt(l);
-                cbox_leiloeiro.setSelectedItem(l);
-                break;
-            }
+            
+            habilitarCampos(false);
+            btn_novo1.setEnabled(false);
+            btn_salvar1.setEnabled(false);
+            btn_alterar1.setEnabled(true);
+            btn_cancelar1.setEnabled(true);
+            btn_deletar1.setEnabled(true);
+        } catch (ParseException ex) {
+            Logger.getLogger(Leilao.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-        habilitarCampos(false);
-        btn_novo1.setEnabled(false);
-        btn_salvar1.setEnabled(false);
-        btn_alterar1.setEnabled(true);
-        btn_cancelar1.setEnabled(true);
-        btn_deletar1.setEnabled(true);
     }//GEN-LAST:event_tb_leilaoMouseClicked
 
     private void txt_buscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_buscarKeyReleased

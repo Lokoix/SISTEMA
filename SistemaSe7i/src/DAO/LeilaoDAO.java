@@ -11,6 +11,7 @@ import Beans.LeiloeiroBeans;
 import Beans.PatioBeans;
 import Beans.VistoriaBeans;
 import Utilitarios.Conexao;
+import Utilitarios.Corretores;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -31,8 +32,8 @@ public class LeilaoDAO {
         try {
             PreparedStatement st = Conexao.getConnection().prepareStatement(sql);
             st.setString(1, leilao.getDescricao());
-            st.setDate(2, (Date) leilao.getDataInicio());
-            st.setDate(3, (Date) leilao.getDataPrevista());
+            st.setString(2, Corretores.ConverterParaSQL(leilao.getDataInicio()));
+            st.setString(3, Corretores.ConverterParaSQL(leilao.getDataPrevista()));
             st.setString(4, leilao.getEdital());
             st.setDouble(5, leilao.getCustoLaudo());
             st.setDouble(6, leilao.getDesvComDoc());
@@ -72,14 +73,14 @@ public class LeilaoDAO {
 
     public void editar(LeilaoBeans leilao) {
 
-        String sql = "update leiloes set descricao = ?, dataInicio = ?, dataPrevista = ?, edital = ?, custoLaudo = ?, desvDoc,"
+        String sql = "update leiloes set descricao = ?, dataInicio = ?, dataPrevista = ?, edital = ?, custoLaudo = ?, desvDoc = ?,"
                 + "desvSemDoc = ?, desvSucata = ?, cartaNotificacao = ?, idVistoria = ?, idPatio = ?, idCidade= ?, "
                 + "idLeiloeiro = ? where id = ?";
         try {
             PreparedStatement st = Conexao.getConnection().prepareStatement(sql);
             st.setString(1, leilao.getDescricao());
-            st.setDate(2, (Date) leilao.getDataInicio());
-            st.setDate(3, (Date) leilao.getDataPrevista());
+            st.setString(2, Corretores.ConverterParaSQL(leilao.getDataInicio()));
+            st.setString(3, Corretores.ConverterParaSQL(leilao.getDataPrevista()));
             st.setString(4, leilao.getEdital());
             st.setDouble(5, leilao.getCustoLaudo());
             st.setDouble(6, leilao.getDesvComDoc());
@@ -106,6 +107,7 @@ public class LeilaoDAO {
             } else {
                 st.setInt(13, leilao.getLeiloeiro().getId());
             }
+            st.setInt(14, leilao.getId());
 
             st.execute();
             Conexao.getConnection().commit();
@@ -153,7 +155,7 @@ public class LeilaoDAO {
             PreparedStatement st = Conexao.getConnection().prepareStatement(sql);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
-                Modelo.addRow(new Object[]{rs.getString("id"), rs.getString("descricao"), rs.getString("leiloeiros.nome"), rs.getString("patios.nome"), rs.getString("cidades.nome"), rs.getString("edital")});
+                Modelo.addRow(new Object[]{rs.getString("id"), rs.getString("leiloes.descricao"), rs.getString("leiloeiros.nome"), rs.getString("patios.nome"), rs.getString("cidades.nome"), rs.getString("edital")});
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro ao Buscar todos LeiloesDAO" + e);
@@ -175,8 +177,8 @@ public class LeilaoDAO {
             if (rs.next()) {
                 leilao.setId(rs.getInt("id"));
                 leilao.setDescricao(rs.getString("descricao"));
-                leilao.setDataInicio(rs.getDate("dataInicio"));
-                leilao.setDataPrevista(rs.getDate("dataPrevista"));
+                leilao.setDataInicio(rs.getString("dataInicio"));
+                leilao.setDataPrevista(rs.getString("dataPrevista"));
                 leilao.setEdital(rs.getString("edital"));
                 leilao.setCustoLaudo(rs.getDouble("custoLaudo"));
                 leilao.setDesvComDoc(rs.getDouble("desvDoc"));
