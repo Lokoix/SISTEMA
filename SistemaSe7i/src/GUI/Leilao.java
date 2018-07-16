@@ -1050,26 +1050,29 @@ public class Leilao extends javax.swing.JInternalFrame {
                     break;
                 }
             }
-            
-            for (int j = 0; j <= cbox_patio.getItemCount(); j++) {
-                System.out.println("SOU BOSTA");
-                PatioBeans item2 = (PatioBeans) cbox_patio.getItemAt(j);
-                if (Objects.equals(item2.getId(), leilaoB.getPatio().getId())) {
-                cbox_patio.setSelectedItem(j);
-                break;
+
+            for (int i = 0; i <= cbox_patio.getItemCount(); i++) {
+                PatioBeans item = (PatioBeans) cbox_patio.getItemAt(i);
+                if ((int) item.getId() == leilaoB.getPatio().getId()) {
+                    cbox_patio.setSelectedIndex(i);
+                    break;
                 }
             }
 
             for (int k = 0; k <= cbox_vistoria.getItemCount(); k++) {
                 VistoriaBeans item3 = (VistoriaBeans) cbox_vistoria.getItemAt(k);
-                cbox_vistoria.setSelectedItem(k);
-                break;
+                if ((int) item3.getId() == leilaoB.getVistoriadora().getId()) {
+                    cbox_vistoria.setSelectedIndex(k);
+                    break;
+                }
             }
 
             for (int l = 0; l <= cbox_leiloeiro.getItemCount(); l++) {
                 LeiloeiroBeans item4 = (LeiloeiroBeans) cbox_leiloeiro.getItemAt(l);
-                cbox_leiloeiro.setSelectedItem(l);
-                break;
+                if ((int) item4.getId() == leilaoB.getLeiloeiro().getId()) {
+                    cbox_leiloeiro.setSelectedIndex(l);
+                    break;
+                }
             }
 
             habilitarCampos(false);
