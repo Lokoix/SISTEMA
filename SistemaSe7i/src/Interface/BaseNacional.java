@@ -99,6 +99,7 @@ public class BaseNacional {
         //}
 
         //Cidade nome
+        System.out.println("!!!!!!!: " + result.get(5));
         if (!result.get(5).toString().equals("")) {
             veic.getCidade().setNome(result.get(5).toString());
         }

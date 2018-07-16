@@ -13,80 +13,92 @@ import DAO.ProprietarioDAO;
  * @author rafae
  */
 public class ProprietarioController {
-    ProprietarioDAO proD = new ProprietarioDAO();
-    
-    
-    public void CorrigirProprietarioPesquisa(ProprietarioBeans a) {
-        if (proD.ExisteProprietario(a)) {//SE EXISTE
-            ProprietarioBeans b = proD.getProprietarioBeans(a); //CARREGA PROBRIETARIO BANCO
-            b = compararProprietarios(a, b);//COMPARA OS PROPRIETARIOS
-            proD.AlterarProprietario(b);//ALTERA O PROPRIETARIO
+
+    ProprietarioDAO daoProprietario = new ProprietarioDAO();
+    CidadeController conCidade = new CidadeController();
+
+
+    public ProprietarioBeans CorrigirProprietarioPesquisa(ProprietarioBeans proprietario) {
+        if (daoProprietario.existe(proprietario)) {//SE EXISTE
+            proprietario.setCidade(conCidade.CorrigirCidade(proprietario.getCidade()));
+
+            ProprietarioBeans base = daoProprietario.carregar(proprietario); //CARREGA PROBRIETARIO BANCO
+            base = compararProprietarios(proprietario, base);//COMPARA OS PROPRIETARIOS
+            daoProprietario.alterar(base);//ALTERA O PROPRIETARIO
+            return base;
         } else { //SE NÃO
-           proD.CadastrarProprietario(a); //CADASTRA O PROPRIETARIO                 
+            proprietario.setCidade(conCidade.CorrigirCidade(proprietario.getCidade()));
+            daoProprietario.cadastrar(proprietario); //CADASTRA O PROPRIETARIO         
+            return daoProprietario.carregar(proprietario);
         }
     }
-    
-    public void CorrigirProprietarioPesquisaCadastro(ProprietarioBeans a) {
-        if (proD.ExisteProprietario(a)) {//SE EXISTE
-            ProprietarioBeans b = proD.getProprietarioBeans(a); //CARREGA PROBRIETARIO BANCO
-            b = compararProprietarios(b, a);//COMPARA OS PROPRIETARIOS
-            proD.AlterarProprietario(b);//ALTERA O PROPRIETARIO
+
+    public ProprietarioBeans CorrigirProprietarioPesquisaCadastro(ProprietarioBeans proprietario) {
+        if (daoProprietario.existe(proprietario)) {//SE EXISTE
+            proprietario.setCidade(conCidade.CorrigirCidade(proprietario.getCidade()));
+
+            ProprietarioBeans base = daoProprietario.carregar(proprietario); //CARREGA PROBRIETARIO BANCO
+            base = compararProprietarios(base, proprietario);//COMPARA OS PROPRIETARIOS
+            daoProprietario.alterar(base);//ALTERA O PROPRIETARIO
+            return base;
         } else { //SE NÃO
-           proD.CadastrarProprietario(a); //CADASTRA O PROPRIETARIO                 
+            proprietario.setCidade(conCidade.CorrigirCidade(proprietario.getCidade()));
+            daoProprietario.cadastrar(proprietario); //CADASTRA O PROPRIETARIO         
+            return daoProprietario.carregar(proprietario);
         }
     }
-    
-    public ProprietarioBeans compararProprietarios(ProprietarioBeans a, ProprietarioBeans b){
+
+    public ProprietarioBeans compararProprietarios(ProprietarioBeans a, ProprietarioBeans b) {
         //id
-        if(b.getId() == null){
+        if (b.getId() == null) {
             b.setId(a.getId());
         }
 
         //nome
-        if(b.getNome().equals("") || b.getNome() == null){
+        if (b.getNome() == null) {
             b.setNome(a.getNome());
         }
-        
+
         //cpfcnpj
-        if(b.getCpfCpnpj().equals("") || b.getCpfCpnpj() == null){
+        if (b.getCpfCpnpj() == null) {
             b.setCpfCpnpj(a.getCpfCpnpj());
         }
-        
+
         //rg
-        if(b.getRg() == null){
+        if (b.getRg() == null) {
             b.setRg(a.getRg());
         }
-        
+
         //endereco
-        if(b.getEndereco() == null){
+        if (b.getEndereco() == null) {
             b.setEndereco(a.getEndereco());
         }
-        
+
         //endNumero
-        if(b.getEndNumero() == null){
+        if (b.getEndNumero() == null) {
             b.setEndNumero(a.getEndNumero());
         }
-        
+
         //complemento
-        if(b.getComplemento() == null){
+        if (b.getComplemento() == null) {
             b.setComplemento(a.getComplemento());
         }
-        
+
         //bairro
-        if(b.getBairro() == null){
+        if (b.getBairro() == null) {
             b.setBairro(a.getBairro());
         }
-        
+
         //cep
-        if(b.getCep() == null){
+        if (b.getCep() == null) {
             b.setCep(a.getCep());
         }
-        
+
         //cidade
-        if(b.getCidade().getId() == null){
+        if (b.getCidade().getId() == null) {
             b.setCidade(a.getCidade());
         }
-            
+
         return b;
     }
 }

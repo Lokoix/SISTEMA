@@ -7,6 +7,7 @@ package Controller;
 
 import Beans.ModeloBeans;
 import DAO.ModeloDAO;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -14,11 +15,24 @@ import DAO.ModeloDAO;
  */
 public class ModeloController {
     
-    ModeloDAO modeloD = new ModeloDAO();
+    ModeloDAO daoModelo = new ModeloDAO();
+    MarcaController conMarca = new MarcaController();
     
-    public ModeloBeans CorrigirModelo(ModeloBeans x){        
-        return modeloD.CarregarModelo(x);
+    public ModeloBeans corrigirModelo(ModeloBeans modelo){        
+        modelo.setMarca(conMarca.CorrigirMarca(modelo.getMarca()));
         
-        
+        if(daoModelo.existe(modelo)){
+            modelo = daoModelo.carregar(modelo);
+            return modelo;
+        }else if(modelo.getNome() == null){
+           JOptionPane.showMessageDialog(null, "Modelo sem nome para o cadastro!","Aviso", 1);
+            return new ModeloBeans();
+        }else if(modelo.getMarca().getNome() == null){
+            JOptionPane.showMessageDialog(null, "Modelo sem marca para o cadastro!","Aviso", 1);
+             return new ModeloBeans();
+        }else{
+            daoModelo.cadastrar(modelo);
+            return this.corrigirModelo(modelo);
+        }   
     }
 }

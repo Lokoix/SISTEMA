@@ -14,7 +14,6 @@ import Interface.BaseNacional;
 import Interface.Cadastro;
 import importacao.arqtxt.Beans.ManipulaTxt;
 import java.io.File;
-import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -28,21 +27,21 @@ public class Pesquisas extends javax.swing.JInternalFrame {
     /**
      * Creates new form Pesquisas
      */
-    ManipulaTxt m;
-    Cadastro cad;
-    BaseNacional bin;
-    VeiculoController veiC;
-    ProprietarioController proC = new ProprietarioController();
+    ManipulaTxt manipulaTxt;
+    Cadastro iCadastro;
+    BaseNacional iBaseNacional;
+    VeiculoController conVeiculo;
+    ProprietarioController conProprietario;
     ArrayList<Integer> tipoTxt;
 
     public Pesquisas() {
         initComponents();
         tipoTxt = new ArrayList();
-        m = new ManipulaTxt();
-        cad = new Cadastro();
-        bin = new BaseNacional();
-        veiC = new VeiculoController();
-       
+        manipulaTxt = new ManipulaTxt();
+        iCadastro = new Cadastro();
+        iBaseNacional = new BaseNacional();
+        conVeiculo = new VeiculoController();
+        conProprietario = new ProprietarioController(); 
     }
 
     /**
@@ -59,7 +58,12 @@ public class Pesquisas extends javax.swing.JInternalFrame {
         jLabel1 = new javax.swing.JLabel();
         cmb_Leilao = new javax.swing.JComboBox<>();
 
-        txt_local.setText("C:\\Users\\rafae\\Desktop\\interface\\END\\");
+        txt_local.setText("C:\\Users\\rafae\\Desktop\\interface\\END\\Nova pasta\\Nova pasta\\");
+            txt_local.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    txt_localActionPerformed(evt);
+                }
+            });
 
             btn_iniciar.setText("Iniciar");
             btn_iniciar.addActionListener(new java.awt.event.ActionListener() {
@@ -110,29 +114,33 @@ public class Pesquisas extends javax.swing.JInternalFrame {
         List<String> listaDeArquivos = listaDeArquivos(local);
 
         for (int i = 0; i < listaDeArquivos.size(); i++) {
-            VeiculoBeans veic;// = new VeiculoBeans();
+            VeiculoBeans veic = new VeiculoBeans();
             ProprietarioBeans proprietario;
             LoteBeans lote = new LoteBeans();
-            ArrayList<String> result = new ArrayList<>();
-            
+            ArrayList<String> result = new ArrayList<>();           
             String s;
             switch (tipoTxt.get(i)) {
                 case 1:
                     s = listaDeArquivos.get(i);                                         //Nome do arquivo
-                    lote.setNumeroLote(s.substring(0, s.indexOf("CAD.txt")));           //PEGA NUMERO DO LOTE            
-                    result = m.Leitura(local, s);                                       //CARREGAR NA LISTA, O CONTEUDO DA PESQUISA
-                    proprietario = cad.getProprietario(result);                         //PEGA O PROPRIETARIO DA LISTA
-                    proC.CorrigirProprietarioPesquisa(proprietario);                    //CORRIGE O PROPRIETARIO                    
-                   // veic = cad.getVeiculo(m.Leitura(local, listaDeArquivos.get(i)));  //Pega o veiculo da lista
-                   // veiC.CorrigirAutomovel(veic);                                     //Corrige o veiculo
+                    lote.setNumeroLote(s.substring(0, s.indexOf("CAD.txt")));           //PEGA NUMERO DO LOTE     
+                    JOptionPane.showMessageDialog(null, "CAD Lote: "+lote.getNumeroLote());
+                    
+                    result = manipulaTxt.Leitura(local, s);                                       //CARREGAR NA LISTA, O CONTEUDO DA PESQUISA
+                    proprietario = iCadastro.getProprietario(result);                              //PEGA O PROPRIETARIO DA LISTA
+                    conProprietario.CorrigirProprietarioPesquisaCadastro(proprietario);            //CORRIGE O PROPRIETARIO                    
+                    veic = iCadastro.getVeiculo(result);                                      //Pega o veiculo da lista
+                    conVeiculo.corrigirVeiculoPesquisaCadastro(veic);                         //Corrige o veiculo
                     break;
                 case 2:
                     s = listaDeArquivos.get(i);
                     lote.setNumeroLote(s.substring(0, s.indexOf("BIN.txt")));
-                    result = m.Leitura(local, s);
-                    proprietario = bin.getProprietario(result);
-                    proC.CorrigirProprietarioPesquisa(proprietario);
-                    
+                    JOptionPane.showMessageDialog(null, "BIN Lote: "+lote.getNumeroLote());
+                    result = manipulaTxt.Leitura(local, s);
+                    proprietario = iBaseNacional.getProprietario(result);
+                    proprietario.exibe();
+                    conProprietario.CorrigirProprietarioPesquisa(proprietario);
+                    veic = iBaseNacional.getVeiculo(result);
+                    conVeiculo.corrigirVeiculoPesquisa(veic);
                     break;
                     
                     
@@ -144,6 +152,10 @@ public class Pesquisas extends javax.swing.JInternalFrame {
 
 
     }//GEN-LAST:event_btn_iniciarActionPerformed
+
+    private void txt_localActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_localActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_localActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

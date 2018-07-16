@@ -51,5 +51,9 @@ public class EstadoBeans {
     public void setUf(String uf){
         this.uf = uf;
     }
+    
+    public void exibe (){
+        System.out.println("Estado: " + this.getId() +", "+this.getNome()+", "+this.getUf());
+    }
 
 }

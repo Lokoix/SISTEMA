@@ -7,26 +7,36 @@ package Controller;
 
 import Beans.CidadeBeans;
 import DAO.CidadeDAO;
+import javax.swing.JOptionPane;
 
 /**
  *
- * @author rafae
+ * @author rafael Piedade
  */
 public class CidadeController {
 
-    CidadeDAO cidD = new CidadeDAO();
+    CidadeDAO daoCidade = new CidadeDAO();
+    EstadoController conEstado = new EstadoController();
 
-    public CidadeBeans CorrigirCidade(CidadeBeans a) {
-        if (cidD.ExisteCidade(a)) {
-            return cidD.getCidadeId(a.getId());
-        } else {
-            //retorna qualquer municipio (impossiver de entrar no else!!quase)
-            //a.setId(munD.BuscarMunicipio(a));
-            return null;
+    public CidadeBeans CorrigirCidade(CidadeBeans cidade) {
+        cidade.setEstado(conEstado.corrigirEstado(cidade.getEstado()));
+        
+        if(daoCidade.existe(cidade)){
+            cidade = daoCidade.carregar(cidade);
+            return cidade;
+        }else if(cidade.getNome() == null){
+            JOptionPane.showMessageDialog(null, "Cidade sem nome para o cadastro!","Aviso", 1);
+            return new CidadeBeans();
+        }else if(cidade.getEstado().getUf() == null){
+             JOptionPane.showMessageDialog(null, "Cidade sem estado para o cadastro!","Aviso", 1);
+             return new CidadeBeans();
+        }else{
+            daoCidade.cadastrar(cidade);
+            return this.CorrigirCidade(cidade);
         }
-    }// fim do metodo
+    }
 
     public CidadeBeans CarregarCidade(int id) {
-        return cidD.getCidadeId(id);
+        return daoCidade.getCidadeId(id);
     }
 }
