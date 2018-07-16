@@ -21,6 +21,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.AbstractAction;
@@ -41,7 +42,7 @@ public class Leilao extends javax.swing.JInternalFrame {
     DefaultTableModel Modelo;
 
     JDesktopPane desk;
-    
+
     SimpleDateFormat spf;
 
     public Leilao(JDesktopPane desktop) {
@@ -1041,33 +1042,36 @@ public class Leilao extends javax.swing.JInternalFrame {
             txt_noDoc.setText(Double.toString(leilaoB.getDesvSemDoc()));
             txt_sucata.setText(Double.toString(leilaoB.getDesvSucata()));
             txt_notificacao.setText(leilaoB.getCartaDeNotificacao());
+
             for (int i = 0; i <= cbox_cidade.getItemCount(); i++) {
-                
                 CidadeBeans item = (CidadeBeans) cbox_cidade.getItemAt(i);
-                if (item.getId() == leilaoB.getCidade().getId()) {
+                if (Objects.equals(item.getId(), leilaoB.getCidade().getId())) {
                     cbox_cidade.setSelectedIndex(i);
-                    break;
-                }
-                
-                for (int j = 0; j <= cbox_patio.getItemCount(); j++) {
-                    PatioBeans item2 = (PatioBeans) cbox_patio.getItemAt(j);
-                    cbox_patio.setSelectedItem(j);
-                    break;
-                }
-                
-                for (int k = 0; k <= cbox_vistoria.getItemCount(); k++) {
-                    VistoriaBeans item3 = (VistoriaBeans) cbox_vistoria.getItemAt(k);
-                    cbox_vistoria.setSelectedItem(k);
-                    break;
-                }
-                
-                for (int l = 0; l <= cbox_leiloeiro.getItemCount(); l++) {
-                    LeiloeiroBeans item4 = (LeiloeiroBeans) cbox_leiloeiro.getItemAt(l);
-                    cbox_leiloeiro.setSelectedItem(l);
                     break;
                 }
             }
             
+            for (int j = 0; j <= cbox_patio.getItemCount(); j++) {
+                System.out.println("SOU BOSTA");
+                PatioBeans item2 = (PatioBeans) cbox_patio.getItemAt(j);
+                if (Objects.equals(item2.getId(), leilaoB.getPatio().getId())) {
+                cbox_patio.setSelectedItem(j);
+                break;
+                }
+            }
+
+            for (int k = 0; k <= cbox_vistoria.getItemCount(); k++) {
+                VistoriaBeans item3 = (VistoriaBeans) cbox_vistoria.getItemAt(k);
+                cbox_vistoria.setSelectedItem(k);
+                break;
+            }
+
+            for (int l = 0; l <= cbox_leiloeiro.getItemCount(); l++) {
+                LeiloeiroBeans item4 = (LeiloeiroBeans) cbox_leiloeiro.getItemAt(l);
+                cbox_leiloeiro.setSelectedItem(l);
+                break;
+            }
+
             habilitarCampos(false);
             btn_novo1.setEnabled(false);
             btn_salvar1.setEnabled(false);
