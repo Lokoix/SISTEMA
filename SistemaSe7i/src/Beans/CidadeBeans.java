@@ -48,7 +48,8 @@ public class CidadeBeans {
     }
 
     public void exibe() {
-        System.out.println(this.id + " - " + this.getNome() + " - " + this.estado.getId() + " - " + this.estado.getNome() + " - " + this.estado.getUf());
+        System.out.println("CIDADE: "+this.getId()+", "+this.getNome());
+        this.estado.exibe();
     }
 
     @Override

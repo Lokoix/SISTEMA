@@ -7,6 +7,7 @@ package Controller;
 
 import Beans.MarcaBeans;
 import DAO.MarcaDAO;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -14,11 +15,18 @@ import DAO.MarcaDAO;
  */
 public class MarcaController {
 
-    MarcaDAO marcaDAO = new MarcaDAO();
+    MarcaDAO daoMarca = new MarcaDAO();
     
-    public MarcaBeans CorrigirMarca(MarcaBeans x) {
-         
-        
-        
+    public MarcaBeans CorrigirMarca(MarcaBeans marca) {
+        if(daoMarca.existe(marca)){
+            marca = daoMarca.carregar(marca);
+            return marca;
+        }else if(marca.getNome() == null){
+            JOptionPane.showMessageDialog(null, "Marca sem nome para o cadastro!","Aviso", 1);
+            return new MarcaBeans();
+        }else{
+            daoMarca.cadastrar(marca);
+            return this.CorrigirMarca(marca);
+        }
     }
 }

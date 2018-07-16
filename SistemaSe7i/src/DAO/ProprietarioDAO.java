@@ -19,73 +19,69 @@ import javax.swing.JOptionPane;
  */
 public class ProprietarioDAO {
 
-    CidadeController munC;
-    CidadeDAO cidadeDAO = new CidadeDAO();
+    CidadeController conCidade = new CidadeController();
+    CidadeDAO daoCidade = new CidadeDAO();
 
-    public void CadastrarProprietario(ProprietarioBeans propB) {
+    public void cadastrar(ProprietarioBeans proprietario) {
         String sqlInsertion = "insert into proprietarios (nome, cpfCnpj, rg, complemento, endereco, endNumero, bairro, cep, idCidade, dataCad) values (?,?,?,?,?,?,?,?,?,?)";
+        proprietario.exibe();
         try {
             PreparedStatement st = Conexao.getConnection().prepareStatement(sqlInsertion);
 
-            st.setString(1, propB.getNome());
-            st.setString(2, propB.getCpfCpnpj());
-            st.setString(3, propB.getRg());
-            st.setString(4, propB.getComplemento());
+            st.setString(1, proprietario.getNome());
+            st.setString(2, proprietario.getCpfCpnpj());
+            st.setString(3, proprietario.getRg());
+            st.setString(4, proprietario.getComplemento());
 
-            st.setString(5, propB.getEndereco());
-            st.setString(6, propB.getEndNumero());
-            st.setString(7, propB.getBairro());
-            st.setString(8, propB.getCep());
-            System.out.println("aaaaaaa");
-            if (propB.getCidade().getNome() == null) {
-                st.setString(9, null);
-            } else {
-                st.setString(9, (cidadeDAO.carregarCidade(propB.getCidade())).getId().toString());
-            }
-            System.out.println("bbbbb");
+            st.setString(5, proprietario.getEndereco());
+            st.setString(6, proprietario.getEndNumero());
+            st.setString(7, proprietario.getBairro());
+            st.setString(8, proprietario.getCep());
+            System.out.println("qweasdqwe");
+            st.setString(9, proprietario.getCidade().getId().toString());
+            System.out.println("rtyfghrty");
             st.setString(10, Corretores.DataAtual());
             st.execute();
             Conexao.getConnection().commit();
             // JOptionPane.showMessageDialog(null, "Registro salvo ");
         } catch (Exception e) {
-
-            JOptionPane.showMessageDialog(null, "Erro ao cadastrar Proprietario no banco: " + e);
+            JOptionPane.showMessageDialog(null, "Erro ProprietarioDAO(cadastrar): " + e);
         }
     }
 
-    public boolean ExisteProprietario(ProprietarioBeans a) {
+    public boolean existe(ProprietarioBeans proprietario) {
         String sql = "select * from proprietarios where cpfCnpj like ?";
         try {
             PreparedStatement st = Conexao.getConnection().prepareStatement(sql);
-            st.setString(1, a.getCpfCpnpj());
+            st.setString(1, proprietario.getCpfCpnpj());
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
-                //JOptionPane.showMessageDialog(null, "Veiculo ja existe no sistema");
                 return true;
             } else {
                 sql = "select * from proprietarios where rg like ?";
                 try {
                     st = Conexao.getConnection().prepareStatement(sql);
-                    st.setString(1, a.getRg());
+                    st.setString(1, proprietario.getRg());
                     rs = st.executeQuery();
                     if (rs.next()) {
-                        // JOptionPane.showMessageDialog(null, "Veiculo ja existe no sistema");
                         return true;
                     }
                 } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, "Erro ProprietarioDAO(existe rg): " + e);
                 }
                 return false;
             }
         } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro ProprietarioDAO(existe cpf/cnpj): " + e);
         }
         return false;
     }
 
-    public ProprietarioBeans getProprietarioBeans(ProprietarioBeans x) {
+    public ProprietarioBeans carregar(ProprietarioBeans proprietario) {
         String sql = "select * from proprietarios where cpfCnpj like ?";
         try {
             PreparedStatement st = Conexao.getConnection().prepareStatement(sql);
-            st.setString(1, x.getCpfCpnpj());
+            st.setString(1, proprietario.getCpfCpnpj());
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
                 ProprietarioBeans proB = new ProprietarioBeans();
@@ -98,17 +94,14 @@ public class ProprietarioDAO {
                 proB.setComplemento(rs.getString("complemento"));
                 proB.setBairro(rs.getString("complemento"));
                 proB.setCep(rs.getString("cep"));
-
-                if (rs.getString("idCidade") != null) {
-                    proB.setCidade(cidadeDAO.getCidadeId(rs.getInt("idCidade")));
-                }
+                proB.setCidade(daoCidade.carregarPorId(rs.getString("idCidade")));
                 proB.setDataCad(Corretores.ConverterParaJava(rs.getString("dataCad")));
                 return proB;
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Erro ao getProprietario no banco: " + e);
+            JOptionPane.showMessageDialog(null, "Erro ProprietarioDAO(carregar): " + e);
         }
-        return null;
+        return proprietario;
     }
 
     public Integer BuscarProprietario(ProprietarioBeans propB) {
@@ -127,7 +120,7 @@ public class ProprietarioDAO {
         return null;
     }// retorna o cod
 
-    public void AlterarProprietario(ProprietarioBeans x) {
+    public void alterar(ProprietarioBeans proprietario) {
         String sqlUpdate = "update proprietarios set "
                 + "nome=?,"
                 + "cpfCnpj=?,"
@@ -141,22 +134,22 @@ public class ProprietarioDAO {
                 + "where id=?";
         try {
             PreparedStatement pst = Conexao.getConnection().prepareStatement(sqlUpdate);
-            pst.setString(1, x.getNome());
-            pst.setString(2, x.getCpfCpnpj());
-            pst.setString(3, x.getRg());
-            pst.setString(4, x.getEndereco());
-            pst.setString(5, x.getEndNumero());
-            pst.setString(6, x.getComplemento());
-            pst.setString(7, x.getBairro());
-            pst.setString(8, x.getCep());
-            pst.setString(9, x.getCidade().getId().toString());
-            pst.setInt(10, x.getId());
-            x.exibe();
+            pst.setString(1, proprietario.getNome());
+            pst.setString(2, proprietario.getCpfCpnpj());
+            pst.setString(3, proprietario.getRg());
+            pst.setString(4, proprietario.getEndereco());
+            pst.setString(5, proprietario.getEndNumero());
+            pst.setString(6, proprietario.getComplemento());
+            pst.setString(7, proprietario.getBairro());
+            pst.setString(8, proprietario.getCep());
+            pst.setString(9, proprietario.getCidade().getId().toString());
 
+            pst.setInt(10, proprietario.getId());
             pst.executeUpdate();
+            Conexao.getConnection().commit();
             //JOptionPane.showMessageDialog(null, "Alterado Com OK");
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Erro ao Editar Automovel no banco: " + e);
+            JOptionPane.showMessageDialog(null, "Erro ProprietarioDAo(alterar): " + e);
         }
     }
 }

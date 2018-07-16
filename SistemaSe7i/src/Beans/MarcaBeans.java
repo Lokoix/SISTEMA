@@ -38,5 +38,9 @@ public class MarcaBeans {
     public void setNome(String nome) {
         this.nome = nome;
     }
+    
+    public void exibe(){
+        System.out.println("Marca: "+this.getId()+", "+this.getNome());
+    }
 
 }
