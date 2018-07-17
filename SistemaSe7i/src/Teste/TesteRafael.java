@@ -18,12 +18,8 @@ public class TesteRafael {
 
     public static void main(String[] args) {
 
-        CidadeBeans cidade = new CidadeBeans();
+        String s = "17298092000130";
         
-        cidade.exibe();
-        
-        if(cidade.getNome() == null){
-            System.out.println("é nulo");
-        }
+        System.out.println(s.length());
     }
 }

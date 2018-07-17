@@ -58,7 +58,7 @@ public class Pesquisas extends javax.swing.JInternalFrame {
         jLabel1 = new javax.swing.JLabel();
         cmb_Leilao = new javax.swing.JComboBox<>();
 
-        txt_local.setText("C:\\Users\\rafae\\Desktop\\interface\\END\\Nova pasta\\Nova pasta\\");
+        txt_local.setText("C:\\Users\\rafae\\Desktop\\interface\\END\\Nova pasta\\Nova pasta\\Nova pasta\\Nova pasta\\");
             txt_local.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
                     txt_localActionPerformed(evt);
@@ -121,15 +121,15 @@ public class Pesquisas extends javax.swing.JInternalFrame {
             String s;
             switch (tipoTxt.get(i)) {
                 case 1:
-                    s = listaDeArquivos.get(i);                                         //Nome do arquivo
-                    lote.setNumeroLote(s.substring(0, s.indexOf("CAD.txt")));           //PEGA NUMERO DO LOTE     
+                    s = listaDeArquivos.get(i);                                                  //Nome do arquivo
+                    lote.setNumeroLote(s.substring(0, s.indexOf("CAD.txt")));                    //PEGA NUMERO DO LOTE     
                     JOptionPane.showMessageDialog(null, "CAD Lote: "+lote.getNumeroLote());
                     
                     result = manipulaTxt.Leitura(local, s);                                       //CARREGAR NA LISTA, O CONTEUDO DA PESQUISA
-                    proprietario = iCadastro.getProprietario(result);                              //PEGA O PROPRIETARIO DA LISTA
-                    conProprietario.CorrigirProprietarioPesquisaCadastro(proprietario);            //CORRIGE O PROPRIETARIO                    
-                    veic = iCadastro.getVeiculo(result);                                      //Pega o veiculo da lista
-                    conVeiculo.corrigirVeiculoPesquisaCadastro(veic);                         //Corrige o veiculo
+                    proprietario = iCadastro.getProprietario(result);                             //PEGA O PROPRIETARIO DA LISTA
+                    conProprietario.CorrigirProprietarioPesquisaCadastro(proprietario);           //CORRIGE O PROPRIETARIO                    
+                    veic = iCadastro.getVeiculo(result);                                          //Pega o veiculo da lista
+                    conVeiculo.corrigirVeiculoPesquisaCadastro(veic);                               //Corrige o veiculo
                     break;
                 case 2:
                     s = listaDeArquivos.get(i);
@@ -142,9 +142,7 @@ public class Pesquisas extends javax.swing.JInternalFrame {
                    // conProprietario.CorrigirProprietarioPesquisa(proprietario);
                     veic = iBaseNacional.getVeiculo(result);
                     conVeiculo.corrigirVeiculoPesquisa(veic);
-                    break;
-                    
-                    
+                    break;  
                 default:
                     JOptionPane.showMessageDialog(null, "Opção inválida");
                     break;
@@ -178,7 +176,6 @@ public class Pesquisas extends javax.swing.JInternalFrame {
                     tipoTxt.add(1);
                 } else if (f.getName().contains("BIN")) {
                     tipoTxt.add(2);
-                    
                 } else if (f.getName().contains("BLO")) {
                     tipoTxt.add(3);
                 }

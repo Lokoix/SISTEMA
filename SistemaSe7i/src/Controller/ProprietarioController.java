@@ -38,7 +38,13 @@ public class ProprietarioController {
             proprietario.setCidade(conCidade.CorrigirCidade(proprietario.getCidade()));
 
             ProprietarioBeans base = daoProprietario.carregar(proprietario); //CARREGA PROBRIETARIO BANCO
-            base = compararProprietarios(base, proprietario);//COMPARA OS PROPRIETARIOS
+            
+            if (proprietario.getCpfCpnpj().length() == 14) {
+                base = compararProprietarios(proprietario, base);//COMPARA OS PROPRIETARIOS
+            }else{
+                base = compararProprietarios(base, proprietario);//COMPARA OS PROPRIETARIOS
+            }
+     
             daoProprietario.alterar(base);//ALTERA O PROPRIETARIO
             return base;
         } else { //SE NÃO
