@@ -136,11 +136,11 @@ public class LeilaoDAO {
 
     public void buscarLeilao(String Pesquisa, DefaultTableModel Modelo) {
         try {
-            String sql = "select * from leiloes where descricao like '%" + Pesquisa + "%' ";
+            String sql = "SELECT leiloes.* , leiloeiros.*, patios.*, cidades.* from leiloes INNER JOIN leiloeiros ON leiloes.idLeiloeiro = leiloeiros.id INNER JOIN patios ON leiloes.idPatio = patios.id INNER JOIN cidades ON leiloes.idCidade = cidades.id where leiloes.descricao like '%"+ Pesquisa +"%'";
             PreparedStatement st = Conexao.getConnection().prepareStatement(sql);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
-                Modelo.addRow(new Object[]{rs.getString("id"), rs.getString("descricao"), rs.getString("idLeiloeiro"), rs.getString("idPatio"), rs.getString("idCidade"), rs.getString("edital")});
+                Modelo.addRow(new Object[]{rs.getString("id"), rs.getString("leiloes.descricao"), rs.getString("leiloeiros.nome"), rs.getString("patios.nome"), rs.getString("cidades.nome"), rs.getString("edital")});
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro ao Buscar LeilaoDAO" + e);
@@ -193,7 +193,7 @@ public class LeilaoDAO {
                 leilao.setCidade(cidade);
                 leiloeiro.setId(rs.getInt("idLeiloeiro"));
                 leilao.setLeiloeiro(leiloeiro);
-                
+
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro ao preencher camposDAO" + e);

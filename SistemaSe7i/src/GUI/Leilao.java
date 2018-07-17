@@ -327,7 +327,15 @@ public class Leilao extends javax.swing.JInternalFrame {
 
         jLabel15.setText("Buscar");
 
+        txt_buscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_buscarActionPerformed(evt);
+            }
+        });
         txt_buscar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txt_buscarKeyPressed(evt);
+            }
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txt_buscarKeyReleased(evt);
             }
@@ -1086,9 +1094,17 @@ public class Leilao extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_tb_leilaoMouseClicked
 
     private void txt_buscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_buscarKeyReleased
+       
+    }//GEN-LAST:event_txt_buscarKeyReleased
+
+    private void txt_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_buscarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_buscarActionPerformed
+
+    private void txt_buscarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_buscarKeyPressed
         Modelo.setNumRows(0);
         leilaoC.controlePesquisa(txt_buscar1.getText(), Modelo);
-    }//GEN-LAST:event_txt_buscarKeyReleased
+    }//GEN-LAST:event_txt_buscarKeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

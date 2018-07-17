@@ -78,7 +78,7 @@ public class ConsultaLaudo extends javax.swing.JFrame {
                         .addComponent(txt_interlavo, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btn_intervalo, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(692, Short.MAX_VALUE))
+                .addContainerGap(687, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -97,15 +97,15 @@ public class ConsultaLaudo extends javax.swing.JFrame {
                         .addComponent(txt_loteInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(txt_interlavo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(715, Short.MAX_VALUE))
+                .addContainerGap(697, Short.MAX_VALUE))
         );
 
         setBounds(0, 0, 1301, 802);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_intervaloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_intervaloActionPerformed
-        JOptionPane.showMessageDialog(null, "Selecione um intervalo de lotes separando-os com ; \n"
-                + "            Por exemplo: 10; 13; 16; 20");
+        JOptionPane.showMessageDialog(null, "    Selecione um intervalo de lotes separando-os com ponto e vírgula. \n"
+                + "Por exemplo: 10; 13; 16; 20 somente os lotes digitados serão mostrados");
     }//GEN-LAST:event_btn_intervaloActionPerformed
 
 
