@@ -144,5 +144,12 @@ public class LeilaoBeans {
     public void setCartaDeNotificacao(String cartaDeNotificacao) {
         this.cartaDeNotificacao = cartaDeNotificacao;
     }
+
+    @Override
+    public String toString() {
+        return getDescricao(); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    
     
 }
