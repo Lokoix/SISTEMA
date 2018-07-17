@@ -60,7 +60,6 @@ public class Leilao extends javax.swing.JInternalFrame {
         txt_id.setVisible(false);
         habilitarCampos(false);
         btn_novo1.setEnabled(true);
-
         Modelo = (DefaultTableModel) tb_leilao.getModel();
         leilaoD.buscarTodosLeiloes(Modelo);
         controlaEsc();
@@ -151,7 +150,7 @@ public class Leilao extends javax.swing.JInternalFrame {
         txt_doc.setEnabled(valor);
         txt_noDoc.setEnabled(valor);
         txt_sucata.setEnabled(valor);
-        txt_notificacao.setEnabled(valor);
+        txt_notificacao.setEnabled(valor);        
         cbox_leiloeiro.setEnabled(valor);
         cbox_vistoria.setEnabled(valor);
         cbox_cidade.setEnabled(valor);
