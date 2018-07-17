@@ -11,7 +11,7 @@ import javax.swing.JOptionPane;
  *
  * @author User
  */
-public class ConsultaLaudo extends javax.swing.JInternalFrame {
+public class ConsultaLaudo extends javax.swing.JFrame {
 
     /**
      * Creates new form ConsultaLaudo
