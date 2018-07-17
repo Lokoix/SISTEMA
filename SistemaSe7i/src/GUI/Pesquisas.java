@@ -5,11 +5,13 @@
  */
 package GUI;
 
+import Beans.LeilaoBeans;
 import Beans.LoteBeans;
 import Beans.ProprietarioBeans;
 import Beans.VeiculoBeans;
 import Controller.ProprietarioController;
 import Controller.VeiculoController;
+import DAO.LeilaoDAO;
 import Interface.BaseNacional;
 import Interface.Cadastro;
 import importacao.arqtxt.Beans.ManipulaTxt;
@@ -33,15 +35,20 @@ public class Pesquisas extends javax.swing.JInternalFrame {
     VeiculoController conVeiculo;
     ProprietarioController conProprietario;
     ArrayList<Integer> tipoTxt;
+    LeilaoDAO leilaoD;
 
     public Pesquisas() {
         initComponents();
+        leilaoD = new LeilaoDAO();
         tipoTxt = new ArrayList();
         manipulaTxt = new ManipulaTxt();
         iCadastro = new Cadastro();
         iBaseNacional = new BaseNacional();
         conVeiculo = new VeiculoController();
         conProprietario = new ProprietarioController(); 
+        for (LeilaoBeans leilao : leilaoD.buscarTodosLeiloes()) {
+            cmb_Leilao.addItem(leilao);
+        }
     }
 
     /**
@@ -74,6 +81,12 @@ public class Pesquisas extends javax.swing.JInternalFrame {
 
             jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
             jLabel1.setText("Leilão:");
+
+            cmb_Leilao.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    cmb_LeilaoActionPerformed(evt);
+                }
+            });
 
             javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
             getContentPane().setLayout(layout);
@@ -155,6 +168,10 @@ public class Pesquisas extends javax.swing.JInternalFrame {
     private void txt_localActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_localActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_localActionPerformed
+
+    private void cmb_LeilaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmb_LeilaoActionPerformed
+        
+    }//GEN-LAST:event_cmb_LeilaoActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
