@@ -115,7 +115,7 @@ public class Pesquisas extends javax.swing.JInternalFrame {
 
         for (int i = 0; i < listaDeArquivos.size(); i++) {
             VeiculoBeans veic = new VeiculoBeans();
-            ProprietarioBeans proprietario;
+            ProprietarioBeans proprietario = new ProprietarioBeans();
             LoteBeans lote = new LoteBeans();
             ArrayList<String> result = new ArrayList<>();           
             String s;
@@ -135,10 +135,11 @@ public class Pesquisas extends javax.swing.JInternalFrame {
                     s = listaDeArquivos.get(i);
                     lote.setNumeroLote(s.substring(0, s.indexOf("BIN.txt")));
                     JOptionPane.showMessageDialog(null, "BIN Lote: "+lote.getNumeroLote());
+                    System.out.println(lote.getNumeroLote());
                     result = manipulaTxt.Leitura(local, s);
-                    proprietario = iBaseNacional.getProprietario(result);
-                    proprietario.exibe();
-                    conProprietario.CorrigirProprietarioPesquisa(proprietario);
+                   // proprietario = iBaseNacional.getProprietario(result);
+                   // proprietario.exibe();
+                   // conProprietario.CorrigirProprietarioPesquisa(proprietario);
                     veic = iBaseNacional.getVeiculo(result);
                     conVeiculo.corrigirVeiculoPesquisa(veic);
                     break;
@@ -177,7 +178,7 @@ public class Pesquisas extends javax.swing.JInternalFrame {
                     tipoTxt.add(1);
                 } else if (f.getName().contains("BIN")) {
                     tipoTxt.add(2);
-                    System.out.println("TIPO 22222222222222222222222222");
+                    
                 } else if (f.getName().contains("BLO")) {
                     tipoTxt.add(3);
                 }

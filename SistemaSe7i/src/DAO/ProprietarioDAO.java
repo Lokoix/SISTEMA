@@ -37,9 +37,15 @@ public class ProprietarioDAO {
             st.setString(6, proprietario.getEndNumero());
             st.setString(7, proprietario.getBairro());
             st.setString(8, proprietario.getCep());
-            System.out.println("qweasdqwe");
-            st.setString(9, proprietario.getCidade().getId().toString());
+            
+            if (proprietario.getCidade().getId() == null) {
+                st.setString(9, null);
+                JOptionPane.showMessageDialog(null, "é nulo yeah");
+            }else{
+                st.setInt(9, proprietario.getCidade().getId());
+            }
             System.out.println("rtyfghrty");
+            
             st.setString(10, Corretores.DataAtual());
             st.execute();
             Conexao.getConnection().commit();
