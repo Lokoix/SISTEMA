@@ -15,6 +15,7 @@ import Utilitarios.Corretores;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -199,5 +200,26 @@ public class LeilaoDAO {
             JOptionPane.showMessageDialog(null, "Erro ao preencher camposDAO" + e);
         }
         return leilao;
+    }
+
+    public ArrayList<LeilaoBeans> buscarTodosLeiloes() {
+        ArrayList<LeilaoBeans> leiloes = new ArrayList<>();
+        LeilaoBeans leilao;
+        try {
+            String sql = "select * from leiloes";
+            PreparedStatement pst = Conexao.getConnection().prepareStatement(sql);
+            ResultSet rs = pst.executeQuery();
+            
+            while (rs.next()) {
+                leilao = new LeilaoBeans();
+                leilao.setId(rs.getInt("id"));
+                leilao.setDescricao(rs.getString("descricao"));
+                leiloes.add(leilao);
+            }
+        } catch (Exception e) {
+        }
+
+        return leiloes;
+
     }
 }

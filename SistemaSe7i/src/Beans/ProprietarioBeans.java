@@ -105,7 +105,7 @@ public class ProprietarioBeans {
                 + "\nComplemento: " + this.complemento
                 + "\nCep: " + this.cep
                 + "\nCidade: " + this.cidade.getId() + "-" + this.getCidade().getNome()
-                + "\nEstado: " + this.getCidade().getEstado().getId() + "-" + this.getCidade().getEstado().getNome()
+                + "\nEstado: " + this.getCidade().getEstado().getId() + ", " + this.getCidade().getEstado().getNome()
                 + "-" + this.getCidade().getEstado().getUf()
                 + "-----------------");
     }

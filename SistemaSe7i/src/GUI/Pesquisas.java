@@ -5,11 +5,13 @@
  */
 package GUI;
 
+import Beans.LeilaoBeans;
 import Beans.LoteBeans;
 import Beans.ProprietarioBeans;
 import Beans.VeiculoBeans;
 import Controller.ProprietarioController;
 import Controller.VeiculoController;
+import DAO.LeilaoDAO;
 import Interface.BaseNacional;
 import Interface.Cadastro;
 import importacao.arqtxt.Beans.ManipulaTxt;
@@ -33,15 +35,20 @@ public class Pesquisas extends javax.swing.JInternalFrame {
     VeiculoController conVeiculo;
     ProprietarioController conProprietario;
     ArrayList<Integer> tipoTxt;
+    LeilaoDAO leilaoD;
 
     public Pesquisas() {
         initComponents();
+        leilaoD = new LeilaoDAO();
         tipoTxt = new ArrayList();
         manipulaTxt = new ManipulaTxt();
         iCadastro = new Cadastro();
         iBaseNacional = new BaseNacional();
         conVeiculo = new VeiculoController();
         conProprietario = new ProprietarioController(); 
+        for (LeilaoBeans leilao : leilaoD.buscarTodosLeiloes()) {
+            cmb_Leilao.addItem(leilao);
+        }
     }
 
     /**
@@ -58,7 +65,7 @@ public class Pesquisas extends javax.swing.JInternalFrame {
         jLabel1 = new javax.swing.JLabel();
         cmb_Leilao = new javax.swing.JComboBox<>();
 
-        txt_local.setText("C:\\Users\\rafae\\Desktop\\interface\\END\\Nova pasta\\Nova pasta\\");
+        txt_local.setText("C:\\Users\\rafae\\Desktop\\interface\\END\\Nova pasta\\Nova pasta\\Nova pasta\\Nova pasta\\");
             txt_local.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
                     txt_localActionPerformed(evt);
@@ -74,6 +81,12 @@ public class Pesquisas extends javax.swing.JInternalFrame {
 
             jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
             jLabel1.setText("Leilão:");
+
+            cmb_Leilao.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    cmb_LeilaoActionPerformed(evt);
+                }
+            });
 
             javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
             getContentPane().setLayout(layout);
@@ -115,35 +128,34 @@ public class Pesquisas extends javax.swing.JInternalFrame {
 
         for (int i = 0; i < listaDeArquivos.size(); i++) {
             VeiculoBeans veic = new VeiculoBeans();
-            ProprietarioBeans proprietario;
+            ProprietarioBeans proprietario = new ProprietarioBeans();
             LoteBeans lote = new LoteBeans();
             ArrayList<String> result = new ArrayList<>();           
             String s;
             switch (tipoTxt.get(i)) {
                 case 1:
-                    s = listaDeArquivos.get(i);                                         //Nome do arquivo
-                    lote.setNumeroLote(s.substring(0, s.indexOf("CAD.txt")));           //PEGA NUMERO DO LOTE     
+                    s = listaDeArquivos.get(i);                                                  //Nome do arquivo
+                    lote.setNumeroLote(s.substring(0, s.indexOf("CAD.txt")));                    //PEGA NUMERO DO LOTE     
                     JOptionPane.showMessageDialog(null, "CAD Lote: "+lote.getNumeroLote());
                     
                     result = manipulaTxt.Leitura(local, s);                                       //CARREGAR NA LISTA, O CONTEUDO DA PESQUISA
-                    proprietario = iCadastro.getProprietario(result);                              //PEGA O PROPRIETARIO DA LISTA
-                    conProprietario.CorrigirProprietarioPesquisaCadastro(proprietario);            //CORRIGE O PROPRIETARIO                    
-                    veic = iCadastro.getVeiculo(result);                                      //Pega o veiculo da lista
-                    conVeiculo.corrigirVeiculoPesquisaCadastro(veic);                         //Corrige o veiculo
+                    proprietario = iCadastro.getProprietario(result);                             //PEGA O PROPRIETARIO DA LISTA
+                    conProprietario.CorrigirProprietarioPesquisaCadastro(proprietario);           //CORRIGE O PROPRIETARIO                    
+                    veic = iCadastro.getVeiculo(result);                                          //Pega o veiculo da lista
+                    conVeiculo.corrigirVeiculoPesquisaCadastro(veic);                               //Corrige o veiculo
                     break;
                 case 2:
                     s = listaDeArquivos.get(i);
                     lote.setNumeroLote(s.substring(0, s.indexOf("BIN.txt")));
                     JOptionPane.showMessageDialog(null, "BIN Lote: "+lote.getNumeroLote());
+                    System.out.println(lote.getNumeroLote());
                     result = manipulaTxt.Leitura(local, s);
-                    proprietario = iBaseNacional.getProprietario(result);
-                    proprietario.exibe();
-                    conProprietario.CorrigirProprietarioPesquisa(proprietario);
+                   // proprietario = iBaseNacional.getProprietario(result);
+                   // proprietario.exibe();
+                   // conProprietario.CorrigirProprietarioPesquisa(proprietario);
                     veic = iBaseNacional.getVeiculo(result);
                     conVeiculo.corrigirVeiculoPesquisa(veic);
-                    break;
-                    
-                    
+                    break;  
                 default:
                     JOptionPane.showMessageDialog(null, "Opção inválida");
                     break;
@@ -156,6 +168,10 @@ public class Pesquisas extends javax.swing.JInternalFrame {
     private void txt_localActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_localActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_localActionPerformed
+
+    private void cmb_LeilaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmb_LeilaoActionPerformed
+        
+    }//GEN-LAST:event_cmb_LeilaoActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -177,7 +193,6 @@ public class Pesquisas extends javax.swing.JInternalFrame {
                     tipoTxt.add(1);
                 } else if (f.getName().contains("BIN")) {
                     tipoTxt.add(2);
-                    System.out.println("TIPO 22222222222222222222222222");
                 } else if (f.getName().contains("BLO")) {
                     tipoTxt.add(3);
                 }

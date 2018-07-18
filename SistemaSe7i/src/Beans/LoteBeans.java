@@ -13,56 +13,26 @@ import java.util.Date;
  */
 public class LoteBeans {
 
-    private int id;
-    private ProprietarioBeans proprietario;
-    private ComunicacaoBeans comunicacao;
-    private ProprietarioBeans alienacao;
-    private VeiculoBeans veiculo;
+    private Integer id;
     private LeilaoBeans leilao;
-    private Date dataDeCadastro;
+    private ProprietarioBeans proprietario = new ProprietarioBeans();
+    private VeiculoBeans veiculo = new VeiculoBeans();
     private String numeroLote;
     private String observacao;
     private String motorBase;
     private String chassiBase;
+    private String dataCad;
 
-    public int getId() {
+    public LoteBeans() {
+
+    }
+
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
-    }
-
-    public ProprietarioBeans getProprietario() {
-        return proprietario;
-    }
-
-    public void setProprietario(ProprietarioBeans proprietario) {
-        this.proprietario = proprietario;
-    }
-
-    public ComunicacaoBeans getComunicacao() {
-        return comunicacao;
-    }
-
-    public void setComunicacao(ComunicacaoBeans comunicacao) {
-        this.comunicacao = comunicacao;
-    }
-
-    public ProprietarioBeans getAlienacao() {
-        return alienacao;
-    }
-
-    public void setAlienacao(ProprietarioBeans alienacao) {
-        this.alienacao = alienacao;
-    }
-
-    public VeiculoBeans getVeiculo() {
-        return veiculo;
-    }
-
-    public void setVeiculo(VeiculoBeans veiculo) {
-        this.veiculo = veiculo;
     }
 
     public LeilaoBeans getLeilao() {
@@ -73,12 +43,20 @@ public class LoteBeans {
         this.leilao = leilao;
     }
 
-    public Date getDataDeCadastro() {
-        return dataDeCadastro;
+    public ProprietarioBeans getProprietario() {
+        return proprietario;
     }
 
-    public void setDataDeCadastro(Date dataDeCadastro) {
-        this.dataDeCadastro = dataDeCadastro;
+    public void setProprietario(ProprietarioBeans proprietario) {
+        this.proprietario = proprietario;
+    }
+
+    public VeiculoBeans getVeiculo() {
+        return veiculo;
+    }
+
+    public void setVeiculo(VeiculoBeans veiculo) {
+        this.veiculo = veiculo;
     }
 
     public String getNumeroLote() {
@@ -111,6 +89,28 @@ public class LoteBeans {
 
     public void setChassiBase(String chassiBase) {
         this.chassiBase = chassiBase;
+    }
+
+    public String getDataCad() {
+        return dataCad;
+    }
+
+    public void setDataCad(String dataCad) {
+        this.dataCad = dataCad;
+    }
+
+    public void exibe() {
+        System.out.println("-----LOTE------");
+        System.out.println("ID: " + this.getId()
+                +"\nLeilão: "+ this.getLeilao().getId()+", "+this.getLeilao().getDescricao()
+                + "\nNumero: " + this.getNumeroLote()
+                + "\nChassi Base: " + this.getChassiBase()
+                + "\nMotor Base: " + this.getMotorBase()
+                + "\nObservação: " + this.getObservacao()
+                + "\nData Cadastro: " + this.getDataCad());
+        this.getVeiculo().exibe();
+        this.getProprietario().exibe();
+        System.out.println("-----LOTE FIM------");
     }
 
 }

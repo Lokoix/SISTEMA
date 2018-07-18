@@ -117,7 +117,7 @@ public class VeiculoController {
             veiculo.setLicenciamento(base.getLicenciamento());
         }
 
-        if (veiculo.getCidade() == null){
+        if (veiculo.getCidade().getId() == null){
             veiculo.setCidade(base.getCidade());
         }
         

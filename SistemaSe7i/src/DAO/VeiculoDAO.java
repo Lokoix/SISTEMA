@@ -45,7 +45,14 @@ public class VeiculoDAO {
             st.setString(11, veiculo.getPotencia());
             st.setString(12, veiculo.getCilidrada());
             st.setString(13, Corretores.ConverterParaSQL(veiculo.getLicenciamento()));
-            st.setString(14, veiculo.getCidade().getId().toString());
+
+            if (veiculo.getCidade().getId() == null) {
+                st.setString(14, null);
+                //JOptionPane.showMessageDialog(null, "é nulo yeah");
+            } else {
+                st.setInt(14, veiculo.getCidade().getId());
+            }
+
             st.setString(15, Corretores.DataAtual());
             st.execute();
             Conexao.getConnection().commit();
@@ -195,11 +202,17 @@ public class VeiculoDAO {
             pst.setString(11, automovel.getPotencia());
             pst.setString(12, automovel.getCilidrada());
             pst.setString(13, Corretores.ConverterParaSQL(automovel.getLicenciamento()));
-            pst.setString(14, automovel.getCidade().getId().toString());         
+            if (automovel.getCidade().getId() == null) {
+                pst.setString(14, null);
+                JOptionPane.showMessageDialog(null, "é nulo yeah");
+            } else {
+                pst.setInt(14, automovel.getCidade().getId());
+            }
+
             pst.setInt(15, automovel.getId());
             pst.executeUpdate();
             Conexao.getConnection().commit();
-            JOptionPane.showMessageDialog(null, "Alterado Com OK");
+            //JOptionPane.showMessageDialog(null, "Alterado Com OK");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro ao Editar Automovel no banco: " + e);
         }
