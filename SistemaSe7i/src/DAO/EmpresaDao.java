@@ -5,11 +5,12 @@
  */
 package DAO;
 
+import Beans.CidadeBeans;
 import Beans.EmpresaBeans;
-import Beans.UsuarioBeans;
 import Utilitarios.Conexao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -19,6 +20,7 @@ import javax.swing.table.DefaultTableModel;
  * @author Guilhermengenharia
  */
 public class EmpresaDao {
+    private EmpresaBeans empresa;
 
     public void cadastrar(EmpresaBeans empresa) {
         String sql = "insert into empresas(razaoSocial, nomeFantasia, endereco, numero, bairro, cidade, cep, "
@@ -30,7 +32,12 @@ public class EmpresaDao {
             st.setString(3, empresa.getEndereco());
             st.setString(4, empresa.getNumero());
             st.setString(5, empresa.getBairro());
-            st.setInt(6, empresa.getCidade().getEstado().getId());//Cidade é objeto e quero só id desse objeto
+            if (empresa.getCidade() == null) {
+                st.setInt(6, 0);
+            } else {
+                st.setInt(6, empresa.getCidade().getId());//Cidade é objeto e quero só id desse objeto
+            }
+            
             st.setString(7, empresa.getCep());
             st.setString(8, empresa.getTelefone());
             st.setString(9, empresa.getCnpj());
@@ -39,7 +46,7 @@ public class EmpresaDao {
 
             st.execute();
             Conexao.getConnection().commit();
-            JOptionPane.showMessageDialog(null, "Registro Salvo com Sucesso", "Salvo", 1, new ImageIcon("Imagens/ok.png"));
+            JOptionPane.showMessageDialog(null, "Registro Salvo com Sucesso");
 
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex);
@@ -49,7 +56,7 @@ public class EmpresaDao {
 
     public void buscarEmpresa(String Pesquisa, DefaultTableModel Modelo) {
         try {
-            String sql = "select * from empresas where nome like '%" + Pesquisa + "%' ";
+            String sql = "select * from empresas where razaoSocial like '%" + Pesquisa + "%' ";
             PreparedStatement st = Conexao.getConnection().prepareStatement(sql);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
@@ -64,6 +71,7 @@ public class EmpresaDao {
 
     public EmpresaBeans preencherCampos(int id) {
         EmpresaBeans empresa = new EmpresaBeans();
+        CidadeBeans cidade = new CidadeBeans();
         try {
             String sql = "select * from empresas where id = ?";
             PreparedStatement st = Conexao.getConnection().prepareStatement(sql);
@@ -73,6 +81,12 @@ public class EmpresaDao {
                 empresa.setId(rs.getInt("id"));
                 empresa.setRazaoSocial(rs.getString("razaoSocial"));
                 empresa.setNomeFantasia(rs.getString("nomeFantasia"));
+                empresa.setEndereco(rs.getString("endereco"));
+                empresa.setNumero(rs.getString("numero"));
+                empresa.setBairro(rs.getString("bairro"));
+                empresa.setCep(rs.getString("cep"));
+                cidade.setId(rs.getInt("cidade"));
+                empresa.setCidade(cidade);
                 empresa.setCnpj(rs.getString("cnpj"));
                 empresa.setLogin(rs.getString("login"));
                 empresa.setSenha(rs.getString("senha"));
@@ -94,7 +108,11 @@ public class EmpresaDao {
             st.setString(3, empresa.getEndereco());
             st.setString(4, empresa.getNumero());
             st.setString(5, empresa.getBairro());
-            st.setInt(6, empresa.getCidade().getEstado().getId());//Cidade é objeto e quero só id desse objeto
+            if (empresa.getCidade() == null) {
+                st.setInt(6, 0);
+            } else {
+                st.setInt(6, empresa.getCidade().getId());//Cidade é objeto e quero só id desse objeto
+            }
             st.setString(7, empresa.getCep());
             st.setString(8, empresa.getTelefone());
             st.setString(9, empresa.getCnpj());
@@ -104,7 +122,7 @@ public class EmpresaDao {
 
             st.execute();
             Conexao.getConnection().commit();
-            JOptionPane.showMessageDialog(null, "Registro Salvo com Sucesso", "Salvo", 1, new ImageIcon("Imagens/ok.png"));
+            JOptionPane.showMessageDialog(null, "Registro Editado com Sucesso", "Salvo", 1, new ImageIcon("Imagens/ok.png"));
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex);
         }
@@ -112,7 +130,7 @@ public class EmpresaDao {
 
     public void buscarTodasEmpresas(DefaultTableModel Modelo) {
         try {
-            String sql = "select * from empresas";
+            String sql = "SELECT empresas.* , cidades.nome from empresas INNER JOIN cidades ON empresas.cidade = cidades.id";
             PreparedStatement st = Conexao.getConnection().prepareStatement(sql);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
@@ -138,5 +156,25 @@ public class EmpresaDao {
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex);
         }
+    }
+    
+        public ArrayList<EmpresaBeans> carregarEmpresas() {// retorna uma lista das cidades que inicial com a string
+        ArrayList<EmpresaBeans> lista = new ArrayList<>();
+        try {
+            String sql = "select * from empresas order by empresas.razaoSocial ASC";
+            PreparedStatement pst = Conexao.getConnection().prepareStatement(sql);
+
+            ResultSet rs = pst.executeQuery();
+            while (rs.next()) {
+                empresa = new EmpresaBeans();
+                empresa.setId(rs.getInt("id"));
+                empresa.setRazaoSocial(rs.getString("razaoSocial"));
+                lista.add(empresa);
+                empresa.exibe();
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro método dao carregarEmpresa: " + e);
+        }
+        return lista;
     }
 }

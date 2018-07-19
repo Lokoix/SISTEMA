@@ -34,11 +34,14 @@ public class CidadeDAO {
                 cidade.setId(rs.getInt("idCidade"));
                 cidade.setNome(rs.getString("nomeCidade"));
                 cidade.setEstado(new EstadoBeans(rs.getInt("idEstado"), rs.getString("nomeEstado")));
+                return cidade;
+            } else {
+
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro metodo dao getCidadeId: " + e);
         }
-        return cidade;
+        return null;
     }
 
     public ArrayList<CidadeBeans> carregarCidades(String a) {// retorna uma lista das cidades que inicial com a string
@@ -84,6 +87,22 @@ public class CidadeDAO {
             JOptionPane.showMessageDialog(null, "Erro metodo dao carregarCidade: " + e);
         }
         return lista;
+    }
+
+    public boolean ExisteCidade(CidadeBeans a) {
+        String sql = "select * from cidades where id = ?";
+        try {
+            PreparedStatement st = Conexao.getConnection().prepareStatement(sql);
+            st.setInt(1, a.getId());
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                //JOptionPane.showMessageDialog(null, "boolean-municipio ja existe no sistema");
+                return true;
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro o verificar se cidade existe no BD: " + e);
+        }
+        return false;
     }
 
 }

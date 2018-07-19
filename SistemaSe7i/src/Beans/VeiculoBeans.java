@@ -11,12 +11,12 @@ package Beans;
  */
 public class VeiculoBeans {
 
-    private int id;
+    private Integer id;
     private String placa;
     private String renavam;
     private String chassiVeiculo;
     private String motorVeiculo;
-    private ModeloBeans modelo;
+    private ModeloBeans modelo = new ModeloBeans();
     private String cor;
     private String anoFab;
     private String anoMod;
@@ -27,13 +27,15 @@ public class VeiculoBeans {
     private String potencia;
     private String cilidrada;
     private String licenciamento;
-    private CidadeBeans cidade;
+    private CidadeBeans cidade = new CidadeBeans();
+    private String apreencao;
+    private String dataCad;
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -165,6 +167,22 @@ public class VeiculoBeans {
         this.cidade = cidade;
     }
 
+    public String getApreencao() {
+        return apreencao;
+    }
+
+    public void setApreencao(String apreencao) {
+        this.apreencao = apreencao;
+    }
+
+    public String getDataCad() {
+        return dataCad;
+    }
+
+    public void setDataCad(String dataCad) {
+        this.dataCad = dataCad;
+    }
+
     public void exibe() {
         System.out.println("------------------"
                 + "\nID: " + this.id
@@ -184,9 +202,9 @@ public class VeiculoBeans {
                 + "\nPOTENCIA: " + this.potencia
                 + "\nCILINDRADA: " + this.cilidrada
                 + "\nLICENCIAMENTO: " + this.licenciamento
-                + "\nCIDADE ID: " + this.cidade.getId()
-                + "\nCIDADE NOME: " + this.cidade.getNome()
-                + "\nCIDADE ESTADO: " + this.cidade.getEstado().getNome()
+                // + "\nCIDADE ID: " + this.cidade.getId()
+                // + "\nCIDADE NOME: " + this.cidade.getNome()
+                // + "\nCIDADE ESTADO: " + this.cidade.getEstado().getNome()
                 + "------------------"
         );
     }

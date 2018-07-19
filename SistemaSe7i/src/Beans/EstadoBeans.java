@@ -10,24 +10,27 @@ package Beans;
  * @author Eu
  */
 public class EstadoBeans {
-    
-    private int id;
+
+    private Integer id;
     private String nome;
 
-    public EstadoBeans(){
-        
+    public EstadoBeans(Integer id, String nome) {
+        this.id = id;
+        this.nome = nome;
     }
     
-    public EstadoBeans(int id, String nome){
-       this.id = id;
-       this.nome = nome;
+     public EstadoBeans(String nome) {
+        this.nome = nome;
     }
-    
-    public int getId() {
+
+    public EstadoBeans() {
+    }
+
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -38,5 +41,5 @@ public class EstadoBeans {
     public void setNome(String nome) {
         this.nome = nome;
     }
-    
+
 }

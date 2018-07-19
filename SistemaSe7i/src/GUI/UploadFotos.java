@@ -47,7 +47,7 @@ public class UploadFotos extends javax.swing.JFrame {
     public UploadFotos() {
         initComponents();
         setExtendedState(JFrame.MAXIMIZED_BOTH);
-        //carregaComboBox();
+        carregaComboBox();
 
     }
 
@@ -62,16 +62,7 @@ public class UploadFotos extends javax.swing.JFrame {
 
         lblImagem = new javax.swing.JLabel();
         cbleilao = new javax.swing.JComboBox<>();
-        txtIdCid = new javax.swing.JTextField();
-        lbltraseira = new javax.swing.JLabel();
-        txtlote = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        lblfrente = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        lblchassi = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        lblmotor = new javax.swing.JLabel();
+        txtIdleilao = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         lblexistentes = new javax.swing.JTextArea();
@@ -80,21 +71,16 @@ public class UploadFotos extends javax.swing.JFrame {
         lblatualizados = new javax.swing.JTextArea();
         jLabel8 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
-        lblexistentes3 = new javax.swing.JTextArea();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
-        lblextra1 = new javax.swing.JLabel();
-        lblextra2 = new javax.swing.JLabel();
+        lblnovo = new javax.swing.JTextArea();
         btn_OpenFolder = new javax.swing.JButton();
         btn_Import = new javax.swing.JButton();
-        btn_BuscarLote = new javax.swing.JButton();
         barraProgresso = new javax.swing.JProgressBar();
+        jLabel10 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setFocusable(false);
 
         cbleilao.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        cbleilao.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "CET 36" }));
         cbleilao.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 cbleilaoItemStateChanged(evt);
@@ -106,21 +92,9 @@ public class UploadFotos extends javax.swing.JFrame {
             }
         });
 
-        txtIdCid.setEditable(false);
-        txtIdCid.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        txtIdCid.setText("1");
-
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel1.setText("Traseira");
-
-        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel2.setText("Frente");
-
-        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel3.setText("Chassi");
-
-        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel4.setText("Motor");
+        txtIdleilao.setEditable(false);
+        txtIdleilao.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtIdleilao.setText("1");
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel6.setText("Lotes Existentes");
@@ -141,15 +115,10 @@ public class UploadFotos extends javax.swing.JFrame {
         jLabel8.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel8.setText("Lotes Novos");
 
-        lblexistentes3.setBackground(new java.awt.Color(153, 255, 153));
-        lblexistentes3.setColumns(10);
-        lblexistentes3.setRows(5);
-        jScrollPane3.setViewportView(lblexistentes3);
-
-        jLabel5.setText("Buscar Lote ");
-
-        jLabel9.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel9.setText("Extras");
+        lblnovo.setBackground(new java.awt.Color(153, 255, 153));
+        lblnovo.setColumns(10);
+        lblnovo.setRows(5);
+        jScrollPane3.setViewportView(lblnovo);
 
         btn_OpenFolder.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/OpenFolder.png"))); // NOI18N
         btn_OpenFolder.addActionListener(new java.awt.event.ActionListener() {
@@ -165,15 +134,10 @@ public class UploadFotos extends javax.swing.JFrame {
             }
         });
 
-        btn_BuscarLote.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/Search.png"))); // NOI18N
-        btn_BuscarLote.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_BuscarLoteActionPerformed(evt);
-            }
-        });
-
         barraProgresso.setForeground(new java.awt.Color(0, 0, 255));
         barraProgresso.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(153, 153, 255), 1, true));
+
+        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/asd.JPG"))); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -187,132 +151,74 @@ public class UploadFotos extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(123, 123, 123)
                                 .addComponent(lblImagem))
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(72, 72, 72)
+                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
                         .addGap(10, 10, 10)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(10, 10, 10)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(10, 10, 10))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lbltraseira, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3)
-                            .addComponent(lblchassi, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(12, 12, 12)
-                                .addComponent(lblfrente, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(2, 2, 2)
-                                .addComponent(jLabel4))
-                            .addComponent(lblmotor, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblextra1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblextra2, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(51, 51, 51)
-                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(119, 119, 119)
                         .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(88, 88, 88)
-                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(46, 46, 46)
-                        .addComponent(jLabel1)
-                        .addGap(243, 243, 243)
-                        .addComponent(jLabel2)
-                        .addGap(221, 221, 221)
-                        .addComponent(jLabel9))
+                        .addGap(43, 43, 43)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(19, 19, 19)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(barraProgresso, javax.swing.GroupLayout.PREFERRED_SIZE, 1307, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(txtIdCid, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(10, 10, 10)
-                                .addComponent(cbleilao, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(10, 10, 10)
-                                .addComponent(btn_OpenFolder)
-                                .addGap(18, 18, 18)
-                                .addComponent(btn_Import)
-                                .addGap(303, 303, 303)
-                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(10, 10, 10)
-                                .addComponent(txtlote, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(6, 6, 6)
-                                .addComponent(btn_BuscarLote, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(21, Short.MAX_VALUE))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(10, 10, 10))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(47, 47, 47)))
+                .addComponent(jLabel10))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(19, 19, 19)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(txtIdleilao, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(10, 10, 10)
+                        .addComponent(cbleilao, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(10, 10, 10)
+                        .addComponent(btn_OpenFolder)
+                        .addGap(18, 18, 18)
+                        .addComponent(btn_Import))
+                    .addComponent(barraProgresso, javax.swing.GroupLayout.PREFERRED_SIZE, 1307, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(18, 18, 18)
+                .addGap(19, 19, 19)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btn_OpenFolder)
+                    .addComponent(btn_Import)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(7, 7, 7)
-                        .addComponent(txtIdCid, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(7, 7, 7)
-                        .addComponent(cbleilao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(1, 1, 1)
-                        .addComponent(btn_OpenFolder))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(1, 1, 1)
-                        .addComponent(btn_Import))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(1, 1, 1)
-                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(1, 1, 1)
-                        .addComponent(txtlote, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(btn_BuscarLote))
-                .addGap(11, 11, 11)
-                .addComponent(barraProgresso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(6, 6, 6)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(2, 2, 2)
-                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(1, 1, 1)
-                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(1, 1, 1)
-                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(jLabel1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(jLabel2))
-                    .addComponent(jLabel9))
-                .addGap(4, 4, 4)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(136, 136, 136)
-                        .addComponent(lblImagem))
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 471, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 471, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 471, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(lbltraseira, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(10, 10, 10)
-                        .addComponent(jLabel3)
-                        .addGap(3, 3, 3)
-                        .addComponent(lblchassi, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblfrente, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblextra1, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(10, 10, 10)
+                            .addComponent(txtIdleilao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cbleilao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(barraProgresso, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(7, 7, 7)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(30, 30, 30)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addGap(3, 3, 3)
-                                .addComponent(lblmotor, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(lblextra2, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(108, 108, 108))
+                                .addGap(136, 136, 136)
+                                .addComponent(lblImagem))
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 530, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(10, 10, 10)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 530, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(10, 10, 10)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 530, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 560, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
         pack();
@@ -353,51 +259,47 @@ public class UploadFotos extends javax.swing.JFrame {
                     barraProgresso.setMaximum(imagens.size());
                     for (BufferedImage i : imagens) {
 
-        //se a pasta não existir, o seguinte codigo cria a pasta                
+                      
                         java.io.File diretorio1 = new java.io.File("C:\\Users\\joaoh\\Desktop\\Leilões");
                         boolean statusDir1 = diretorio1.mkdir();
                         
-        //Em seguida, é criado uma pasta dentro no diretorio criado anteriormente com o nome do leilao selecionado na combobox
                         String leilao = cbleilao.getSelectedItem().toString();
                         java.io.File diretorio2 = new java.io.File(diretorio1 + "\\" + leilao + "\\");
                         boolean statusDir2 = diretorio2.mkdir();
                         
-        //Depois, uma outra pasta é criada para salvar as imagens inseridas pelo usuário Ex. Leiloes\CET36\Fotos\               
                         java.io.File diretorio3 = new java.io.File(diretorio2 + "\\Fotos\\");
                         boolean statusDir3 = diretorio3.mkdir();
 
                         
-        //Uma string armazenará os nomes doas arquivos presentes na pasta 
                         String caminhofinal = diretorio3 + "\\" + nomeDosArquivos.get(contador);
                         
-        //A string diretorio final vai receber o diretorio 3 com todas as pastas criadas anteriormente             
                         String diretoriofinal = diretorio3 + "\\";
-
+                         
                         String Lote, Tipo;
-        //abaixo os tratamentos das imagens                
+                        int idleilao = Integer.parseInt(txtIdleilao.getText()); 
+                               
                         if (caminhofinal.contains("T_")) {
                             Lote = caminhofinal.substring(caminhofinal.lastIndexOf("\\") + 1, caminhofinal.lastIndexOf("T_"));
                             Tipo = caminhofinal.substring(caminhofinal.lastIndexOf("T_"), caminhofinal.lastIndexOf("T_") + 2);
 
-        //Uma string sql vai buscar no banco de dados para saber se a imagem já existe                     
                             String sql1 = "select * from fotos where caminho=?";
                             PreparedStatement st = Conexao.getConnection().prepareStatement(sql1);
                             st.setString(1, diretoriofinal + Lote + Tipo + ".jpg");
                             ResultSet rs = st.executeQuery();
 
                             if (!rs.next()) {
-        
-        //O seguinte código cria uma cópia das imagens no diretorio final. 
                                 File outputfile = new File(diretoriofinal + Lote + Tipo + ".jpg");
                                 ImageIO.write(i, "jpg", outputfile);
 
                                 FotoB.setCaminho(caminhofinal);
                                 FotoB.setLote(Lote);
                                 FotoB.setTipo(Tipo);
+                                FotoB.setIdleilao(idleilao);
                                 FotoC.InserirFotos(FotoB);
 
                                 String existente = Lote + Tipo;
                                 lblatualizados.setText(lblatualizados.getText() + existente + "\n");
+                    
                             } else {
                                 String existente = Lote + Tipo;
                                 lblexistentes.setText(lblexistentes.getText() + existente + "\n");
@@ -417,6 +319,7 @@ public class UploadFotos extends javax.swing.JFrame {
                                 FotoB.setCaminho(caminhofinal);
                                 FotoB.setLote(Lote);
                                 FotoB.setTipo(Tipo);
+                                FotoB.setIdleilao(idleilao);
                                 FotoC.InserirFotos(FotoB);
                                 String existente = Lote + Tipo;
                                 lblatualizados.setText(lblatualizados.getText() + existente + "\n");
@@ -440,6 +343,7 @@ public class UploadFotos extends javax.swing.JFrame {
                                 FotoB.setCaminho(caminhofinal);
                                 FotoB.setLote(Lote);
                                 FotoB.setTipo(Tipo);
+                                FotoB.setIdleilao(idleilao);
                                 FotoC.InserirFotos(FotoB);
 
                                 String existente = Lote + Tipo;
@@ -464,6 +368,7 @@ public class UploadFotos extends javax.swing.JFrame {
                                 FotoB.setCaminho(caminhofinal);
                                 FotoB.setLote(Lote);
                                 FotoB.setTipo(Tipo);
+                                FotoB.setIdleilao(idleilao);
                                 FotoC.InserirFotos(FotoB);
                                 String existente = Lote + Tipo;
                                 lblatualizados.setText(lblatualizados.getText() + existente + "\n");
@@ -471,11 +376,14 @@ public class UploadFotos extends javax.swing.JFrame {
                                 String existente = Lote + Tipo;
                                 lblexistentes.setText(lblexistentes.getText() + existente + "\n");
                             }
-                        } else if (caminhofinal.contains("E")) {
-
+                        }
+                       
+                        else if (caminhofinal.substring(caminhofinal.length() - 6, caminhofinal.length()).contains("E")) {
+                            //    
                             Lote = caminhofinal.substring(caminhofinal.lastIndexOf("\\") + 1, caminhofinal.lastIndexOf(".jpg") - 2);
                             Tipo = caminhofinal.substring(caminhofinal.indexOf(".jpg") - 2, caminhofinal.lastIndexOf(".jpg"));
-
+                            
+                            System.out.println(caminhofinal);   
                             String sql1 = "select * from fotos where caminho=?";
                             PreparedStatement st = Conexao.getConnection().prepareStatement(sql1);
                             st.setString(1, diretoriofinal + Lote + Tipo + ".jpg");
@@ -488,6 +396,7 @@ public class UploadFotos extends javax.swing.JFrame {
                                 FotoB.setCaminho(caminhofinal);
                                 FotoB.setLote(Lote);
                                 FotoB.setTipo(Tipo);
+                                FotoB.setIdleilao(idleilao);
                                 FotoC.InserirFotos(FotoB);
                                 
                                 String existente = Lote + Tipo;
@@ -496,10 +405,13 @@ public class UploadFotos extends javax.swing.JFrame {
                                 String existente = Lote + Tipo;
                                 lblexistentes.setText(lblexistentes.getText() + existente + "\n");
                             }
-                        } else if (caminhofinal.contains("F")) {
-                            Lote = caminhofinal.substring(caminhofinal.lastIndexOf("\\") + 1, caminhofinal.lastIndexOf("F_"));
-                            Tipo = caminhofinal.substring(caminhofinal.lastIndexOf("F_"), caminhofinal.lastIndexOf("F_") + 2);
-
+                        } else if (caminhofinal.contains("F.jpg")) {
+                            Lote = caminhofinal.substring(caminhofinal.lastIndexOf("\\") + 1, caminhofinal.lastIndexOf("F"));
+                            Tipo = caminhofinal.substring(caminhofinal.lastIndexOf("F"), caminhofinal.lastIndexOf("F") + 1);
+                             
+                            System.out.println(Lote);
+                            System.out.println(Tipo);
+                            
                             String sql1 = "select * from fotos where caminho=?";
                             PreparedStatement st = Conexao.getConnection().prepareStatement(sql1);
                             st.setString(1, diretoriofinal + Lote + Tipo + ".jpg");
@@ -512,6 +424,7 @@ public class UploadFotos extends javax.swing.JFrame {
                                 FotoB.setCaminho(caminhofinal);
                                 FotoB.setLote(Lote);
                                 FotoB.setTipo(Tipo);
+                                FotoB.setIdleilao(idleilao);
                                 FotoC.InserirFotos(FotoB);
 
                                 String existente = Lote + Tipo;
@@ -521,12 +434,10 @@ public class UploadFotos extends javax.swing.JFrame {
                                 lblexistentes.setText(lblexistentes.getText() + existente + "\n");
                             }
                         }
-                        //o contador vai ser somado, e irá pra uma próxima imagem
                         contador++;
-                        //a barra de progresso é atualizada conforme o contador aumenta. 
                         barraProgresso.setValue(contador);
                     }
-                    //depois da inserção as strings usadas para encontrar os caminhos são limpas. 
+                   
                     nomeDosArquivos.clear();
                     imagens.clear();
                     JOptionPane.showMessageDialog(rootPane, "Imagens enviadas com sucesso");
@@ -540,26 +451,13 @@ public class UploadFotos extends javax.swing.JFrame {
             }
         }.start();
     }
-
+    
 
     private void cbleilaoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbleilaoItemStateChanged
         BuscarIdCidade();
-        setarLabel();
-        limpar();
+      
     }//GEN-LAST:event_cbleilaoItemStateChanged
 
-    public void setarLabel() {
-        lbltraseira.setIcon(null);
-        lblfrente.setIcon(null);
-        lblchassi.setIcon(null);
-        lblmotor.setIcon(null);
-        lblextra1.setIcon(null);
-        lblextra2.setIcon(null);
-    }
-
-    public void limpar() {
-        txtlote.setText("");
-    }
     private void btn_OpenFolderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_OpenFolderActionPerformed
         CaminhoFotos();
     }//GEN-LAST:event_btn_OpenFolderActionPerformed
@@ -569,146 +467,17 @@ public class UploadFotos extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btn_ImportActionPerformed
 
-    private void btn_BuscarLoteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_BuscarLoteActionPerformed
-        if (txtlote.getText().equals("")) {
-            JOptionPane.showMessageDialog(null, "Informe o lote!", "Buscar Lote", 1);
-        } else {
-            setarLabel();
-            carregarfototraseira();
-            carregarfotofrente();
-            carregarfotochassi();
-            carregarfotomotor();
-            carregarfotoextra1();
-            carregarfotoextra2();
-        }
-    }//GEN-LAST:event_btn_BuscarLoteActionPerformed
-
     private void cbleilaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbleilaoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cbleilaoActionPerformed
 
-    public void carregarfototraseira() {
-        String sql = "Select * from fotos where lote=" + txtlote.getText() + " and leilao=" + txtIdCid.getText() + " and tipo='T_'";
-        try {
-            PreparedStatement st = Conexao.getConnection().prepareStatement(sql);
-            ResultSet rs = st.executeQuery();
-            String caminhofinal = null;
-
-            while (rs.next()) {
-                caminhofinal = rs.getString(2);
-            }
-
-            ImageIcon icontraseira = new ImageIcon(caminhofinal);
-            lbltraseira.setIcon(new ImageIcon(icontraseira.getImage().getScaledInstance(lbltraseira.getWidth(), lbltraseira.getHeight(), Image.SCALE_DEFAULT)));
-
-            Conexao.getConnection().commit();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e);
-
-        }
-    }
-
-    public void carregarfotofrente() {
-        String sql = "Select * from fotos where lote=" + txtlote.getText() + " and leilao=" + txtIdCid.getText() + " and tipo='F_'";
-        try {
-            PreparedStatement st = Conexao.getConnection().prepareStatement(sql);
-            ResultSet rs = st.executeQuery();
-            String caminhofinal = null;
-
-            while (rs.next()) {
-                caminhofinal = rs.getString(2);
-            }
-            ImageIcon iconfrente = new ImageIcon(caminhofinal);
-
-            lblfrente.setIcon(new ImageIcon(iconfrente.getImage().getScaledInstance(lblfrente.getWidth(), lblfrente.getHeight(), Image.SCALE_DEFAULT)));
-            Conexao.getConnection().commit();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e);
-        }
-    }
-
-    public void carregarfotochassi() {
-        String sql = "Select * from fotos where (lote=" + txtlote.getText() + " and leilao=" + txtIdCid.getText() + ") and (tipo='CH_' or tipo ='CF_')";
-        try {
-            PreparedStatement st = Conexao.getConnection().prepareStatement(sql);
-            ResultSet rs = st.executeQuery();
-            String caminhofinal = null;
-
-            while (rs.next()) {
-                caminhofinal = rs.getString(2);
-            }
-            ImageIcon iconchassi = new ImageIcon(caminhofinal);
-            lblchassi.setIcon(new ImageIcon(iconchassi.getImage().getScaledInstance(lblchassi.getWidth(), lblchassi.getHeight(), Image.SCALE_DEFAULT)));
-
-            Conexao.getConnection().commit();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e);
-        }
-    }
-
-    public void carregarfotomotor() {
-        String sql = "Select * from fotos where (lote=" + txtlote.getText() + " and leilao=" + txtIdCid.getText() + ") and (tipo='MP_' or tipo = 'MF_')";
-        try {
-            PreparedStatement st = Conexao.getConnection().prepareStatement(sql);
-            ResultSet rs = st.executeQuery();
-            String caminhofinal = null;
-
-            while (rs.next()) {
-                caminhofinal = rs.getString(2);
-            }
-            ImageIcon iconmotor = new ImageIcon(caminhofinal);
-            lblmotor.setIcon(new ImageIcon(iconmotor.getImage().getScaledInstance(lblmotor.getWidth(), lblmotor.getHeight(), Image.SCALE_DEFAULT)));
-            Conexao.getConnection().commit();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e);
-        }
-    }
-
-    public void carregarfotoextra1() {
-        String sql = "Select * from fotos where lote=" + txtlote.getText() + " and leilao=" + txtIdCid.getText() + " and tipo='EA'";
-        try {
-            PreparedStatement st = Conexao.getConnection().prepareStatement(sql);
-            ResultSet rs = st.executeQuery();
-            String caminhofinal = null;
-
-            while (rs.next()) {
-                caminhofinal = rs.getString(2);
-            }
-            ImageIcon iconfrente = new ImageIcon(caminhofinal);
-
-            lblextra1.setIcon(new ImageIcon(iconfrente.getImage().getScaledInstance(lblextra1.getWidth(), lblextra1.getHeight(), Image.SCALE_DEFAULT)));
-            Conexao.getConnection().commit();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e);
-        }
-    }
-
-    public void carregarfotoextra2() {
-        String sql = "Select * from fotos where lote=" + txtlote.getText() + " and leilao=" + txtIdCid.getText() + " and tipo='EB'";
-        try {
-            PreparedStatement st = Conexao.getConnection().prepareStatement(sql);
-            ResultSet rs = st.executeQuery();
-            String caminhofinal = null;
-
-            while (rs.next()) {
-                caminhofinal = rs.getString(2);
-            }
-            ImageIcon iconfrente = new ImageIcon(caminhofinal);
-
-            lblextra2.setIcon(new ImageIcon(iconfrente.getImage().getScaledInstance(lblextra2.getWidth(), lblextra2.getHeight(), Image.SCALE_DEFAULT)));
-            Conexao.getConnection().commit();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e);
-        }
-    }
-
     public void BuscarIdCidade() {
         try {
-            String sql = "select * from leilao where leilao_nome like '%" + cbleilao.getSelectedItem() + "%' ";
+            String sql = "select * from leiloes where descricao like '%" + cbleilao.getSelectedItem() + "%' ";
             PreparedStatement preparedStatement = Conexao.getConnection().prepareStatement(sql);
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
-                txtIdCid.setText(rs.getString(1));
+                txtIdleilao.setText(rs.getString(1));
             }
         } catch (Exception e) {
         }
@@ -719,9 +488,9 @@ public class UploadFotos extends javax.swing.JFrame {
             Connection conn;
             conn = Conexao.getConnection();
             Statement st = conn.createStatement();
-            ResultSet rs = st.executeQuery("SELECT leilao.leilao_nome FROM leilao");
+            ResultSet rs = st.executeQuery("SELECT leiloes.descricao FROM leiloes");
             while (rs.next()) {
-                cbleilao.addItem(rs.getString("leilao_nome"));
+                cbleilao.addItem(rs.getString("descricao"));
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null,
@@ -770,33 +539,20 @@ public class UploadFotos extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JProgressBar barraProgresso;
-    private javax.swing.JButton btn_BuscarLote;
     private javax.swing.JButton btn_Import;
     private javax.swing.JButton btn_OpenFolder;
     private javax.swing.JComboBox<String> cbleilao;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JLabel lblImagem;
     private javax.swing.JTextArea lblatualizados;
-    private javax.swing.JLabel lblchassi;
     private javax.swing.JTextArea lblexistentes;
-    private javax.swing.JTextArea lblexistentes3;
-    private javax.swing.JLabel lblextra1;
-    private javax.swing.JLabel lblextra2;
-    private javax.swing.JLabel lblfrente;
-    private javax.swing.JLabel lblmotor;
-    private javax.swing.JLabel lbltraseira;
-    private javax.swing.JTextField txtIdCid;
-    private javax.swing.JTextField txtlote;
+    private javax.swing.JTextArea lblnovo;
+    private javax.swing.JTextField txtIdleilao;
     // End of variables declaration//GEN-END:variables
 }

@@ -9,8 +9,8 @@ package Beans;
  *
  * @author Eu
  */
-public class LeiloeiroBeans {
-
+public class PatioBeans {
+    
     private int id;
     private String nome;
     private String endereco;
@@ -18,19 +18,8 @@ public class LeiloeiroBeans {
     private String bairro;
     private String cep;
     private String telefone;
-    private String celular;
-    private String email;
-    private String jucesp;
+    private String Responsavel;
     private CidadeBeans cidade;
-    private EmpresaBeans empresa;
-
-    public EmpresaBeans getEmpresa() {
-        return empresa;
-    }
-
-    public void setEmpresa(EmpresaBeans empresa) {
-        this.empresa = empresa;
-    }
 
     public int getId() {
         return id;
@@ -80,14 +69,6 @@ public class LeiloeiroBeans {
         this.cep = cep;
     }
 
-    public CidadeBeans getCidade() {
-        return cidade;
-    }
-
-    public void setCidade(CidadeBeans cidade) {
-        this.cidade = cidade;
-    }
-
     public String getTelefone() {
         return telefone;
     }
@@ -96,27 +77,22 @@ public class LeiloeiroBeans {
         this.telefone = telefone;
     }
 
-    public String getCelular() {
-        return celular;
+    public String getResponsavel() {
+        return Responsavel;
     }
 
-    public void setCelular(String celular) {
-        this.celular = celular;
+    public void setResponsavel(String Responsavel) {
+        this.Responsavel = Responsavel;
     }
 
-    public String getJucesp() {
-        return jucesp;
+    public CidadeBeans getCidade() {
+        return cidade;
     }
 
-    public void setJucesp(String jucesp) {
-        this.jucesp = jucesp;
+    public void setCidade(CidadeBeans cidade) {
+        this.cidade = cidade;
     }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
+    
+    
+    
 }
