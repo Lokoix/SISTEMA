@@ -9,6 +9,7 @@ import Beans.LeilaoBeans;
 import Beans.LoteBeans;
 import Beans.ProprietarioBeans;
 import Beans.VeiculoBeans;
+import Controller.LoteController;
 import Controller.ProprietarioController;
 import Controller.VeiculoController;
 import DAO.LeilaoDAO;
@@ -36,6 +37,7 @@ public class Pesquisas extends javax.swing.JInternalFrame {
     ProprietarioController conProprietario;
     ArrayList<Integer> tipoTxt;
     LeilaoDAO leilaoD;
+    LoteController conLote;
 
     public Pesquisas() {
         initComponents();
@@ -46,6 +48,7 @@ public class Pesquisas extends javax.swing.JInternalFrame {
         iBaseNacional = new BaseNacional();
         conVeiculo = new VeiculoController();
         conProprietario = new ProprietarioController(); 
+        conLote = new LoteController();
         for (LeilaoBeans leilao : leilaoD.buscarTodosLeiloes()) {
             cmb_Leilao.addItem(leilao);
         }
@@ -130,19 +133,22 @@ public class Pesquisas extends javax.swing.JInternalFrame {
             VeiculoBeans veic = new VeiculoBeans();
             ProprietarioBeans proprietario = new ProprietarioBeans();
             LoteBeans lote = new LoteBeans();
+            lote.setLeilao((LeilaoBeans) cmb_Leilao.getSelectedItem());
             ArrayList<String> result = new ArrayList<>();           
             String s;
             switch (tipoTxt.get(i)) {
                 case 1:
                     s = listaDeArquivos.get(i);                                                  //Nome do arquivo
                     lote.setNumeroLote(s.substring(0, s.indexOf("CAD.txt")));                    //PEGA NUMERO DO LOTE     
-                    JOptionPane.showMessageDialog(null, "CAD Lote: "+lote.getNumeroLote());
+                    //JOptionPane.showMessageDialog(null, "CAD Lote: "+lote.getNumeroLote());
                     
                     result = manipulaTxt.Leitura(local, s);                                       //CARREGAR NA LISTA, O CONTEUDO DA PESQUISA
                     proprietario = iCadastro.getProprietario(result);                             //PEGA O PROPRIETARIO DA LISTA
-                    conProprietario.CorrigirProprietarioPesquisaCadastro(proprietario);           //CORRIGE O PROPRIETARIO                    
-                    veic = iCadastro.getVeiculo(result);                                          //Pega o veiculo da lista
-                    conVeiculo.corrigirVeiculoPesquisaCadastro(veic);                               //Corrige o veiculo
+                                                   
+                    veic = iCadastro.getVeiculo(result);                                          //Pega o veiculo da lista                                                 
+                    lote.setVeiculo(conVeiculo.corrigirVeiculoPesquisaCadastro(veic));//Corrige o veiculo
+                    lote.setProprietario(conProprietario.CorrigirProprietarioPesquisaCadastro(proprietario));//CORRIGE O PROPRIETARIO
+                    conLote.corrigirLote(lote);
                     break;
                 case 2:
                     s = listaDeArquivos.get(i);
@@ -155,6 +161,8 @@ public class Pesquisas extends javax.swing.JInternalFrame {
                    // conProprietario.CorrigirProprietarioPesquisa(proprietario);
                     veic = iBaseNacional.getVeiculo(result);
                     conVeiculo.corrigirVeiculoPesquisa(veic);
+                    lote.setVeiculo(veic);
+                    conLote.corrigirLote(lote);
                     break;  
                 default:
                     JOptionPane.showMessageDialog(null, "Opção inválida");
