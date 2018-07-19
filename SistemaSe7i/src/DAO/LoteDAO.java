@@ -6,8 +6,13 @@
 package DAO;
 
 import Beans.LoteBeans;
+import Controller.ProprietarioController;
+import Controller.VeiculoController;
+import Utilitarios.Conexao;
+import Utilitarios.Corretores;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Types;
 import javax.swing.JOptionPane;
 
 /**
@@ -16,112 +21,121 @@ import javax.swing.JOptionPane;
  */
 public class LoteDAO {
 
-    AutomovelController autC = new AutomovelController();
-    ProprietarioController proC = new ProprietarioController();
+    VeiculoController conVeiculo = new VeiculoController();
+    ProprietarioController conProprietario = new ProprietarioController();
 
-    public boolean ExisteLote(LoteBeans a) {
-        String sql = "select * from lotes where lot_num = ?";
+    public boolean existe(LoteBeans lote) {
+        String sql = "select * from lotes where numeroLote = ? and idLeilao = ?";
         try {
             PreparedStatement st = Conexao.getConnection().prepareStatement(sql);
-            st.setString(1, a.getLote());
+            st.setString(1, lote.getNumeroLote());
+            st.setInt(2, lote.getLeilao().getId());
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
-                JOptionPane.showMessageDialog(null, "Lote " + a.getLote() + " ja existe no sistema");
+                //JOptionPane.showMessageDialog(null, "Lote " + a.getLote() + " ja existe no sistema");
                 return true;
             }
         } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro LoteDAO(existe): " + e);
         }
         return false;
     }
 
-    public Integer BuscaLote(LoteBeans lote) {
-        String sql = "select * from lotes where lot_num = ?";
+    public LoteBeans carregar(LoteBeans lote) {
+        LoteBeans base = new LoteBeans();
+        String sql = "select * from lotes where numeroLote = ? and idLeilao = ?";
         try {
-            PreparedStatement st = Conexao.getConnection().prepareStatement(sql);
-            st.setString(1, lote.getLote());
-            ResultSet rs = st.executeQuery();
+            PreparedStatement pst = Conexao.getConnection().prepareStatement(sql);
+            pst.setString(1, lote.getNumeroLote());
+            pst.setInt(2, lote.getLeilao().getId());
+            ResultSet rs = pst.executeQuery();
             if (rs.next()) {
-                System.out.println("Achou o lote");
-                return Integer.parseInt(rs.getString("lot_id"));
-            } else {
-                //CadastrarProrietario(proprietario);
+                base.setId(rs.getInt("id"));
+                base.setNumeroLote(rs.getString("numeroLote"));
+                base.getLeilao().setId(rs.getInt("idLeilao"));
+                base.getProprietario().setId(rs.getInt("idProprietario"));
+                base.getVeiculo().setId(rs.getInt("idVeiculo"));
+                base.setMotorBase(rs.getString("motorBase"));
+                base.setChassiBase(rs.getString("chassiBase"));
             }
         } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro LoteDAO(carregar): " + e);
         }
-        return null;
+        return lote;
     }
 
-    public void AlterarLote(LoteBeans lote) {
-        String sqlUpdate = "update lotes set lot_num = ?, lot_idAut = ?, lot_idProp = ?, lot_obs = ? where lot_id = ?";
+    public void alterar(LoteBeans lote) {
+        String sqlUpdate = "update lotes set idProprietario = ?, idVeiculo = ?, motorBase = ?, chassiBase = ?, observacao = ? where id = ?";
         try {
-            System.out.println("vvvvvvv");
             PreparedStatement pst = Conexao.getConnection().prepareStatement(sqlUpdate);
-            System.out.println("vvvvvvv");
-            pst.setString(1, lote.getLote());
-            System.out.println("vvvvvvv");
 
-            pst.setInt(2, lote.getAutomovel().getCod());
-            System.out.println("vvvvvvv");
-            if (lote.getProprietario() == null) {
-                System.out.println("vvvvvvv");
-                pst.setInt(3, 0);
+            //Proprietario
+            if (lote.getProprietario().getId() != null) {
+                pst.setInt(1, lote.getProprietario().getId());
             } else {
-                System.out.println("vvvvvvvff");
-                pst.setInt(3, lote.getProprietario().getCod());
+                pst.setNull(1, Types.NULL);
             }
-            System.out.println("vvvvvvv");
-            pst.setString(4, lote.getObservacao());
-            System.out.println("vvvvvvv");
-            pst.setInt(5, lote.getCod());
-            System.out.println("vvvvvvv");
+
+            //Veiculo
+            if (lote.getVeiculo().getId() != null) {
+                pst.setInt(2, lote.getVeiculo().getId());
+            } else {
+                pst.setNull(2, Types.NULL);
+            }
+
+            //Motor Base
+            pst.setString(3, lote.getMotorBase());
+
+            //Chassi Base
+            pst.setString(4, lote.getChassiBase());
+
+            //obs
+            pst.setString(5, lote.getObservacao());
+
+            //id
+            pst.setInt(6, lote.getId());
 
             pst.executeUpdate();
+            Conexao.getConnection().commit();
+
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro ao alterar LOTE no banco: " + e);
         }
     }
 
-    public void cadastrarLote(LoteBeans lote) {//cad
-        String sqlInsertion = "insert into lotes (lot_num, lot_idAut, lot_idProp, lot_obs) value (?,?,?,?)";
-        System.out.println("33");
+    public void cadastrar(LoteBeans lote) {//cad
+        String sqlInsertion = "insert into lotes (numeroLote, idLeilao, idProprietario, idVeiculo, motorBase, chassiBase, dataCad) values (?,?,?,?,?,?,?)";
         try {
-            PreparedStatement st = Conexao.getConnection().prepareStatement(sqlInsertion);
-            st.setString(1, lote.getLote());
-            st.setInt(2, lote.getAutomovel().getCod());
-            if (lote.getProprietario() == null) {
-                st.setString(3, null);
+            PreparedStatement pst = Conexao.getConnection().prepareStatement(sqlInsertion);
+            pst.setString(1, lote.getNumeroLote());
+            pst.setInt(2, lote.getLeilao().getId());
+
+            //Proprietario
+            if (lote.getProprietario().getId() != null) {
+                pst.setInt(3, lote.getProprietario().getId());
             } else {
-                st.setInt(3, lote.getProprietario().getCod());
+                pst.setNull(3, Types.NULL);
             }
-            st.setString(4, lote.getObservacao());
-            st.execute();
+
+            //Veiculo
+            if (lote.getVeiculo().getId() != null) {
+                pst.setInt(4, lote.getVeiculo().getId());
+            } else {
+                pst.setNull(4, Types.NULL);
+            }
+
+            pst.setString(5, lote.getMotorBase());
+            
+            pst.setString(6, lote.getChassiBase());
+            
+            pst.setString(7, Corretores.DataAtual());
+          
+            pst.execute();
             Conexao.getConnection().commit();
-            JOptionPane.showMessageDialog(null, "Registro salvo ");
+            //JOptionPane.showMessageDialog(null, "Registro salvo ");
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Erro ao Cadastrar lote no banco: " + e);
+            JOptionPane.showMessageDialog(null, "Erro LoteDAO(cadastrar): " + e);
         }
     }
 
-    public LoteBeans CarregarLoteBD(int id) {
-        LoteBeans loteBD = new LoteBeans();
-        String sql = "select * from lotes where lot_id = ?";
-        try {
-            PreparedStatement pst = Conexao.getConnection().prepareStatement(sql);
-            pst.setInt(1, id);
-            ResultSet rs = pst.executeQuery();
-            if (rs.next()) {
-                loteBD.setCod(id);
-                loteBD.setLote(rs.getString("lot_num"));
-                int idA = rs.getInt("lot_idAut");
-                Integer idP = rs.getInt("lot_idProp");
-                loteBD.setAutomovel(autC.CarregarAutomovel(id));
-                if (idP != null) {
-                    loteBD.setProprietario(proC.CarregarProprietario(idP));
-                }
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Erro ao Carregar loteBD: " + e);
-        }
-        return loteBD;
-    }
 }

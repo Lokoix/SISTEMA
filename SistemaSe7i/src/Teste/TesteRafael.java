@@ -18,8 +18,12 @@ public class TesteRafael {
 
     public static void main(String[] args) {
 
-        String s = "17298092000130";
+         VeiculoBeans veiculo = new VeiculoBeans();
+         
+         System.out.println("iniciando");
+         veiculo.setId(1);
+         veiculo.exibe();
+         
         
-        System.out.println(s.length());
     }
 }
