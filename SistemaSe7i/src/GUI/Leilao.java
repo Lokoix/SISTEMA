@@ -885,7 +885,7 @@ public class Leilao extends javax.swing.JInternalFrame {
                     .addGap(0, 467, Short.MAX_VALUE)))
         );
 
-        pack();
+        setBounds(0, 0, 1228, 969);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_newPatioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_newPatioActionPerformed
