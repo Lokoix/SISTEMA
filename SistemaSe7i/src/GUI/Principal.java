@@ -234,6 +234,7 @@ public class Principal extends javax.swing.JFrame {
     private void jMenu4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu4ActionPerformed
         ConsultaLaudo c = new ConsultaLaudo();
         c.setVisible(true);
+        
     }//GEN-LAST:event_jMenu4ActionPerformed
 
     private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
