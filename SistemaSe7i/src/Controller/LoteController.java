@@ -22,8 +22,22 @@ public class LoteController {
     public void corrigirLote(LoteBeans lote) {
         if (daoLote.existe(lote)) {
             LoteBeans base = daoLote.carregar(lote);
-            this.compararProprietarioLote(lote, base);
-            this.compararVeiculoLote(lote, base);
+            this.compararLote(lote, base);
+            System.out.println("EXIBINDO A BASE");
+            base.exibe();
+            System.out.println("\n\n EXIBINDO O LOTE");
+            lote.exibe();
+            daoLote.alterar(base);
+            
+        } else {
+            daoLote.cadastrar(lote);
+        }
+    }
+    
+    public void corrigirLoteCadastro(LoteBeans lote) {
+        if (daoLote.existe(lote)) {
+            LoteBeans base = daoLote.carregar(lote);
+            this.compararLoteCadastro(lote, base);
             daoLote.alterar(base);
         } else {
             lote.exibe();
@@ -31,6 +45,32 @@ public class LoteController {
         }
     }
 
+    private void compararLoteCadastro (LoteBeans lote, LoteBeans base){
+        this.compararProprietarioLote(lote, base);
+        this.compararVeiculoLote(lote, base);
+        
+        if (lote.getMotorBase() != null) {
+            base.setMotorBase(lote.getMotorBase());
+        }
+
+        if (lote.getChassiBase() != null) {
+            base.setChassiBase(lote.getChassiBase());
+        }  
+    }
+    
+    private void compararLote (LoteBeans lote, LoteBeans base){
+        this.compararProprietarioLote(lote, base);
+        this.compararVeiculoLote(lote, base);
+        
+        if (base.getMotorBase() == null) {
+            base.setMotorBase(lote.getMotorBase());
+        }
+
+        if (base.getChassiBase() == null) {
+            base.setChassiBase(lote.getChassiBase());
+        }  
+    }
+    
     private void compararVeiculoLote(LoteBeans lote, LoteBeans base) {
         if (lote.getVeiculo().getId() != null && base.getVeiculo().getId() == null) {
             base.setVeiculo(lote.getVeiculo());

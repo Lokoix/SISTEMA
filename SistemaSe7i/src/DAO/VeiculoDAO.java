@@ -166,6 +166,46 @@ public class VeiculoDAO {
         return veiculo;
     }
 
+    public VeiculoBeans carregarId(String id) {
+        String sql = "select * from veiculos where id = ?";
+        try {
+            PreparedStatement st = Conexao.getConnection().prepareStatement(sql);
+            st.setString(1, id);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                VeiculoBeans veiculo = new VeiculoBeans();
+                veiculo.setId(rs.getInt("id"));
+                veiculo.setPlaca(rs.getString("placa"));
+                veiculo.setRenavam(rs.getString("renavam"));
+                veiculo.setChassiVeiculo(rs.getString("chassiVeiculo"));
+                veiculo.setMotorVeiculo(rs.getString("motorVeiculo"));
+                veiculo.setModelo(modeloDAO.carregarPorId(rs.getString("idModelo")));
+                veiculo.setCor(rs.getString("cor"));
+                veiculo.setAnoFab(rs.getString("anoFabricacao"));
+                veiculo.setAnoMod(rs.getString("anoModelo"));
+                veiculo.setCombustivel(rs.getString("combustivel"));
+                veiculo.setCategoria(rs.getString("categoria"));
+                veiculo.setTipo(rs.getString("tipo"));
+                veiculo.setEspecie(rs.getString("especie"));
+                veiculo.setPotencia(rs.getString("potencia"));
+                veiculo.setCilidrada(rs.getString("cilindrada"));
+                veiculo.setLicenciamento(Corretores.ConverterParaJava(rs.getString("licenciamento")));
+
+                if (rs.getString("idCidade") == null) {
+                    veiculo.setCidade(null);
+                } else {
+                    veiculo.setCidade(cidadeDAO.getCidadeId(rs.getInt("idCidade")));
+                }
+
+                veiculo.setDataCad(Corretores.ConverterParaJava(rs.getString("dataCad")));
+                return veiculo;
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro ao getVeiculo no banco: " + e);
+        }
+        return new VeiculoBeans();
+    }
+    
     public Integer BuscarVeiculo(VeiculoBeans veiculo) {
         String sql = "select * from veiculos where placa = ?";//placa existe
         try {

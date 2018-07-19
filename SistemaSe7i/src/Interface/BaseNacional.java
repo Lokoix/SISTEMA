@@ -5,11 +5,13 @@
  */
 package Interface;
 
+import Beans.LoteBeans;
 import Beans.ProprietarioBeans;
 import Beans.VeiculoBeans;
 import DAO.CidadeDAO;
 import DAO.ModeloDAO;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -20,9 +22,21 @@ public class BaseNacional {
     private VeiculoBeans veic = new VeiculoBeans();
     private ModeloDAO modD = new ModeloDAO();
     private CidadeDAO cidD = new CidadeDAO();
-    
-    
-    public VeiculoBeans getVeiculo(ArrayList<String> result){
+
+    public void getLote(List<String> result, LoteBeans lote) {
+        lote.setVeiculo(this.getVeiculo(result));
+
+        if (!result.get(28).toString().equals("")) {
+            lote.setMotorBase(result.get(28).toString());
+        }
+
+        if (!result.get(7).toString().equals("")) {
+            lote.setChassiBase(result.get(7).toString());
+        }
+
+    }
+
+    public VeiculoBeans getVeiculo(List<String> result) {
         VeiculoBeans veic = new VeiculoBeans();
         ModeloDAO modD = new ModeloDAO();
         CidadeDAO cidD = new CidadeDAO();
@@ -41,6 +55,8 @@ public class BaseNacional {
         if (!result.get(11).toString().equals("")) {
             veic.getModelo().setNome(result.get(11).toString().substring(result.get(11).indexOf("/") + 1));
             veic.getModelo().getMarca().setNome(result.get(11).toString().substring(0, result.get(11).indexOf("/")));
+            System.out.println(veic.getModelo().getNome());
+            System.out.println(veic.getModelo().getMarca().getNome());
         }
 
         //Cor
@@ -64,20 +80,17 @@ public class BaseNacional {
         }
 
         //Categoria
-       // if (!result.get(19).toString().equals("")) {
-       //     veic.setCategoria(result.get(19).toString());
-       // }
-
+        // if (!result.get(19).toString().equals("")) {
+        //     veic.setCategoria(result.get(19).toString());
+        // }
         //Tipo
         //if (!result.get(20).toString().equals("")) {
         //    veic.setTipo(result.get(20).toString());
         //}
-
         //Especie
         //if (!result.get(22).toString().equals("")) {
         //    veic.setEspecie(result.get(22).toString());
         //}
-
         //Potencia
         if (!result.get(20).toString().equals("")) {
             veic.setPotencia(result.get(20).toString());
@@ -92,12 +105,10 @@ public class BaseNacional {
         //if (!result.get(37).toString().equals("")) {
         //    veic.setLicenciamento(result.get(37).toString());
         //}
-
         //Cidade id
         //if (!result.get(7).toString().equals("")) {
         //    veic.getCidade().setId(Integer.parseInt(result.get(7).toString()));
         //}
-
         //Cidade nome
         System.out.println("!!!!!!!: " + result.get(5));
         if (!result.get(5).toString().equals("")) {
@@ -107,9 +118,11 @@ public class BaseNacional {
         if (!result.get(6).toString().equals("")) {
             veic.getCidade().getEstado().setUf(result.get(6).toString());
         }
+
+        veic.exibe();
         return veic;
     }
-    
+
     public ProprietarioBeans getProprietario(ArrayList<String> result) {
         ProprietarioBeans prop = new ProprietarioBeans();
 
@@ -119,7 +132,7 @@ public class BaseNacional {
         } else {
             prop.setCpfCpnpj(result.get(46).toString());
         }
-        
+
         /*//Nome
         if (!result.get(58).toString().equals("")) {
             prop.setNome(result.get(58).toString());
@@ -170,10 +183,7 @@ public class BaseNacional {
         if (!result.get(63).toString().equals("")) {
             prop.setBairro(result.get(63).toString());
         }*/
-        
         return prop;
     }
-    
-    
-    
+
 }
