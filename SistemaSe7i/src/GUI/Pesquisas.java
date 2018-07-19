@@ -47,7 +47,7 @@ public class Pesquisas extends javax.swing.JInternalFrame {
         iCadastro = new Cadastro();
         iBaseNacional = new BaseNacional();
         conVeiculo = new VeiculoController();
-        conProprietario = new ProprietarioController(); 
+        conProprietario = new ProprietarioController();
         conLote = new LoteController();
         for (LeilaoBeans leilao : leilaoD.buscarTodosLeiloes()) {
             cmb_Leilao.addItem(leilao);
@@ -68,7 +68,9 @@ public class Pesquisas extends javax.swing.JInternalFrame {
         jLabel1 = new javax.swing.JLabel();
         cmb_Leilao = new javax.swing.JComboBox<>();
 
-        txt_local.setText("C:\\Users\\rafae\\Desktop\\interface\\END\\Nova pasta\\Nova pasta\\Nova pasta\\Nova pasta\\");
+        setClosable(true);
+
+        txt_local.setText("C:\\Users\\rafae\\Desktop\\interface\\Teste de Lotes\\");
             txt_local.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
                     txt_localActionPerformed(evt);
@@ -134,40 +136,33 @@ public class Pesquisas extends javax.swing.JInternalFrame {
             ProprietarioBeans proprietario = new ProprietarioBeans();
             LoteBeans lote = new LoteBeans();
             lote.setLeilao((LeilaoBeans) cmb_Leilao.getSelectedItem());
-            ArrayList<String> result = new ArrayList<>();           
+            ArrayList<String> result = new ArrayList<>();
             String s;
             switch (tipoTxt.get(i)) {
                 case 1:
-                    s = listaDeArquivos.get(i);                                                  //Nome do arquivo
-                    lote.setNumeroLote(s.substring(0, s.indexOf("CAD.txt")));                    //PEGA NUMERO DO LOTE     
-                    //JOptionPane.showMessageDialog(null, "CAD Lote: "+lote.getNumeroLote());
-                    
-                    result = manipulaTxt.Leitura(local, s);                                       //CARREGAR NA LISTA, O CONTEUDO DA PESQUISA
-                    proprietario = iCadastro.getProprietario(result);                             //PEGA O PROPRIETARIO DA LISTA
-                                                   
-                    veic = iCadastro.getVeiculo(result);                                          //Pega o veiculo da lista                                                 
-                    lote.setVeiculo(conVeiculo.corrigirVeiculoPesquisaCadastro(veic));//Corrige o veiculo
-                    lote.setProprietario(conProprietario.CorrigirProprietarioPesquisaCadastro(proprietario));//CORRIGE O PROPRIETARIO
-                    conLote.corrigirLote(lote);
+                    s = listaDeArquivos.get(i);                                                 
+                    lote.setNumeroLote(s.substring(0, s.indexOf("CAD.txt")));                                     
+
+                    result = manipulaTxt.Leitura(local, s);                                       
+                    iCadastro.getLote(result, lote);
+                    lote.setVeiculo(conVeiculo.corrigirVeiculoPesquisaCadastro(lote.getVeiculo()));
+                    lote.setProprietario(conProprietario.CorrigirProprietarioPesquisaCadastro(lote.getProprietario()));
+                    conLote.corrigirLoteCadastro(lote);
                     break;
                 case 2:
                     s = listaDeArquivos.get(i);
                     lote.setNumeroLote(s.substring(0, s.indexOf("BIN.txt")));
-                    JOptionPane.showMessageDialog(null, "BIN Lote: "+lote.getNumeroLote());
-                    System.out.println(lote.getNumeroLote());
+                    
                     result = manipulaTxt.Leitura(local, s);
-                   // proprietario = iBaseNacional.getProprietario(result);
-                   // proprietario.exibe();
-                   // conProprietario.CorrigirProprietarioPesquisa(proprietario);
-                    veic = iBaseNacional.getVeiculo(result);
-                    conVeiculo.corrigirVeiculoPesquisa(veic);
-                    lote.setVeiculo(veic);
+                    iBaseNacional.getLote(result, lote);
+                    lote.setVeiculo(conVeiculo.corrigirVeiculoPesquisa(lote.getVeiculo()));
                     conLote.corrigirLote(lote);
-                    break;  
+                    break;
                 default:
-                    JOptionPane.showMessageDialog(null, "Opção inválida");
+                    JOptionPane.showMessageDialog(null, "não: "+listaDeArquivos.get(i).toString());
                     break;
             }
+            JOptionPane.showMessageDialog(null, "Arquivo lido: "+ listaDeArquivos.get(i).toString());
         }
 
 
@@ -178,7 +173,7 @@ public class Pesquisas extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txt_localActionPerformed
 
     private void cmb_LeilaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmb_LeilaoActionPerformed
-        
+
     }//GEN-LAST:event_cmb_LeilaoActionPerformed
 
 
@@ -193,9 +188,7 @@ public class Pesquisas extends javax.swing.JInternalFrame {
         File dir = new File(local);
         ArrayList<String> lista = new ArrayList();
         for (File f : dir.listFiles()) {// lista o que possui no diretorio dir
-            if (f.isDirectory()) {//se for um diretorio/pasta true;
-                //System.out.println(f + " é um diretório");
-            } else if (f.isFile()) {//se for um arquivo true;
+            if (f.isFile()) {//se for um arquivo true;
                 lista.add(f.getName());
                 if (f.getName().contains("CAD")) {
                     tipoTxt.add(1);
@@ -203,9 +196,12 @@ public class Pesquisas extends javax.swing.JInternalFrame {
                     tipoTxt.add(2);
                 } else if (f.getName().contains("BLO")) {
                     tipoTxt.add(3);
+                }else{
+                    tipoTxt.add(9);
                 }
             }
         }
+        
         return lista;
     }
 

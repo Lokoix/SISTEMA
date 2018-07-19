@@ -165,7 +165,20 @@ public class Cadastro {
             prop.setBairro(result.get(63).toString());
         }
         
-        return prop;
+        return prop;  
     }
 
+    public void getLote(List<String> result, LoteBeans lote){
+        lote.setVeiculo(this.getVeiculo(result));
+        lote.setProprietario(this.getProprietario(result));
+        
+        if (!result.get(57).toString().equals("")) {
+            lote.setMotorBase(result.get(57).toString());
+        }
+        
+        if (!result.get(10).toString().equals("")) {
+            lote.setChassiBase(result.get(10).toString());
+        }
+        
+    }
 }

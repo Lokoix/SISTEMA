@@ -14,7 +14,7 @@ import java.util.Date;
 public class LoteBeans {
 
     private Integer id;
-    private LeilaoBeans leilao;
+    private LeilaoBeans leilao = new LeilaoBeans();
     private ProprietarioBeans proprietario = new ProprietarioBeans();
     private VeiculoBeans veiculo = new VeiculoBeans();
     private String numeroLote;
