@@ -46,13 +46,13 @@ public class Principal extends javax.swing.JFrame {
         jMenuItem6 = new javax.swing.JMenuItem();
         jMenuItem7 = new javax.swing.JMenuItem();
         jMenuItem8 = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
         jMenuItem9 = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
+        jMenu2 = new javax.swing.JMenu();
 
         jRadioButtonMenuItem1.setSelected(true);
         jRadioButtonMenuItem1.setText("jRadioButtonMenuItem1");
@@ -68,7 +68,7 @@ public class Principal extends javax.swing.JFrame {
         desktop.setLayout(desktopLayout);
         desktopLayout.setHorizontalGroup(
             desktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGap(0, 626, Short.MAX_VALUE)
         );
         desktopLayout.setVerticalGroup(
             desktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -127,9 +127,6 @@ public class Principal extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu1);
 
-        jMenu2.setText("Sair");
-        jMenuBar1.add(jMenu2);
-
         jMenu3.setText("Importar");
         jMenu3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -180,6 +177,10 @@ public class Principal extends javax.swing.JFrame {
             }
         });
         jMenuBar1.add(jMenu5);
+
+        jMenu2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/ico_sair.png"))); // NOI18N
+        jMenu2.setText("Sair");
+        jMenuBar1.add(jMenu2);
 
         setJMenuBar(jMenuBar1);
 
