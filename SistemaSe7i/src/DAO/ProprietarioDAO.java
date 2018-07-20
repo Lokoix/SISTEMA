@@ -11,6 +11,7 @@ import Utilitarios.Conexao;
 import Utilitarios.Corretores;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Types;
 import javax.swing.JOptionPane;
 
 /**
@@ -38,11 +39,11 @@ public class ProprietarioDAO {
             st.setString(7, proprietario.getBairro());
             st.setString(8, proprietario.getCep());
             
-            if (proprietario.getCidade().getId() == null) {
-                st.setString(9, null);
-                JOptionPane.showMessageDialog(null, "é nulo yeah");
+            //cidade
+            if (proprietario.getCidade().getId() != null) {
+                 st.setInt(9, proprietario.getCidade().getId());
             }else{
-                st.setInt(9, proprietario.getCidade().getId());
+                st.setNull(9, Types.NULL);
             }
             System.out.println("rtyfghrty");
             
@@ -100,7 +101,12 @@ public class ProprietarioDAO {
                 proB.setComplemento(rs.getString("complemento"));
                 proB.setBairro(rs.getString("complemento"));
                 proB.setCep(rs.getString("cep"));
-                proB.setCidade(daoCidade.carregarPorId(rs.getString("idCidade")));
+               
+               
+                if(rs.getString("idCidade") != null){
+                    proB.setCidade(daoCidade.carregarPorId(rs.getString("idCidade")));
+                }
+                              
                 proB.setDataCad(Corretores.ConverterParaJava(rs.getString("dataCad")));
                 return proB;
             }
@@ -148,7 +154,12 @@ public class ProprietarioDAO {
             pst.setString(6, proprietario.getComplemento());
             pst.setString(7, proprietario.getBairro());
             pst.setString(8, proprietario.getCep());
-            pst.setString(9, proprietario.getCidade().getId().toString());
+            
+            if (proprietario.getCidade().getId() != null) {
+                pst.setInt(9, proprietario.getId());
+            }else{
+                pst.setNull(9, Types.NULL);
+            }           
 
             pst.setInt(10, proprietario.getId());
             pst.executeUpdate();
