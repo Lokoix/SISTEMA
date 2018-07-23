@@ -74,8 +74,6 @@ public class LoteDAO {
     }
 
     public void alterar(LoteBeans lote) {
-        System.out.println("oshfoaololl");
-        lote.exibe();
         String sqlUpdate = "update lotes set idProprietario = ?, idVeiculo = ?, motorBase = ?, chassiBase = ?, observacao = ? where id = ?";
         try {
             PreparedStatement pst = Conexao.getConnection().prepareStatement(sqlUpdate);

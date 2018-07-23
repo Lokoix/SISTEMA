@@ -21,7 +21,7 @@ public class EstadoController {
             estado = daoEstado.carregar(estado);
             return estado;
         }else{
-            JOptionPane.showMessageDialog(null, "Estado não localizado","Aviso!", 1);
+            //JOptionPane.showMessageDialog(null, "Estado não localizado","Aviso!", 1);
         }
         return new EstadoBeans();
     }

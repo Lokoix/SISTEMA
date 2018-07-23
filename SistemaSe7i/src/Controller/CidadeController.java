@@ -25,10 +25,10 @@ public class CidadeController {
             cidade = daoCidade.carregar(cidade);
             return cidade;
         }else if(cidade.getNome() == null){
-            JOptionPane.showMessageDialog(null, "Cidade sem nome para o cadastro!","Aviso", 1);
+            //JOptionPane.showMessageDialog(null, "Cidade sem nome para o cadastro!","Aviso", 1);
             return new CidadeBeans();
         }else if(cidade.getEstado().getUf() == null){
-             JOptionPane.showMessageDialog(null, "Cidade sem estado para o cadastro!","Aviso", 1);
+             //JOptionPane.showMessageDialog(null, "Cidade sem estado para o cadastro!","Aviso", 1);
              return new CidadeBeans();
         }else{
             daoCidade.cadastrar(cidade);

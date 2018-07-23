@@ -19,7 +19,9 @@ public class ModeloController {
     MarcaController conMarca = new MarcaController();
     
     public ModeloBeans corrigirModelo(ModeloBeans modelo){        
+        System.out.println("1111111111");
         modelo.setMarca(conMarca.CorrigirMarca(modelo.getMarca()));
+        System.out.println("2222222222");
         
         if(daoModelo.existe(modelo)){
             modelo = daoModelo.carregar(modelo);
@@ -31,7 +33,9 @@ public class ModeloController {
             JOptionPane.showMessageDialog(null, "Modelo sem marca para o cadastro!","Aviso", 1);
              return new ModeloBeans();
         }else{
+            System.out.println("iiiiiiiiiiiiiiii");
             daoModelo.cadastrar(modelo);
+            System.out.println("jjjjjjjjjjjj");
             return this.corrigirModelo(modelo);
         }   
     }
