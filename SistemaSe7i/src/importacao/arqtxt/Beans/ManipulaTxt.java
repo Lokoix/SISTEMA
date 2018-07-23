@@ -81,72 +81,78 @@ public class ManipulaTxt {
             int count = 0;
             int a1, a2, b1, b2, c1, c2, d1, d2;
             int aux1 = 0, aux2 = 0;
-            while (matcher1.find(aux1) && matcher2.find(aux2)) {
-                //guardando posição da primeira busca
-                // [ - abre
-                a1 = matcher1.start();
-                a2 = matcher1.end();
+             while (matcher1.find(aux1) && matcher2.find(aux2)) {
+            //guardando posição da primeira busca
+            // [ - abre
+            a1 = matcher1.start();
+            a2 = matcher1.end();
 
-                // ] - fecha
-                b1 = matcher2.start();
-                b2 = matcher2.end();
+            // ] - fecha
+            b1 = matcher2.start();
+            b2 = matcher2.end();
 
-                //guardando a posição da proxima busca
-                if (!matcher1.find()) {// [ - abre
-                    break;
-                }
+            //guardando a posição da proxima busca
+            if (matcher1.find()) {// [ - abre
                 c1 = matcher1.start();
-
                 c2 = matcher1.end();
+            } else {
+                c1 = 0;
+                c2 = 0;
+            }
 
-                matcher2.find();// ] - fecha
+            if (matcher2.find()) {// ] - fecha
                 d1 = matcher2.start();
                 d2 = matcher2.end();
+            } else {
+                d1 = 0;
+                d2 = 0;
+            }
 
-                if (c2 < b1) {
-                    //System.out.println("--if 1");
+            if ((a1 < b1) && (c1 <= d1)) {
+                if (c1 < b1 && c1 != 0) {
+                    //System.out.println("if 1.1 ");
                     lista.add(sb.substring(a2, c1).trim());
                     System.out.println(count + "item: " + lista.get(count).toString());
                     count++;
                     aux1 = a2;
                     aux2 = a2;
-                } else if (c1 > d1) {
-                    // System.out.println("--if 2");
-                    String a = sb.substring(b2, d1);
-                    if (a.contains(":")) {
-                        lista.add(a.substring(a.indexOf(":") + 1).trim());
-                        System.out.println(count + "item: " + lista.get(count).toString());
-                    } else {
-                        lista.add(sb.substring(b2, d1).trim());
-                        System.out.println(count + "item: " + lista.get(count).toString());
-                    }
-                    count++;
-                    aux1 = b2;
-                    aux2 = b2;
-
-                } else if (c1 < b1) {
-                    // System.out.println("--if 3");
-                    lista.add(sb.substring(a2, c1).trim());
-                    System.out.println(count + "item: " + lista.get(count).toString());
-                    count++;
-                    aux1 = a2;
-                    aux2 = a2;
-                } else if (b1 < a1) {
-                    // System.out.println("--if 4");
-                    lista.add(sb.substring(b2, a1).trim());
-                    System.out.println(count + "item: " + lista.get(count).toString());
-                    count++;
-                    aux1 = b2;
-                    aux2 = b2;
                 } else {
-                    // System.out.println("---else");
+                    //System.out.println("if 1.2 ");
                     lista.add(sb.substring(a2, b1).trim());
                     System.out.println(count + "item: " + lista.get(count).toString());
                     count++;
                     aux1 = b2;
                     aux2 = b2;
                 }
+
+                if (c1 == 0 && d1 == 0) {
+                    break;
+                }
+            } else if (a1 < b1 && c1 > d1) {
+                //System.out.println("if 2  ");
+                lista.add(sb.substring(a2, b1).trim());
+                System.out.println(count + "item: " + lista.get(count).toString());
+                count++;
+                aux1 = c1;
+                aux2 = b1;
+            } else if (b1 < d1 && d1 < a1) {
+                //System.out.println("if 3 :  ");
+                lista.add(sb.substring(b2, d1).trim());
+                System.out.println(count + "item: " + lista.get(count).toString());
+                count++;
+                aux1 = a1;
+                aux2 = d1;
+            } else if (a1 > b1) {
+                //System.out.println("if 4 :  ");
+                lista.add(sb.substring(b2, a1).trim());
+                System.out.println(count + "item: " + lista.get(count).toString());
+                count++;
+                aux1 = a1;
+                aux2 = a1;
+            } else {
+                System.out.println("bug");
             }
+        }
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro " + e);
