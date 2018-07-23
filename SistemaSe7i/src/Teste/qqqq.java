@@ -32,7 +32,7 @@ public class qqqq {
         StringBuffer sb = new StringBuffer();
         List<String> lista = new ArrayList<>();
         try {
-            Scanner s = new Scanner(new FileReader("C:\\P. PRUDENTE MUNICIPAL 002-2018\\2622\\2622 - Judicial.txt"));
+            Scanner s = new Scanner(new FileReader("C:\\Users\\Eu\\Desktop\\Serviço Backup\\CET 37\\CET 37\\1cad\\100CAD.txt"));
             //PrintStream ps = new PrintStream("C:\\Users\\rafae\\Documents\\NetBeansProjects\\Java-III\\src\\Aula4\\Video\\saida.txt");
 
             String linha = "";
