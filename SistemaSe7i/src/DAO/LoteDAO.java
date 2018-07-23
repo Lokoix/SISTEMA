@@ -74,8 +74,6 @@ public class LoteDAO {
     }
 
     public void alterar(LoteBeans lote) {
-        System.out.println("oshfoaololl");
-        lote.exibe();
         String sqlUpdate = "update lotes set idProprietario = ?, idVeiculo = ?, motorBase = ?, chassiBase = ?, observacao = ? where id = ?";
         try {
             PreparedStatement pst = Conexao.getConnection().prepareStatement(sqlUpdate);
@@ -86,12 +84,14 @@ public class LoteDAO {
             } else {
                 pst.setNull(1, Types.NULL);
             }
+            
             //Veiculo
             if (lote.getVeiculo().getId() != null) {
                 pst.setInt(2, lote.getVeiculo().getId());
             } else {
                 pst.setNull(2, Types.NULL);
             }
+            
             //Motor Base
             pst.setString(3, lote.getMotorBase());
             //Chassi Base

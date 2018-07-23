@@ -148,18 +148,29 @@ public class Fipe extends javax.swing.JFrame {
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, true, true, true, true, true, true, true, true
+                false, false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
+        jTable1.setColumnSelectionAllowed(true);
         jScrollPane1.setViewportView(jTable1);
+        jTable1.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
         if (jTable1.getColumnModel().getColumnCount() > 0) {
             jTable1.getColumnModel().getColumn(0).setMinWidth(100);
             jTable1.getColumnModel().getColumn(0).setPreferredWidth(100);
             jTable1.getColumnModel().getColumn(0).setMaxWidth(100);
+            jTable1.getColumnModel().getColumn(0).setHeaderValue("Lote");
+            jTable1.getColumnModel().getColumn(1).setHeaderValue("Placa");
+            jTable1.getColumnModel().getColumn(2).setHeaderValue("Marca");
+            jTable1.getColumnModel().getColumn(3).setHeaderValue("Modelo");
+            jTable1.getColumnModel().getColumn(4).setHeaderValue("Fipe");
+            jTable1.getColumnModel().getColumn(5).setHeaderValue("Débito");
+            jTable1.getColumnModel().getColumn(6).setHeaderValue("Com Doc");
+            jTable1.getColumnModel().getColumn(7).setHeaderValue("Sem Doc");
+            jTable1.getColumnModel().getColumn(8).setHeaderValue("Classificação");
         }
 
         jLabel13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/2.jpeg"))); // NOI18N
@@ -213,8 +224,7 @@ public class Fipe extends javax.swing.JFrame {
                                         .addGap(64, 64, 64)
                                         .addComponent(txt_totalGeral, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel13)
-                                .addGap(0, 0, 0)))
+                                .addComponent(jLabel13)))
                         .addContainerGap())))
         );
         layout.setVerticalGroup(
@@ -271,7 +281,7 @@ public class Fipe extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        pack();
+        setBounds(1280, 728, 1166, 743);
     }// </editor-fold>//GEN-END:initComponents
 
     /**

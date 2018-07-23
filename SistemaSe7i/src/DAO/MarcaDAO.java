@@ -22,7 +22,7 @@ public class MarcaDAO {
         try {
             PreparedStatement st = Conexao.getConnection().prepareStatement(sqlInsertion);
             st.setString(1, marca.getNome());
-            st.execute();
+            st.executeUpdate();
             Conexao.getConnection().commit();           
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro MarcaDAO(cadastrar): " + e);

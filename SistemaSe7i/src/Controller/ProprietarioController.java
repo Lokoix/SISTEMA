@@ -17,13 +17,13 @@ public class ProprietarioController {
     ProprietarioDAO daoProprietario = new ProprietarioDAO();
     CidadeController conCidade = new CidadeController();
 
-
     public ProprietarioBeans CorrigirProprietarioPesquisa(ProprietarioBeans proprietario) {
+        ProprietarioBeans base = new ProprietarioBeans();
         if (daoProprietario.existe(proprietario)) {//SE EXISTE
             proprietario.setCidade(conCidade.CorrigirCidade(proprietario.getCidade()));
 
-            ProprietarioBeans base = daoProprietario.carregar(proprietario); //CARREGA PROBRIETARIO BANCO
-            base = compararProprietarios(proprietario, base);//COMPARA OS PROPRIETARIOS
+            base = daoProprietario.carregar(proprietario); //CARREGA PROBRIETARIO BANCO
+            compararProprietarios(proprietario, base);//COMPARA OS PROPRIETARIOS
             daoProprietario.alterar(base);//ALTERA O PROPRIETARIO
             return base;
         } else { //SE NÃO
@@ -34,17 +34,12 @@ public class ProprietarioController {
     }
 
     public ProprietarioBeans CorrigirProprietarioPesquisaCadastro(ProprietarioBeans proprietario) {
+        ProprietarioBeans base = new ProprietarioBeans();
         if (daoProprietario.existe(proprietario)) {//SE EXISTE
             proprietario.setCidade(conCidade.CorrigirCidade(proprietario.getCidade()));
 
-            ProprietarioBeans base = daoProprietario.carregar(proprietario); //CARREGA PROBRIETARIO BANCO
-            
-            if (proprietario.getCpfCpnpj().length() == 14) {
-                base = compararProprietarios(proprietario, base);//COMPARA OS PROPRIETARIOS
-            }else{
-                base = compararProprietarios(base, proprietario);//COMPARA OS PROPRIETARIOS
-            }
-     
+            base = daoProprietario.carregar(proprietario); //CARREGA PROBRIETARIO BANCO
+            compararProprietarios(proprietario, base);//COMPARA OS PROPRIETARIOS
             daoProprietario.alterar(base);//ALTERA O PROPRIETARIO
             return base;
         } else { //SE NÃO
@@ -54,57 +49,55 @@ public class ProprietarioController {
         }
     }
 
-    public ProprietarioBeans compararProprietarios(ProprietarioBeans a, ProprietarioBeans b) {
+    public void compararProprietarios(ProprietarioBeans proprietario, ProprietarioBeans base) {
         //id
-        if (b.getId() == null) {
-            b.setId(a.getId());
+        if (base.getId() == null) {
+            base.setId(proprietario.getId());
         }
 
         //nome
-        if (b.getNome() == null) {
-            b.setNome(a.getNome());
+        if (base.getNome() == null) {
+            base.setNome(proprietario.getNome());
         }
 
         //cpfcnpj
-        if (b.getCpfCpnpj() == null) {
-            b.setCpfCpnpj(a.getCpfCpnpj());
+        if (base.getCpfCpnpj() == null) {
+            base.setCpfCpnpj(proprietario.getCpfCpnpj());
         }
 
         //rg
-        if (b.getRg() == null) {
-            b.setRg(a.getRg());
+        if (base.getRg() == null) {
+            base.setRg(proprietario.getRg());
         }
 
         //endereco
-        if (b.getEndereco() == null) {
-            b.setEndereco(a.getEndereco());
+        if (base.getEndereco() == null) {
+            base.setEndereco(proprietario.getEndereco());
         }
 
         //endNumero
-        if (b.getEndNumero() == null) {
-            b.setEndNumero(a.getEndNumero());
+        if (base.getEndNumero() == null) {
+            base.setEndNumero(proprietario.getEndNumero());
         }
 
         //complemento
-        if (b.getComplemento() == null) {
-            b.setComplemento(a.getComplemento());
+        if (base.getComplemento() == null) {
+            base.setComplemento(proprietario.getComplemento());
         }
 
         //bairro
-        if (b.getBairro() == null) {
-            b.setBairro(a.getBairro());
+        if (base.getBairro() == null) {
+            base.setBairro(proprietario.getBairro());
         }
 
         //cep
-        if (b.getCep() == null) {
-            b.setCep(a.getCep());
+        if (base.getCep() == null) {
+            base.setCep(proprietario.getCep());
         }
 
         //cidade
-        if (b.getCidade().getId() == null) {
-            b.setCidade(a.getCidade());
+        if (base.getCidade().getId() == null) {
+            base.setCidade(proprietario.getCidade());
         }
-
-        return b;
     }
 }
