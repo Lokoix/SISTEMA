@@ -150,6 +150,7 @@ public class ManipulaTxt {
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro " + e);
+            return lista;
         }
         return lista;
     }

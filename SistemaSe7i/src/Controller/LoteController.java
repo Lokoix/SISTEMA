@@ -23,10 +23,6 @@ public class LoteController {
         if (daoLote.existe(lote)) {
             LoteBeans base = daoLote.carregar(lote);
             this.compararLote(lote, base);
-            System.out.println("EXIBINDO A BASE");
-            base.exibe();
-            System.out.println("\n\n EXIBINDO O LOTE");
-            lote.exibe();
             daoLote.alterar(base);
             
         } else {

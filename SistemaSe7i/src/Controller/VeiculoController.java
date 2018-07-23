@@ -51,6 +51,7 @@ public class VeiculoController {
             
             return base;
         } else { 
+            veiculo.exibe();
             veiculo.setModelo(conModelo.corrigirModelo(veiculo.getModelo()));
             veiculo.setCidade(conCidade.CorrigirCidade(veiculo.getCidade()));
             daoVeiculo.cadastrar(veiculo);

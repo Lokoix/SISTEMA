@@ -70,7 +70,7 @@ public class Pesquisas extends javax.swing.JInternalFrame {
 
         setClosable(true);
 
-        txt_local.setText("C:\\Users\\rafae\\Desktop\\interface\\Teste de Lotes\\");
+        txt_local.setText("C:\\Users\\rafae\\Desktop\\interface\\Cad\\Nova pasta\\");
             txt_local.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
                     txt_localActionPerformed(evt);
@@ -140,31 +140,37 @@ public class Pesquisas extends javax.swing.JInternalFrame {
             String s;
             switch (tipoTxt.get(i)) {
                 case 1:
-                    s = listaDeArquivos.get(i);                                                 
-                    lote.setNumeroLote(s.substring(0, s.indexOf("CAD.txt")));                                     
+                    s = listaDeArquivos.get(i);
+                    lote.setNumeroLote(s.substring(0, s.indexOf("CAD.txt")));
+                    result = manipulaTxt.Leitura(local, s);
 
-                    result = manipulaTxt.Leitura(local, s);                                       
-                    iCadastro.getLote(result, lote);
-                    lote.setVeiculo(conVeiculo.corrigirVeiculoPesquisaCadastro(lote.getVeiculo()));
-                    lote.setProprietario(conProprietario.CorrigirProprietarioPesquisaCadastro(lote.getProprietario()));
-                    conLote.corrigirLoteCadastro(lote);
-                    break;
+                    if (result.size() == 85) {
+                        iCadastro.getLote(result, lote);
+                        lote.setVeiculo(conVeiculo.corrigirVeiculoPesquisaCadastro(lote.getVeiculo()));
+                        lote.setProprietario(conProprietario.CorrigirProprietarioPesquisaCadastro(lote.getProprietario()));
+                        conLote.corrigirLoteCadastro(lote);
+                        break;
+                    }else{
+                        JOptionPane.showMessageDialog(null, "interface difere: " + listaDeArquivos.get(i).toString());
+                        break;
+                    }
+
                 case 2:
                     s = listaDeArquivos.get(i);
                     lote.setNumeroLote(s.substring(0, s.indexOf("BIN.txt")));
-                    
+
                     result = manipulaTxt.Leitura(local, s);
                     iBaseNacional.getLote(result, lote);
                     lote.setVeiculo(conVeiculo.corrigirVeiculoPesquisa(lote.getVeiculo()));
                     conLote.corrigirLote(lote);
                     break;
                 default:
-                    JOptionPane.showMessageDialog(null, "não: "+listaDeArquivos.get(i).toString());
+                    JOptionPane.showMessageDialog(null, "não: " + listaDeArquivos.get(i).toString());
                     break;
             }
-            JOptionPane.showMessageDialog(null, "Arquivo lido: "+ listaDeArquivos.get(i).toString());
+            //JOptionPane.showMessageDialog(null, "Arquivo lido: " + listaDeArquivos.get(i).toString());
         }
-
+        JOptionPane.showMessageDialog(null, "ACABOOO");
 
     }//GEN-LAST:event_btn_iniciarActionPerformed
 
@@ -196,12 +202,12 @@ public class Pesquisas extends javax.swing.JInternalFrame {
                     tipoTxt.add(2);
                 } else if (f.getName().contains("BLO")) {
                     tipoTxt.add(3);
-                }else{
+                } else {
                     tipoTxt.add(9);
                 }
             }
         }
-        
+
         return lista;
     }
 

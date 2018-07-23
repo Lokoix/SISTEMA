@@ -32,7 +32,7 @@ public class qqqq {
         StringBuffer sb = new StringBuffer();
         List<String> lista = new ArrayList<>();
         try {
-            Scanner s = new Scanner(new FileReader("C:\\P. PRUDENTE MUNICIPAL 002-2018\\2622\\2622 - Judicial.txt"));
+            Scanner s = new Scanner(new FileReader("C:\\Users\\rafae\\Desktop\\interface\\Cad\\87CAD.txt"));
             //PrintStream ps = new PrintStream("C:\\Users\\rafae\\Documents\\NetBeansProjects\\Java-III\\src\\Aula4\\Video\\saida.txt");
 
             String linha = "";
@@ -73,26 +73,71 @@ public class qqqq {
             b2 = matcher2.end();
 
             //guardando a posição da proxima busca
-            if (!matcher1.find()) {// [ - abre
-                break;
+            if (matcher1.find()) {// [ - abre
+                c1 = matcher1.start();
+                c2 = matcher1.end();
+            }else{
+                c1 = 0;
+                c2 = 0;
             }
-            c1 = matcher1.start();
+            
 
-            c2 = matcher1.end();
-
-            matcher2.find();// ] - fecha
-            d1 = matcher2.start();
+            if(matcher2.find()){// ] - fecha
+                d1 = matcher2.start();
             d2 = matcher2.end();
+            }else{
+                d1=0;
+                d2=0;
+            }    
+            
+            if((a1 < b1) && (c1 <= d1))
+            {
+               // System.out.println("if 1 : tudo certo ");
+                lista.add(sb.substring(a2, b1).trim());
+                System.out.println(count + "item: " + lista.get(count).toString());
+                count++;
+                aux1 = b2;
+                aux2 = b2;
+                if(c1==0 && d1==0){
+                    break;
+                }
+            }else if(a1 < b1 && c1 > d1){
+               // System.out.println("if 2 : certo o primeiro, errado o proximo ");
+                lista.add(sb.substring(a2, b1).trim());
+                System.out.println(count + "item: " + lista.get(count).toString());
+                count++;
+                aux1 = c1;
+                aux2 = b1;   
+            }else if(b1 < d1 && d1 < a1){
+               // System.out.println("if 3 :  ");
+                lista.add(sb.substring(b2, d1).trim());
+                System.out.println(count + "item: " + lista.get(count).toString());
+                count++;
+                aux1 = a1;
+                aux2 = d1;
+            }else if(a1 > b1 ){
+               // System.out.println("if 4 :  ");
+                lista.add(sb.substring(b2, a1).trim());
+                System.out.println(count + "item: " + lista.get(count).toString());
+                count++;
+                aux1 = a1;
+                aux2 = a1;
+            }else{
+                System.out.println("bug");
+            }
+            
+            
+            
 
-            if (c2 < b1) {
-                //System.out.println("--if 1");
+            /*if (c2 < b1) {
+                System.out.println("--if 1");
                 lista.add(sb.substring(a2, c1).trim());
                 System.out.println(count + "item: " + lista.get(count).toString());
                 count++;
                 aux1 = a2;
                 aux2 = a2;
             } else if (c1 > d1) {
-                // System.out.println("--if 2");
+                 System.out.println("--if 2");
                 String a = sb.substring(b2, d1);
                 if (a.contains(":")) {
                     lista.add(a.substring(a.indexOf(":") + 1).trim());
@@ -106,28 +151,30 @@ public class qqqq {
                 aux2 = b2;
 
             } else if (c1 < b1) {
-                // System.out.println("--if 3");
+                 System.out.println("--if 3");
                 lista.add(sb.substring(a2, c1).trim());
                 System.out.println(count + "item: " + lista.get(count).toString());
                 count++;
                 aux1 = a2;
                 aux2 = a2;
             } else if (b1 < a1) {
-                // System.out.println("--if 4");
+                System.out.println("--if 4");
                 lista.add(sb.substring(b2, a1).trim());
                 System.out.println(count + "item: " + lista.get(count).toString());
                 count++;
                 aux1 = b2;
                 aux2 = b2;
             } else {
-                // System.out.println("---else");
+                 System.out.println("---else");
                 lista.add(sb.substring(a2, b1).trim());
                 System.out.println(count + "item: " + lista.get(count).toString());
                 count++;
                 aux1 = b2;
                 aux2 = b2;
-            }
+            }*/
+            
         }
+        System.out.println(lista.size());
 
     }
 }
