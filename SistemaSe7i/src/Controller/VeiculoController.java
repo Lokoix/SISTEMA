@@ -40,8 +40,7 @@ public class VeiculoController {
         if (daoVeiculo.existe(veiculo)) {//SE EXISTE
             veiculo.setModelo(conModelo.corrigirModelo(veiculo.getModelo()));
             veiculo.setCidade(conCidade.CorrigirCidade(veiculo.getCidade()));
-            
-                   
+
             VeiculoBeans base = daoVeiculo.carregar(veiculo);  //CARREGA veiculo do BANCO
             base.exibe();
             veiculo.exibe();

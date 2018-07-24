@@ -71,7 +71,7 @@ public class LoteController {
         if (lote.getVeiculo().getId() != null && base.getVeiculo().getId() == null) {
             base.setVeiculo(lote.getVeiculo());
         }
-        if (lote.getVeiculo().getId() != base.getVeiculo().getId()) {
+        if (lote.getVeiculo().getId().intValue() != base.getVeiculo().getId().intValue()) {
             JOptionPane.showMessageDialog(null, "Pesquisas do lote " + base.getNumeroLote() + ", consta Veiculos diferentes!", "Aviso!", 2);
         }
     }
@@ -80,8 +80,10 @@ public class LoteController {
         if (lote.getProprietario().getId() != null && base.getProprietario().getId() == null) {
             base.setProprietario(lote.getProprietario());
         }
-        if (lote.getVeiculo().getId() != base.getVeiculo().getId()) {
-            JOptionPane.showMessageDialog(null, "Pesquisas do lote " + base.getNumeroLote() + ", consta Proprietarios diferentes!", "Aviso!", 2);
+        
+        if (lote.getProprietario().getId() != null && lote.getProprietario().getId().intValue() != base.getProprietario().getId().intValue()){
+            JOptionPane.showMessageDialog(null, "Pesquisas do lote " + base.getNumeroLote() + ", consta Proprietarios diferentes!\n"
+                    +"Proprietario lote: "+lote.getProprietario().getId()+ " / base: "+base.getProprietario().getId(), "Aviso!", 2);
         }
     }
 

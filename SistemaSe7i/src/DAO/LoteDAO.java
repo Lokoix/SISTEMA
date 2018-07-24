@@ -5,6 +5,7 @@
  */
 package DAO;
 
+import Beans.LeilaoBeans;
 import Beans.LoteBeans;
 import Controller.ProprietarioController;
 import Controller.VeiculoController;
@@ -13,6 +14,7 @@ import Utilitarios.Corretores;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Types;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 /**
@@ -84,14 +86,14 @@ public class LoteDAO {
             } else {
                 pst.setNull(1, Types.NULL);
             }
-            
+
             //Veiculo
             if (lote.getVeiculo().getId() != null) {
                 pst.setInt(2, lote.getVeiculo().getId());
             } else {
                 pst.setNull(2, Types.NULL);
             }
-            
+
             //Motor Base
             pst.setString(3, lote.getMotorBase());
             //Chassi Base
@@ -141,6 +143,40 @@ public class LoteDAO {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro LoteDAO(cadastrar): " + e);
         }
+    }
+
+    public ArrayList<LoteBeans> buscarTodosLotesDoLeilao(LeilaoBeans leilao) {
+        ArrayList<LoteBeans> lotes = new ArrayList<>();
+        LoteBeans lote;
+        try {
+            String sql = "SELECT lotes.*, veiculos.placa, marcas.nome, modelos.nome FROM lotes, veiculos, marcas, modelos WHERE lotes.idVeiculo = veiculos.id "
+                    + "AND veiculos.idModelo = modelos.id AND modelos.idMarca = marcas.id AND lotes.idLeilao = ? order by lotes.numeroLote ASC";
+            PreparedStatement st = Conexao.getConnection().prepareStatement(sql);
+            st.setInt(1, leilao.getId());
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                lote = new LoteBeans();
+                lote.setId(rs.getInt("id"));
+                lote.setNumeroLote(rs.getString("numeroLote"));
+                lote.getLeilao().setId(rs.getInt("idLeilao"));
+                lote.getProprietario().setId(rs.getInt("idProprietario"));
+                lote.getVeiculo().setId(rs.getInt("idVeiculo"));
+                lote.getVeiculo().setPlaca(rs.getString("veiculos.placa"));
+                lote.getVeiculo().getModelo().setNome(rs.getString("modelos.nome"));
+                lote.getVeiculo().getModelo().getMarca().setNome(rs.getString("marcas.nome"));
+                lote.getComunicao().setId(rs.getInt("idComunicacao"));
+                lote.getAlienacao().setId(rs.getInt("idAlienacao"));
+                lote.setDataCad(rs.getDate("dataCad").toString());
+                lote.setObservacao(rs.getString("observacao"));
+                lote.setMotorBase(rs.getString("motorBase"));
+                lote.setChassiBase(rs.getString("chassiBase"));
+                lote.setFipe(rs.getDouble("fipe"));
+                lote.setDebito(rs.getDouble("debito"));
+                lotes.add(lote);
+            }
+        } catch (Exception e) {
+        }
+        return lotes;
     }
 
 }

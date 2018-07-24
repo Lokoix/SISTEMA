@@ -32,15 +32,9 @@ public class qqqq {
         StringBuffer sb = new StringBuffer();
         List<String> lista = new ArrayList<>();
         try {
-<<<<<<< HEAD
-            Scanner s = new Scanner(new FileReader("C:\\Users\\rafae\\Desktop\\interface\\Cad\\1CAD.txt"));
-=======
-<<<<<<< HEAD
-            Scanner s = new Scanner(new FileReader("C:\\Users\\Eu\\Desktop\\Serviço Backup\\CET 37\\CET 37\\1cad\\100CAD.txt"));
-=======
-            Scanner s = new Scanner(new FileReader("C:\\Users\\rafae\\Desktop\\interface\\Cad\\87CAD.txt"));
->>>>>>> acb18ec14ae548f908d08f04d743fc23163edef8
->>>>>>> 723455223494775f2b8d6bba87cc0e5a7380d3f3
+
+            Scanner s = new Scanner(new FileReader("C:\\Users\\rafae\\Desktop\\interface\\Cad\\112CAD.txt"));
+
             //PrintStream ps = new PrintStream("C:\\Users\\rafae\\Documents\\NetBeansProjects\\Java-III\\src\\Aula4\\Video\\saida.txt");
 
             String linha = "";

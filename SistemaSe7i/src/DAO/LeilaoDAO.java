@@ -25,6 +25,8 @@ import javax.swing.table.DefaultTableModel;
  */
 public class LeilaoDAO {
 
+   
+
     public void cadastrar(LeilaoBeans leilao) {
 
         String sql = "insert into leiloes(descricao, dataInicio, dataPrevista, edital, custoLaudo, desvDoc, desvSemDoc, desvSucata,"
@@ -222,4 +224,6 @@ public class LeilaoDAO {
         return leiloes;
 
     }
+    
+    
 }

@@ -244,7 +244,7 @@ public class VeiculoDAO {
             pst.setString(13, Corretores.ConverterParaSQL(automovel.getLicenciamento()));
             if (automovel.getCidade().getId() == null) {
                 pst.setString(14, null);
-                JOptionPane.showMessageDialog(null, "é nulo yeah");
+                //JOptionPane.showMessageDialog(null, "é nulo yeah");
             } else {
                 pst.setInt(14, automovel.getCidade().getId());
             }
