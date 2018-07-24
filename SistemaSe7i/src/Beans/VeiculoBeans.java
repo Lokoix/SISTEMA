@@ -5,6 +5,9 @@
  */
 package Beans;
 
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+
 /**
  *
  * @author rafae
@@ -221,5 +224,17 @@ public class VeiculoBeans {
                 + "\nCIDADE ID: " + this.cidade.getId());
         this.modelo.exibe();
         this.cidade.exibe();
+    }
+    
+    public void ValidaNumero(JTextField Numero) {
+        long valor;
+        if (Numero.getText().length() != 0) {
+            try {
+                valor = Long.parseLong(Numero.getText());
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(null, "Esse Campo só aceita números", "Informação", JOptionPane.INFORMATION_MESSAGE);
+                Numero.grabFocus();
+            }
+        }
     }
 }
