@@ -106,10 +106,10 @@ public class Leilao extends javax.swing.JInternalFrame {
             leilaoB.setCustoLaudo(Double.parseDouble(txt_custoLaudo.getText()));
         }
         if (!txt_doc.getText().equals("")) {
-            leilaoB.setDesvComDoc(Double.parseDouble(txt_doc.getText()));
+            leilaoB.setDesvComDoc(Integer.parseInt(txt_doc.getText()));
         }
         if (!txt_noDoc.getText().equals("")) {
-            leilaoB.setDesvSemDoc(Double.parseDouble(txt_noDoc.getText()));
+            leilaoB.setDesvSemDoc(Integer.parseInt(txt_noDoc.getText()));
         }
         if (!txt_sucata.getText().equals("")) {
             leilaoB.setDesvSucata(Double.parseDouble(txt_sucata.getText()));

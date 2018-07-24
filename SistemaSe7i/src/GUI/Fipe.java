@@ -9,6 +9,7 @@ import Beans.LeilaoBeans;
 import Beans.LoteBeans;
 import DAO.LeilaoDAO;
 import DAO.LoteDAO;
+import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -27,14 +28,13 @@ public class Fipe extends javax.swing.JFrame {
         initComponents();
         loteD = new LoteDAO();
         leilaoD = new LeilaoDAO();
-        Modelo = (DefaultTableModel) tb_fipe.getModel();
         tb_fipe.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        Modelo = (DefaultTableModel) tb_fipe.getModel();
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         cmb_leilao.addItem("Selecionar Leilao");
         for (LeilaoBeans leilao : leilaoD.buscarTodosLeiloes()) {
             cmb_leilao.addItem(leilao);
         }
-
     }
 
     /**
@@ -158,11 +158,11 @@ public class Fipe extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Lote", "Placa", "Marca", "Modelo", "Fipe", "Débito", "Com Doc", "Sem Doc", "Classificação"
+                "Lote", "Placa", "Marca", "Modelo", "Fipe", "Débito", "Com Doc", "Sem Doc", "Sucata", "Classificação"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -173,18 +173,10 @@ public class Fipe extends javax.swing.JFrame {
         jScrollPane1.setViewportView(tb_fipe);
         tb_fipe.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
         if (tb_fipe.getColumnModel().getColumnCount() > 0) {
-            tb_fipe.getColumnModel().getColumn(0).setResizable(false);
             tb_fipe.getColumnModel().getColumn(0).setPreferredWidth(100);
-            tb_fipe.getColumnModel().getColumn(1).setResizable(false);
             tb_fipe.getColumnModel().getColumn(1).setPreferredWidth(100);
-            tb_fipe.getColumnModel().getColumn(2).setResizable(false);
-            tb_fipe.getColumnModel().getColumn(3).setResizable(false);
-            tb_fipe.getColumnModel().getColumn(4).setResizable(false);
-            tb_fipe.getColumnModel().getColumn(5).setResizable(false);
             tb_fipe.getColumnModel().getColumn(6).setResizable(false);
-            tb_fipe.getColumnModel().getColumn(7).setResizable(false);
-            tb_fipe.getColumnModel().getColumn(8).setResizable(false);
-            tb_fipe.getColumnModel().getColumn(8).setPreferredWidth(300);
+            tb_fipe.getColumnModel().getColumn(9).setPreferredWidth(300);
         }
 
         jLabel13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/2.jpeg"))); // NOI18N
@@ -216,14 +208,14 @@ public class Fipe extends javax.swing.JFrame {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(txt_totalDoc, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txt_desvDoc, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel2))
+                                    .addComponent(jLabel2)
+                                    .addComponent(txt_desvDoc, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(txt_totalFVU, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel3)
                                     .addComponent(jLabel7)
-                                    .addComponent(txt_desvFVU, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel3))
+                                    .addComponent(txt_desvFVU, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
@@ -234,7 +226,7 @@ public class Fipe extends javax.swing.JFrame {
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(txt_Totalsucata, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(txt_desvSucata, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addComponent(txt_desvSucata, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addGap(64, 64, 64)
                                         .addComponent(txt_totalGeral, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -303,11 +295,15 @@ public class Fipe extends javax.swing.JFrame {
         if (objeto instanceof LeilaoBeans) {
             Modelo.setNumRows(0);
             LeilaoBeans leilao = (LeilaoBeans) objeto;
+            txt_desvDoc.setText(Integer.toString(leilao.getDesvComDoc()) + "%");
+            txt_desvFVU.setText(Integer.toString(leilao.getDesvSemDoc()) + "%");
+            txt_desvSucata.setText(Double.toString(leilao.getDesvSucata()).replace(".", ","));
             for (LoteBeans l : loteD.buscarTodosLotesDoLeilao(leilao)) {
-                Modelo.addRow(new Object[]{l.getNumeroLote(), l.getVeiculo().getPlaca(), 
-                    l.getVeiculo().getModelo().getMarca().getNome(), l.getVeiculo().getModelo().getNome(), 
+                Modelo.addRow(new Object[]{l.getNumeroLote(), l.getVeiculo().getPlaca(),
+                    l.getVeiculo().getModelo().getMarca().getNome(), l.getVeiculo().getModelo().getNome(),
                     l.getFipe(), l.getDebito(), l.getDebito(), l.getFipe(), l.getObservacao()});
             }
+            
         }
     }//GEN-LAST:event_cmb_leilaoActionPerformed
 

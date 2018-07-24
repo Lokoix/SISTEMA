@@ -30,6 +30,24 @@ public class VeiculoBeans {
     private CidadeBeans cidade = new CidadeBeans();
     private String apreencao;
     private String dataCad;
+    private double fipe;
+    private double debito;
+
+    public double getFipe() {
+        return fipe;
+    }
+
+    public void setFipe(double fipe) {
+        this.fipe = fipe;
+    }
+
+    public double getDebito() {
+        return debito;
+    }
+
+    public void setDebito(double debito) {
+        this.debito = debito;
+    }
 
     public Integer getId() {
         return id;
