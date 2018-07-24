@@ -19,171 +19,93 @@ import java.util.List;
  */
 public class BaseNacional {
 
-    private VeiculoBeans veic = new VeiculoBeans();
-    private ModeloDAO modD = new ModeloDAO();
-    private CidadeDAO cidD = new CidadeDAO();
-
-    public void getLote(List<String> result, LoteBeans lote) {
-        lote.setVeiculo(this.getVeiculo(result));
-
-        if (!result.get(28).toString().equals("")) {
-            lote.setMotorBase(result.get(28).toString());
-        }
-
-        if (!result.get(7).toString().equals("")) {
-            lote.setChassiBase(result.get(7).toString());
-        }
-
-    }
-
-    public VeiculoBeans getVeiculo(List<String> result) {
-        VeiculoBeans veic = new VeiculoBeans();
-        ModeloDAO modD = new ModeloDAO();
-        CidadeDAO cidD = new CidadeDAO();
-
+    public void getLoteBaseNacional1(List<String> result, LoteBeans lote) {
+        //<--------VEICULO------->
         //Placa
-        if (!result.get(4).toString().equals("")) {
-            veic.setPlaca(result.get(4).toString());
+        if (!result.get(5).toString().equals("")) {
+            lote.getVeiculo().setPlaca(result.get(5).toString());
         }
 
         //Renavam
-        if (!result.get(9).toString().equals("")) {
-            veic.setRenavam(result.get(9).toString());
+        if (!result.get(10).toString().equals("")) {
+            lote.getVeiculo().setRenavam(result.get(10).toString());
         }
 
         //Modelo
-        if (!result.get(11).toString().equals("")) {
-            veic.getModelo().setNome(result.get(11).toString().substring(result.get(11).indexOf("/") + 1));
-            veic.getModelo().getMarca().setNome(result.get(11).toString().substring(0, result.get(11).indexOf("/")));
-            System.out.println(veic.getModelo().getNome());
-            System.out.println(veic.getModelo().getMarca().getNome());
+        if (!result.get(12).toString().equals("")) {
+            lote.getVeiculo().getModelo().setNome(result.get(12).toString().substring(result.get(12).indexOf("/") + 1));
+            lote.getVeiculo().getModelo().getMarca().setNome(result.get(12).toString().substring(0, result.get(12).indexOf("/")));
         }
 
         //Cor
-        if (!result.get(14).toString().equals("")) {
-            veic.setCor(result.get(14).toString());
+        if (!result.get(15).toString().equals("")) {
+            lote.getVeiculo().setCor(result.get(15).toString());
         }
 
         //Ano Fabricacao
-        if (!result.get(16).toString().equals("")) {
-            veic.setAnoFab(result.get(16).toString());
+        if (!result.get(17).toString().equals("")) {
+            lote.getVeiculo().setAnoFab(result.get(17).toString());
         }
 
         //Ano Modelo
-        if (!result.get(17).toString().equals("")) {
-            veic.setAnoMod(result.get(17).toString());
+        if (!result.get(18).toString().equals("")) {
+            lote.getVeiculo().setAnoMod(result.get(18).toString());
         }
 
         //Combustivel
-        if (!result.get(18).toString().equals("")) {
-            veic.setCombustivel(result.get(18).toString());
+        if (!result.get(19).toString().equals("")) {
+            lote.getVeiculo().setCombustivel(result.get(19).toString());
         }
 
         //Categoria
-        // if (!result.get(19).toString().equals("")) {
-        //     veic.setCategoria(result.get(19).toString());
-        // }
+        if (!result.get(14).toString().equals("")) {
+            lote.getVeiculo().setCategoria(result.get(14).toString());
+        }
+
         //Tipo
-        //if (!result.get(20).toString().equals("")) {
-        //    veic.setTipo(result.get(20).toString());
-        //}
+        if (!result.get(13).toString().equals("")) {
+            lote.getVeiculo().setTipo(result.get(13).toString());
+        }
+
         //Especie
-        //if (!result.get(22).toString().equals("")) {
-        //    veic.setEspecie(result.get(22).toString());
-        //}
+        if (!result.get(16).toString().equals("")) {
+            lote.getVeiculo().setEspecie(result.get(16).toString());
+        }
+
         //Potencia
-        if (!result.get(20).toString().equals("")) {
-            veic.setPotencia(result.get(20).toString());
+        if (!result.get(21).toString().equals("")) {
+            lote.getVeiculo().setPotencia(result.get(21).toString());
         }
 
         //Cilindrada
-        if (!result.get(21).toString().equals("")) {
-            veic.setCilidrada(result.get(21).toString());
+        if (!result.get(22).toString().equals("")) {
+            lote.getVeiculo().setCilidrada(result.get(22).toString());
         }
 
         //Licenciamento
-        //if (!result.get(37).toString().equals("")) {
-        //    veic.setLicenciamento(result.get(37).toString());
-        //}
-        //Cidade id
-        //if (!result.get(7).toString().equals("")) {
-        //    veic.getCidade().setId(Integer.parseInt(result.get(7).toString()));
-        //}
-        //Cidade nome
-        System.out.println("!!!!!!!: " + result.get(5));
-        if (!result.get(5).toString().equals("")) {
-            veic.getCidade().setNome(result.get(5).toString());
-        }
-        //Cidade estado uf
-        if (!result.get(6).toString().equals("")) {
-            veic.getCidade().getEstado().setUf(result.get(6).toString());
-        }
-
-        veic.exibe();
-        return veic;
-    }
-
-    public ProprietarioBeans getProprietario(ArrayList<String> result) {
-        ProprietarioBeans prop = new ProprietarioBeans();
-
-        //cpf ou cnpj
-        if (result.get(46).toString().substring(0, 3).equals("000")) {
-            prop.setCpfCpnpj(result.get(46).toString().substring(3));
-        } else {
-            prop.setCpfCpnpj(result.get(46).toString());
-        }
-
-        /*//Nome
-        if (!result.get(58).toString().equals("")) {
-            prop.setNome(result.get(58).toString());
-        }
-
-        // Endereco
-        if (!result.get(60).toString().equals("")) {
-            prop.setEndereco(result.get(60).toString());
-        }
-
-        //Complemento
-        if (!result.get(62).toString().equals("")) {
-            prop.setComplemento(result.get(62).toString());
-        }
         
-        //Endereco numero
-        if (!result.get(61).toString().equals("")) {
-            prop.setEndNumero(result.get(61).toString());
-        }
-
-        //cep
-        if (!result.get(64).toString().equals("")) {
-            prop.setCep(result.get(64).toString());
-        }
+        //Cidade id
+        
 
         //Cidade nome
-        if (!result.get(66).toString().equals("")) {
-            prop.getCidade().setNome(result.get(66).toString());
+        if (!result.get(6).toString().equals("")) {
+            lote.getVeiculo().getCidade().setNome(result.get(6).toString());
         }
         //Cidade estado uf
-        if (!result.get(68).toString().equals("")) {
-            prop.getCidade().getEstado().setUf(result.get(68).toString());
+        if (!result.get(7).toString().equals("")) {
+            lote.getVeiculo().getCidade().getEstado().setUf(result.get(7).toString());
+        }
+        //<------ Fim de Veiculo --------->
+
+        //<-------- Inicio Lote ---------->
+        if (!result.get(29).toString().equals("")) {
+            lote.setMotorBase(result.get(29).toString());
         }
 
-        //rg
-        if (!result.get(67).toString().equals("")) {
-            prop.setRg(result.get(67).toString());
+        if (!result.get(8).toString().equals("")) {
+            lote.setChassiBase(result.get(8).toString());
         }
+        //<-------- Fim Lote ----------------->
 
-        //cpf ou cnpj
-        if (result.get(69).toString().substring(0, 3).equals("000")) {
-            prop.setCpfCpnpj(result.get(69).toString().substring(3));
-        } else {
-            prop.setCpfCpnpj(result.get(69).toString());
-        }
-
-        //bairro
-        if (!result.get(63).toString().equals("")) {
-            prop.setBairro(result.get(63).toString());
-        }*/
-        return prop;
     }
-
 }
