@@ -306,7 +306,7 @@ public class Fipe extends javax.swing.JFrame {
             for (LoteBeans l : loteD.buscarTodosLotesDoLeilao(leilao)) {
                 Modelo.addRow(new Object[]{l.getNumeroLote(), l.getVeiculo().getPlaca(), 
                     l.getVeiculo().getModelo().getMarca().getNome(), l.getVeiculo().getModelo().getNome(), 
-                    l.getFipe(), l.getDebito(), l.getFipe(), l.getFipe(), l.getObservacao()});
+                    l.getFipe(), l.getDebito(), l.getDebito(), l.getFipe(), l.getObservacao()});
             }
         }
     }//GEN-LAST:event_cmb_leilaoActionPerformed
