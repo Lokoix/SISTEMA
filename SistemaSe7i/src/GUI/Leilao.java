@@ -27,6 +27,7 @@ import java.util.logging.Logger;
 import javax.swing.AbstractAction;
 import javax.swing.JDesktopPane;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.table.DefaultTableModel;
 
@@ -95,24 +96,33 @@ public class Leilao extends javax.swing.JInternalFrame {
             cbox_cidade.addItem(cidade);
 
         }
-
+        txt_notificacao.setLineWrap(true);
     }
 
     public void popularLeilao() {
         leilaoB.setDescricao(txt_descricao.getText());
-        leilaoB.setDataInicio(spf.format(data_inicio.getDate()));
-        leilaoB.setDataPrevista(spf.format(data_termino.getDate()));
-        if (!txt_custoLaudo.getText().equals("")) {
-            leilaoB.setCustoLaudo(Double.parseDouble(txt_custoLaudo.getText()));
+        if(data_inicio.getDate()== null){
+           leilaoB.setDataInicio(null);
+        }else{
+            leilaoB.setDataInicio(spf.format(data_inicio.getDate())); 
         }
-        if (!txt_doc.getText().equals("")) {
-            leilaoB.setDesvComDoc(Integer.parseInt(txt_doc.getText()));
+        if(data_termino.getDate()==null){
+            leilaoB.setDataPrevista(null);
+        }else{
+            leilaoB.setDataPrevista(spf.format(data_termino.getDate()));
         }
-        if (!txt_noDoc.getText().equals("")) {
-            leilaoB.setDesvSemDoc(Integer.parseInt(txt_noDoc.getText()));
+        
+        if (!txt_custoLaudo.getText().equals("R$  .  ")) {
+            leilaoB.setCustoLaudo(Double.parseDouble(txt_custoLaudo.getText().replace("R$", "")));
         }
-        if (!txt_sucata.getText().equals("")) {
-            leilaoB.setDesvSucata(Double.parseDouble(txt_sucata.getText()));
+        if (!txt_doc.getText().equals("  %")) {
+            leilaoB.setDesvComDoc(Integer.parseInt(txt_doc.getText().replace("%", "")));
+        }
+        if (!txt_noDoc.getText().equals("  %")) {
+            leilaoB.setDesvSemDoc(Integer.parseInt(txt_noDoc.getText().replace("%", "")));
+        }
+        if (!txt_sucata.getText().equals("R$ .  ")) {
+            leilaoB.setDesvSucata(Double.parseDouble(txt_sucata.getText().replace("R$", "")));
         }
 
         leilaoB.setEdital(txt_edital.getText());
@@ -184,6 +194,20 @@ public class Leilao extends javax.swing.JInternalFrame {
         });
     }
 
+        public void ValidaNumero(JTextField Numero) {
+        long valor;
+        if (Numero.getText().length() != 0 && Numero.getText().contains("%")) {
+            try {
+                
+                valor = Long.parseLong(Numero.getText().replace("%", ""));
+                
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(null, "Esse Campo só aceita números", "Informação", JOptionPane.INFORMATION_MESSAGE);
+                Numero.grabFocus();
+                Numero.setText("");
+            }
+        }
+    }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -204,18 +228,13 @@ public class Leilao extends javax.swing.JInternalFrame {
         jLabel7 = new javax.swing.JLabel();
         cbox_patio = new javax.swing.JComboBox<>();
         jLabel8 = new javax.swing.JLabel();
-        txt_custoLaudo = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
         cbox_cidade = new javax.swing.JComboBox<>();
         jLabel10 = new javax.swing.JLabel();
-        txt_doc = new javax.swing.JTextField();
-        txt_noDoc = new javax.swing.JTextField();
-        txt_sucata = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
-        txt_notificacao = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         tb_leilao = new javax.swing.JTable();
         jSeparator1 = new javax.swing.JSeparator();
@@ -263,6 +282,12 @@ public class Leilao extends javax.swing.JInternalFrame {
         btn_cancelar1 = new javax.swing.JButton();
         btn_deletar1 = new javax.swing.JButton();
         jLabel28 = new javax.swing.JLabel();
+        txt_doc = new javax.swing.JFormattedTextField();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        txt_notificacao = new javax.swing.JTextArea();
+        txt_noDoc = new javax.swing.JFormattedTextField();
+        txt_sucata = new javax.swing.JFormattedTextField();
+        txt_custoLaudo = new javax.swing.JFormattedTextField();
 
         setClosable(true);
 
@@ -695,6 +720,34 @@ public class Leilao extends javax.swing.JInternalFrame {
 
         jLabel28.setText("Novo Pátio");
 
+        try {
+            txt_doc.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##%")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+
+        txt_notificacao.setColumns(20);
+        txt_notificacao.setRows(5);
+        jScrollPane3.setViewportView(txt_notificacao);
+
+        try {
+            txt_noDoc.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##%")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+
+        try {
+            txt_sucata.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("R$#.##")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+
+        try {
+            txt_custoLaudo.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("R$##.##")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -711,7 +764,7 @@ public class Leilao extends javax.swing.JInternalFrame {
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addGroup(layout.createSequentialGroup()
                                                 .addComponent(jLabel2)
-                                                .addGap(0, 356, Short.MAX_VALUE))
+                                                .addGap(0, 367, Short.MAX_VALUE))
                                             .addComponent(txt_descricao))
                                         .addGap(18, 18, 18)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -738,11 +791,17 @@ public class Leilao extends javax.swing.JInternalFrame {
                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                     .addComponent(jLabel8)
                                                     .addGroup(layout.createSequentialGroup()
-                                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                                             .addComponent(cbox_patio, javax.swing.GroupLayout.PREFERRED_SIZE, 418, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                                .addComponent(jLabel13)
-                                                                .addComponent(txt_sucata, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                                            .addGroup(layout.createSequentialGroup()
+                                                                .addComponent(txt_doc, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                .addGap(54, 54, 54)
+                                                                .addComponent(txt_noDoc, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                                    .addComponent(jLabel13)
+                                                                    .addComponent(txt_sucata, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                                .addGap(16, 16, 16)))
                                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                                             .addGroup(layout.createSequentialGroup()
                                                                 .addGap(30, 30, 30)
@@ -754,18 +813,14 @@ public class Leilao extends javax.swing.JInternalFrame {
                                                                     .addComponent(btn_newPatio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addComponent(txt_custoLaudo, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                    .addComponent(jLabel9)))
+                                                    .addComponent(jLabel9)
+                                                    .addComponent(txt_custoLaudo, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addGap(8, 8, 8))
                                             .addGroup(layout.createSequentialGroup()
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addComponent(txt_doc, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                    .addGroup(layout.createSequentialGroup()
-                                                        .addComponent(jLabel11)
-                                                        .addGap(98, 98, 98)
-                                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                            .addComponent(txt_noDoc, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                            .addComponent(jLabel12))))
-                                                .addGap(178, 178, 178)
+                                                .addComponent(jLabel11)
+                                                .addGap(98, 98, 98)
+                                                .addComponent(jLabel12)
+                                                .addGap(208, 208, 208)
                                                 .addComponent(txt_edital, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addGap(0, 0, Short.MAX_VALUE))))))
                             .addGroup(layout.createSequentialGroup()
@@ -779,8 +834,8 @@ public class Leilao extends javax.swing.JInternalFrame {
                                 .addComponent(jLabel15)
                                 .addGap(18, 18, 18)
                                 .addComponent(txt_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 719, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 73, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 62, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -798,8 +853,8 @@ public class Leilao extends javax.swing.JInternalFrame {
                                 .addComponent(jLabel1)
                                 .addGap(18, 18, 18)
                                 .addComponent(txt_id, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(txt_notificacao, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING))))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addContainerGap())
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
@@ -813,33 +868,35 @@ public class Leilao extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel2))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel2))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(data_inicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txt_descricao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel4))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(data_termino, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(cbox_leiloeiro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(data_inicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(txt_descricao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel4))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel7)
+                                .addComponent(jLabel9)
+                                .addComponent(jLabel8))
+                            .addComponent(jLabel28, javax.swing.GroupLayout.Alignment.TRAILING))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(data_termino, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(cbox_leiloeiro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel7)
-                        .addComponent(jLabel9)
-                        .addComponent(jLabel8))
-                    .addComponent(jLabel28, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(cbox_vistoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(cbox_patio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(txt_custoLaudo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(btn_newPatio))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(cbox_vistoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(cbox_patio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(btn_newPatio)))
+                    .addComponent(txt_custoLaudo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10)
@@ -850,15 +907,15 @@ public class Leilao extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cbox_cidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_edital, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txt_doc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txt_noDoc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_sucata, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_edital, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txt_sucata, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jLabel14)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txt_notificacao, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -1002,6 +1059,7 @@ public class Leilao extends javax.swing.JInternalFrame {
     private void btn_cancelar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cancelar1ActionPerformed
         int i = JOptionPane.showConfirmDialog(null, "Deseja cancelar esta operação" + "?", "Cancelar Operação", JOptionPane.YES_NO_OPTION);
         if (i == JOptionPane.YES_OPTION) {
+            txt_id.setText("");
             btn_cancelar1.setEnabled(false);
             btn_alterar1.setEnabled(false);
             btn_salvar1.setEnabled(false);
@@ -1157,6 +1215,7 @@ public class Leilao extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JLabel lbl_id;
@@ -1167,21 +1226,21 @@ public class Leilao extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txt_buscar1;
     private javax.swing.JFormattedTextField txt_cep;
     private javax.swing.JFormattedTextField txt_cnpj;
-    private javax.swing.JTextField txt_custoLaudo;
+    private javax.swing.JFormattedTextField txt_custoLaudo;
     private javax.swing.JTextField txt_descricao;
-    private javax.swing.JTextField txt_doc;
+    private javax.swing.JFormattedTextField txt_doc;
     private javax.swing.JTextField txt_edital;
     private javax.swing.JTextField txt_endereco;
     private javax.swing.JTextField txt_fantasia;
     private javax.swing.JTextField txt_id;
     private javax.swing.JTextField txt_id1;
     private javax.swing.JTextField txt_login;
-    private javax.swing.JTextField txt_noDoc;
-    private javax.swing.JTextField txt_notificacao;
+    private javax.swing.JFormattedTextField txt_noDoc;
+    private javax.swing.JTextArea txt_notificacao;
     private javax.swing.JTextField txt_numero;
     private javax.swing.JTextField txt_razao;
     private javax.swing.JPasswordField txt_senha;
-    private javax.swing.JTextField txt_sucata;
+    private javax.swing.JFormattedTextField txt_sucata;
     private javax.swing.JFormattedTextField txt_telefone;
     // End of variables declaration//GEN-END:variables
 }

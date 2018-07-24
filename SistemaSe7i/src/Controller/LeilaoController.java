@@ -78,6 +78,16 @@ public class LeilaoController {
             JOptionPane.showMessageDialog(null, "Preencher Campo Desv. Sucata", "Erro", 0);
             return false;
         }
+        
+        if(leilao.getDataInicio() == null){
+             JOptionPane.showMessageDialog(null, "Preencher Campo Data de Início", "Erro", 0);
+            return false;
+        }
+        
+        if(leilao.getDataPrevista() == null){
+             JOptionPane.showMessageDialog(null, "Preencher Campo Data Prevista", "Erro", 0);
+            return false;
+        }
         return true;
     }
     

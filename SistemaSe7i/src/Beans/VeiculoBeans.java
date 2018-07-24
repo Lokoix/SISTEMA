@@ -226,15 +226,5 @@ public class VeiculoBeans {
         this.cidade.exibe();
     }
     
-    public void ValidaNumero(JTextField Numero) {
-        long valor;
-        if (Numero.getText().length() != 0) {
-            try {
-                valor = Long.parseLong(Numero.getText());
-            } catch (NumberFormatException ex) {
-                JOptionPane.showMessageDialog(null, "Esse Campo só aceita números", "Informação", JOptionPane.INFORMATION_MESSAGE);
-                Numero.grabFocus();
-            }
-        }
-    }
+
 }
