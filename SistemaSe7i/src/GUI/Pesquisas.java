@@ -38,12 +38,12 @@ public class Pesquisas extends javax.swing.JInternalFrame {
     ArrayList<Integer> tipoTxt;
     LeilaoDAO leilaoD;
     LoteController conLote;
+    List<String> listaDeArquivos;
 
     public Pesquisas() {
         initComponents();
         leilaoD = new LeilaoDAO();
-        tipoTxt = new ArrayList();
-        manipulaTxt = new ManipulaTxt();
+
         iCadastro = new Cadastro();
         iBaseNacional = new BaseNacional();
         conVeiculo = new VeiculoController();
@@ -126,9 +126,14 @@ public class Pesquisas extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_iniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_iniciarActionPerformed
+        tipoTxt = new ArrayList();
+        manipulaTxt = new ManipulaTxt();
+        listaDeArquivos = new ArrayList();
+
         String local;
         local = txt_local.getText();
-        List<String> listaDeArquivos = listaDeArquivos(local);
+
+        listaDeArquivos = listaDeArquivos(local);
 
         //System.out.println("tamanho Lista de arquivos.size: "+listaDeArquivos.size() + "tamanho Tipos TXT: "+ tipoTxt.size());
         for (int i = 0; i < listaDeArquivos.size(); i++) {
@@ -163,19 +168,24 @@ public class Pesquisas extends javax.swing.JInternalFrame {
                         conLote.corrigirLoteCadastro(lote);
                         break;
                     } else {
-                        JOptionPane.showMessageDialog(null, "interface difere: " + listaDeArquivos.get(i).toString());
+                        JOptionPane.showMessageDialog(null, "interface difere de CAD: " + listaDeArquivos.get(i).toString());
                         break;
                     }
 
                 case 2:
                     s = listaDeArquivos.get(i);
                     lote.setNumeroLote(s.substring(0, s.indexOf("BIN.txt")));
-
                     result = manipulaTxt.Leitura(local, s);
-                    iBaseNacional.getLote(result, lote);
-                    lote.setVeiculo(conVeiculo.corrigirVeiculoPesquisa(lote.getVeiculo()));
-                    conLote.corrigirLote(lote);
-                    break;
+
+                    if (result.size() == 62) {
+                        iBaseNacional.getLoteBaseNacional1(result, lote);
+                        lote.setVeiculo(conVeiculo.corrigirVeiculoPesquisa(lote.getVeiculo()));
+                        conLote.corrigirLote(lote);
+                        break;
+                    } else {
+                        JOptionPane.showMessageDialog(null, "interface difere de BIN: " + listaDeArquivos.get(i).toString());
+                    }
+
                 default:
                     JOptionPane.showMessageDialog(null, "não: " + listaDeArquivos.get(i).toString());
                     break;
@@ -205,12 +215,13 @@ public class Pesquisas extends javax.swing.JInternalFrame {
     // End of variables declaration//GEN-END:variables
 
     public ArrayList<String> listaDeArquivos(String local) {
-        System.out.println("<----Lista de arquivos---->");
+        System.out.println("entrou na lista de arquivos");
+        System.out.println("local: " + local);
         File dir = new File(local);
         ArrayList<String> lista = new ArrayList();
         for (File f : dir.listFiles()) {// lista o que possui no diretorio dir
             if (f.isFile()) {//se for um arquivo true;
-                System.out.println("Arquivo: ");
+
                 lista.add(f.getName());
                 if (f.getName().contains("CAD")) {
                     tipoTxt.add(1);
@@ -223,7 +234,8 @@ public class Pesquisas extends javax.swing.JInternalFrame {
                 }
             }
         }
-        System.out.println("<----Fim da Lista de arquivos---->");
+        System.out.println("lista: " + lista.size() + " tipotxt: " + tipoTxt.size());
+        System.out.println("saiu da lista de arquivos");
         return lista;
     }
 
