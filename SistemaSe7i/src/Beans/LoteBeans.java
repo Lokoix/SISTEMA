@@ -16,6 +16,8 @@ public class LoteBeans {
     private Integer id;
     private LeilaoBeans leilao = new LeilaoBeans();
     private ProprietarioBeans proprietario = new ProprietarioBeans();
+    private ProprietarioBeans comunicao = new ProprietarioBeans();
+    private ProprietarioBeans alienacao = new ProprietarioBeans();
     private VeiculoBeans veiculo = new VeiculoBeans();
     private String numeroLote;
     private String observacao;
@@ -29,6 +31,24 @@ public class LoteBeans {
 
     }
 
+    public ProprietarioBeans getComunicao() {
+        return comunicao;
+    }
+
+    public void setComunicao(ProprietarioBeans comunicao) {
+        this.comunicao = comunicao;
+    }
+
+    public ProprietarioBeans getAlienacao() {
+        return alienacao;
+    }
+
+    public void setAlienacao(ProprietarioBeans alienacao) {
+        this.alienacao = alienacao;
+    }
+
+    
+    
     public double getFipe() {
         return fipe;
     }

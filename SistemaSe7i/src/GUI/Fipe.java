@@ -6,8 +6,12 @@
 package GUI;
 
 import Beans.LeilaoBeans;
+import Beans.LoteBeans;
 import DAO.LeilaoDAO;
+import DAO.LoteDAO;
 import javax.swing.JFrame;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -16,16 +20,20 @@ import javax.swing.JFrame;
 public class Fipe extends javax.swing.JFrame {
 
     LeilaoDAO leilaoD;
+    LoteDAO loteD;
+    DefaultTableModel Modelo;
 
     public Fipe() {
         initComponents();
+        loteD = new LoteDAO();
         leilaoD = new LeilaoDAO();
+        Modelo = (DefaultTableModel) tb_fipe.getModel();
+        tb_fipe.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         cmb_leilao.addItem("Selecionar Leilao");
         for (LeilaoBeans leilao : leilaoD.buscarTodosLeiloes()) {
             cmb_leilao.addItem(leilao);
         }
-        
 
     }
 
@@ -65,12 +73,18 @@ public class Fipe extends javax.swing.JFrame {
         jLabel14 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tb_fipe = new javax.swing.JTable();
         jLabel13 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setText("Leilão");
+
+        cmb_leilao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmb_leilaoActionPerformed(evt);
+            }
+        });
 
         txt_totalDoc.setEditable(false);
 
@@ -139,7 +153,7 @@ public class Fipe extends javax.swing.JFrame {
                 .addGap(6, 6, 6))
         );
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tb_fipe.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -155,22 +169,22 @@ public class Fipe extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jTable1.setColumnSelectionAllowed(true);
-        jScrollPane1.setViewportView(jTable1);
-        jTable1.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setMinWidth(100);
-            jTable1.getColumnModel().getColumn(0).setPreferredWidth(100);
-            jTable1.getColumnModel().getColumn(0).setMaxWidth(100);
-            jTable1.getColumnModel().getColumn(0).setHeaderValue("Lote");
-            jTable1.getColumnModel().getColumn(1).setHeaderValue("Placa");
-            jTable1.getColumnModel().getColumn(2).setHeaderValue("Marca");
-            jTable1.getColumnModel().getColumn(3).setHeaderValue("Modelo");
-            jTable1.getColumnModel().getColumn(4).setHeaderValue("Fipe");
-            jTable1.getColumnModel().getColumn(5).setHeaderValue("Débito");
-            jTable1.getColumnModel().getColumn(6).setHeaderValue("Com Doc");
-            jTable1.getColumnModel().getColumn(7).setHeaderValue("Sem Doc");
-            jTable1.getColumnModel().getColumn(8).setHeaderValue("Classificação");
+        tb_fipe.setColumnSelectionAllowed(true);
+        jScrollPane1.setViewportView(tb_fipe);
+        tb_fipe.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        if (tb_fipe.getColumnModel().getColumnCount() > 0) {
+            tb_fipe.getColumnModel().getColumn(0).setResizable(false);
+            tb_fipe.getColumnModel().getColumn(0).setPreferredWidth(100);
+            tb_fipe.getColumnModel().getColumn(1).setResizable(false);
+            tb_fipe.getColumnModel().getColumn(1).setPreferredWidth(100);
+            tb_fipe.getColumnModel().getColumn(2).setResizable(false);
+            tb_fipe.getColumnModel().getColumn(3).setResizable(false);
+            tb_fipe.getColumnModel().getColumn(4).setResizable(false);
+            tb_fipe.getColumnModel().getColumn(5).setResizable(false);
+            tb_fipe.getColumnModel().getColumn(6).setResizable(false);
+            tb_fipe.getColumnModel().getColumn(7).setResizable(false);
+            tb_fipe.getColumnModel().getColumn(8).setResizable(false);
+            tb_fipe.getColumnModel().getColumn(8).setPreferredWidth(300);
         }
 
         jLabel13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/2.jpeg"))); // NOI18N
@@ -253,7 +267,7 @@ public class Fipe extends javax.swing.JFrame {
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jLabel10)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                        .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(txt_totalDoc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(6, 6, 6)
@@ -283,6 +297,19 @@ public class Fipe extends javax.swing.JFrame {
 
         setBounds(1280, 728, 1166, 743);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void cmb_leilaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmb_leilaoActionPerformed
+        Object objeto = cmb_leilao.getSelectedItem();
+        if (objeto instanceof LeilaoBeans) {
+            Modelo.setNumRows(0);
+            LeilaoBeans leilao = (LeilaoBeans) objeto;
+            for (LoteBeans l : loteD.buscarTodosLotesDoLeilao(leilao)) {
+                Modelo.addRow(new Object[]{l.getNumeroLote(), l.getVeiculo().getPlaca(), 
+                    l.getVeiculo().getModelo().getMarca().getNome(), l.getVeiculo().getModelo().getNome(), 
+                    l.getFipe(), l.getDebito(), l.getFipe(), l.getFipe(), l.getObservacao()});
+            }
+        }
+    }//GEN-LAST:event_cmb_leilaoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -339,9 +366,9 @@ public class Fipe extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextField5;
+    private javax.swing.JTable tb_fipe;
     private javax.swing.JTextField txt_Totalsucata;
     private javax.swing.JTextField txt_desvDoc;
     private javax.swing.JTextField txt_desvFVU;
