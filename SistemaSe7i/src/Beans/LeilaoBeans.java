@@ -12,7 +12,7 @@ import java.util.Date;
  * @author Eu
  */
 public class LeilaoBeans {
-    
+
     private int id;
     private String descricao;
     private String dataInicio;
@@ -20,31 +20,13 @@ public class LeilaoBeans {
     private LeiloeiroBeans leiloeiro;
     private String edital;
     private VistoriaBeans vistoriadora;
-    private PatioBeans patio; 
+    private PatioBeans patio;
     private double custoLaudo;
     private CidadeBeans cidade;
-    private double DesvComDoc;
-    private double DesvSemDoc;
+    private int DesvComDoc;
+    private int DesvSemDoc;
     private double DesvSucata;
     private String cartaDeNotificacao;
-
-    public PatioBeans getPatio() {
-        return patio;
-    }
-
-    public void setPatio(PatioBeans patio) {
-        this.patio = patio;
-    }
-
-    public double getDesvSucata() {
-        return DesvSucata;
-    }
-
-    public void setDesvSucata(double DesvSucata) {
-        this.DesvSucata = DesvSucata;
-    }
-    
-    
 
     public int getId() {
         return id;
@@ -78,7 +60,6 @@ public class LeilaoBeans {
         this.dataPrevista = dataPrevista;
     }
 
-
     public LeiloeiroBeans getLeiloeiro() {
         return leiloeiro;
     }
@@ -103,6 +84,13 @@ public class LeilaoBeans {
         this.vistoriadora = vistoriadora;
     }
 
+    public PatioBeans getPatio() {
+        return patio;
+    }
+
+    public void setPatio(PatioBeans patio) {
+        this.patio = patio;
+    }
 
     public double getCustoLaudo() {
         return custoLaudo;
@@ -112,7 +100,6 @@ public class LeilaoBeans {
         this.custoLaudo = custoLaudo;
     }
 
-
     public CidadeBeans getCidade() {
         return cidade;
     }
@@ -121,20 +108,28 @@ public class LeilaoBeans {
         this.cidade = cidade;
     }
 
-    public double getDesvComDoc() {
+    public int getDesvComDoc() {
         return DesvComDoc;
     }
 
-    public void setDesvComDoc(double DesvComDoc) {
+    public void setDesvComDoc(int DesvComDoc) {
         this.DesvComDoc = DesvComDoc;
     }
 
-    public double getDesvSemDoc() {
+    public int getDesvSemDoc() {
         return DesvSemDoc;
     }
 
-    public void setDesvSemDoc(double DesvSemDoc) {
+    public void setDesvSemDoc(int DesvSemDoc) {
         this.DesvSemDoc = DesvSemDoc;
+    }
+
+    public double getDesvSucata() {
+        return DesvSucata;
+    }
+
+    public void setDesvSucata(double DesvSucata) {
+        this.DesvSucata = DesvSucata;
     }
 
     public String getCartaDeNotificacao() {
@@ -149,7 +144,5 @@ public class LeilaoBeans {
     public String toString() {
         return getDescricao(); //To change body of generated methods, choose Tools | Templates.
     }
-    
-    
-    
+
 }

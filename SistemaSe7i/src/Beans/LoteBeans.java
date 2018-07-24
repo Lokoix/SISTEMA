@@ -47,8 +47,6 @@ public class LoteBeans {
         this.alienacao = alienacao;
     }
 
-    
-    
     public double getFipe() {
         return fipe;
     }

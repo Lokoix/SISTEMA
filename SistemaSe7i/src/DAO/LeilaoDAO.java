@@ -184,8 +184,8 @@ public class LeilaoDAO {
                 leilao.setDataPrevista(rs.getString("dataPrevista"));
                 leilao.setEdital(rs.getString("edital"));
                 leilao.setCustoLaudo(rs.getDouble("custoLaudo"));
-                leilao.setDesvComDoc(rs.getDouble("desvDoc"));
-                leilao.setDesvSemDoc(rs.getDouble("desvSemDoc"));
+                leilao.setDesvComDoc(rs.getInt("desvDoc"));
+                leilao.setDesvSemDoc(rs.getInt("desvSemDoc"));
                 leilao.setDesvSucata(rs.getDouble("desvSucata"));
                 leilao.setCartaDeNotificacao(rs.getString("cartaNotificacao"));
                 vistoria.setId(rs.getInt("idVistoria"));
@@ -216,6 +216,9 @@ public class LeilaoDAO {
                 leilao = new LeilaoBeans();
                 leilao.setId(rs.getInt("id"));
                 leilao.setDescricao(rs.getString("descricao"));
+                leilao.setDesvComDoc(rs.getInt("desvDoc"));
+                leilao.setDesvSemDoc(rs.getInt("desvSemDoc"));
+                leilao.setDesvSucata(rs.getDouble("desvSucata"));
                 leiloes.add(leilao);
             }
         } catch (Exception e) {
