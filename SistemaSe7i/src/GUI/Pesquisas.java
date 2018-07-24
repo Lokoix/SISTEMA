@@ -70,7 +70,7 @@ public class Pesquisas extends javax.swing.JInternalFrame {
 
         setClosable(true);
 
-        txt_local.setText("C:\\Users\\rafae\\Desktop\\interface\\Cad\\Nova pasta\\");
+        txt_local.setText("C:\\Users\\rafae\\Desktop\\interface\\Cad\\teste 5\\cad\\");
             txt_local.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
                     txt_localActionPerformed(evt);
@@ -131,26 +131,39 @@ public class Pesquisas extends javax.swing.JInternalFrame {
         local = txt_local.getText();
         List<String> listaDeArquivos = listaDeArquivos(local);
 
+        System.out.println("tamanho Lista de arquivos.size: "+listaDeArquivos.size() + "tamanho Tipos TXT: "+ tipoTxt.size());
         for (int i = 0; i < listaDeArquivos.size(); i++) {
             VeiculoBeans veic = new VeiculoBeans();
             ProprietarioBeans proprietario = new ProprietarioBeans();
             LoteBeans lote = new LoteBeans();
+            System.out.println("");
             lote.setLeilao((LeilaoBeans) cmb_Leilao.getSelectedItem());
             ArrayList<String> result = new ArrayList<>();
             String s;
+
             switch (tipoTxt.get(i)) {
                 case 1:
                     s = listaDeArquivos.get(i);
                     lote.setNumeroLote(s.substring(0, s.indexOf("CAD.txt")));
                     result = manipulaTxt.Leitura(local, s);
 
-                    if (result.size() == 85) {
-                        iCadastro.getLote(result, lote);
+                    if (result.size() == 88) { // pesquisa de cadastro normal
+                        iCadastro.getLoteCadastro1(result, lote);
                         lote.setVeiculo(conVeiculo.corrigirVeiculoPesquisaCadastro(lote.getVeiculo()));
                         lote.setProprietario(conProprietario.CorrigirProprietarioPesquisaCadastro(lote.getProprietario()));
                         conLote.corrigirLoteCadastro(lote);
                         break;
-                    }else{
+                    } else if (result.size() == 11) { //pesquisa de cadastro sem registro
+                        iCadastro.getLoteCadastro2(result, lote);
+                        conLote.corrigirLoteCadastro(lote);
+                        break;
+                    } else if (result.size() == 54) {
+                        iCadastro.getLoteCadastro3(result, lote); // pesquisa de cadastro de fora do estado
+                        lote.setVeiculo(conVeiculo.corrigirVeiculoPesquisaCadastro(lote.getVeiculo()));
+                        lote.setProprietario(conProprietario.CorrigirProprietarioPesquisaCadastro(lote.getProprietario()));
+                        conLote.corrigirLoteCadastro(lote);
+                        break;
+                    } else {
                         JOptionPane.showMessageDialog(null, "interface difere: " + listaDeArquivos.get(i).toString());
                         break;
                     }
@@ -168,7 +181,9 @@ public class Pesquisas extends javax.swing.JInternalFrame {
                     JOptionPane.showMessageDialog(null, "não: " + listaDeArquivos.get(i).toString());
                     break;
             }
+
             //JOptionPane.showMessageDialog(null, "Arquivo lido: " + listaDeArquivos.get(i).toString());
+            JOptionPane.showMessageDialog(null, "ID Leilao: " + ((LeilaoBeans) cmb_Leilao.getSelectedItem()).getId() + ", " + ((LeilaoBeans) cmb_Leilao.getSelectedItem()).getDescricao() + " Lote: " + lote.getNumeroLote() + "  " + listaDeArquivos.get(i).toString());
         }
         JOptionPane.showMessageDialog(null, "ACABOOO");
 
@@ -191,10 +206,12 @@ public class Pesquisas extends javax.swing.JInternalFrame {
     // End of variables declaration//GEN-END:variables
 
     public ArrayList<String> listaDeArquivos(String local) {
+        System.out.println("<----Lista de arquivos---->");
         File dir = new File(local);
         ArrayList<String> lista = new ArrayList();
         for (File f : dir.listFiles()) {// lista o que possui no diretorio dir
             if (f.isFile()) {//se for um arquivo true;
+                System.out.println("Arquivo: ");
                 lista.add(f.getName());
                 if (f.getName().contains("CAD")) {
                     tipoTxt.add(1);
@@ -207,7 +224,7 @@ public class Pesquisas extends javax.swing.JInternalFrame {
                 }
             }
         }
-
+        System.out.println("<----Fim da Lista de arquivos---->");
         return lista;
     }
 

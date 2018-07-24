@@ -145,38 +145,24 @@ public class ProprietarioDAO {
                 + "idCidade=? "
                 + "where id=?";
         try {
-            System.out.println("kkkk");
             PreparedStatement pst = Conexao.getConnection().prepareStatement(sqlUpdate);
-            System.out.println("kkkkk");
             pst.setString(1, proprietario.getNome());
-            System.out.println("kkkkkk");
             pst.setString(2, proprietario.getCpfCpnpj());
-            System.out.println("kkkkkkk");
             pst.setString(3, proprietario.getRg());
-            System.out.println("kkkkkkk");
             pst.setString(4, proprietario.getEndereco());
-            System.out.println("kkkkkkkkk");
             pst.setString(5, proprietario.getEndNumero());
-            System.out.println("kkkkkkkk");
             pst.setString(6, proprietario.getComplemento());
-            System.out.println("kkkkkkkk");
             pst.setString(7, proprietario.getBairro());
-            System.out.println("kkkkkkkkkkk");
             pst.setString(8, proprietario.getCep());
-            System.out.println("kkkkkkkkk");
             
             if (proprietario.getCidade().getId() != null) {
                 pst.setInt(9, proprietario.getId());
             }else{
                 pst.setNull(9, Types.NULL);
             }           
-            System.out.println("kkkkkkkk");
             pst.setInt(10, proprietario.getId());
-            System.out.println("asdas "+ proprietario.getId());
             pst.executeUpdate();
-            System.out.println("kkkkkk13");
             Conexao.getConnection().commit();
-            System.out.println("kkkkkkk14");
             //JOptionPane.showMessageDialog(null, "Alterado Com OK");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro ProprietarioDAo(alterar):\n " + e);

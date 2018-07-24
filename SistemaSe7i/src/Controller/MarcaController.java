@@ -22,7 +22,7 @@ public class MarcaController {
             marca = daoMarca.carregar(marca);
             return marca;
         }else if(marca.getNome() == null){
-            JOptionPane.showMessageDialog(null, "Marca sem nome para o cadastro!","Aviso", 1);
+            //JOptionPane.showMessageDialog(null, "Marca sem nome para o cadastro!","Aviso", 1);
             return new MarcaBeans();
         }else{
             daoMarca.cadastrar(marca);
