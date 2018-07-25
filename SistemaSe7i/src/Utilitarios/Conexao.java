@@ -18,7 +18,7 @@ import javax.swing.JOptionPane;
  */
 public class Conexao {
 
-    private final String URL = "jdbc:mysql://localhost:3306/sistemase7ii";//private final não pode ser alterado; URL caminho para se chegar ao BD
+    private final String URL = "jdbc:mysql://localhost:3306/sistemase7i";//private final não pode ser alterado; URL caminho para se chegar ao BD
     private final String Driver = "org.gjt.mm.mysql.Driver";//informação de conexão
     private final String Usuario = "root";
     private final String Senha = "";

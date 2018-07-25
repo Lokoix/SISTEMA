@@ -2,6 +2,7 @@ package GUI;
 
 import Beans.FotosBeans;
 import Controller.FotosController;
+import DAO.FotosDAO;
 import DAO.VeiculoDAO;
 import Utilitarios.Conexao;
 import Utilitarios.Corretores;
@@ -43,6 +44,7 @@ public class UploadFotos extends javax.swing.JFrame {
     FotosBeans FotoB = new FotosBeans();
     FotosController FotoC = new FotosController();
     VeiculoDAO veiculoD = new VeiculoDAO(); 
+    FotosDAO FotosD = new FotosDAO(); 
     /**
      * Creates new form Upload
      */
@@ -79,7 +81,7 @@ public class UploadFotos extends javax.swing.JFrame {
         barraProgresso = new javax.swing.JProgressBar();
         jLabel10 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setFocusable(false);
 
         cbleilao.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -101,6 +103,7 @@ public class UploadFotos extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel6.setText("Lotes Existentes");
 
+        lblexistentes.setEditable(false);
         lblexistentes.setBackground(new java.awt.Color(255, 204, 204));
         lblexistentes.setColumns(10);
         lblexistentes.setRows(5);
@@ -109,6 +112,7 @@ public class UploadFotos extends javax.swing.JFrame {
         jLabel7.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel7.setText("Lotes Atualizados");
 
+        lblatualizados.setEditable(false);
         lblatualizados.setBackground(new java.awt.Color(51, 255, 255));
         lblatualizados.setColumns(10);
         lblatualizados.setRows(5);
@@ -117,6 +121,7 @@ public class UploadFotos extends javax.swing.JFrame {
         jLabel8.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel8.setText("Lotes Novos");
 
+        lblnovo.setEditable(false);
         lblnovo.setBackground(new java.awt.Color(153, 255, 153));
         lblnovo.setColumns(10);
         lblnovo.setRows(5);
@@ -281,9 +286,18 @@ public class UploadFotos extends javax.swing.JFrame {
                         if (caminhofinal.contains("T_")) {
                             Lote = caminhofinal.substring(caminhofinal.lastIndexOf("\\") + 1, caminhofinal.lastIndexOf("T_"));
                             Tipo = caminhofinal.substring(caminhofinal.lastIndexOf("T_"), caminhofinal.lastIndexOf("T_") + 2);
-
+                            
+                            
                             BscLote(Lote, Tipo, idleilao);
-
+                            int idlote=0;
+                            String sql4 = "select * from lotes where numeroLote=" + Lote + " and idLeilao=" + idleilao;
+                            PreparedStatement st2 = Conexao.getConnection().prepareStatement(sql4);
+                            ResultSet rs2 = st2.executeQuery();
+                            if(rs2.next()){
+                                idlote = Integer.parseInt(rs2.getString(1)); 
+                            }
+                            
+                            
                             String sql1 = "select * from fotos where lote=" + Lote + " and tipo='" + Tipo + "' and idleilao=" + idleilao;
                             PreparedStatement st = Conexao.getConnection().prepareStatement(sql1);
                             ResultSet rs = st.executeQuery();
@@ -296,6 +310,7 @@ public class UploadFotos extends javax.swing.JFrame {
                                 FotoB.setLote(Lote);
                                 FotoB.setTipo(Tipo);
                                 FotoB.setIdleilao(idleilao);
+                                FotoB.setIdlote(idlote);
                                 FotoC.InserirFotos(FotoB);
 
                                 String existente = Lote + Tipo;
@@ -305,7 +320,7 @@ public class UploadFotos extends javax.swing.JFrame {
                                 String existente = Lote + Tipo;
                                 lblexistentes.setText(lblexistentes.getText() + existente + "\n");
                             }
-
+                            
                         } else if (caminhofinal.contains("MP_")) {
                             Lote = caminhofinal.substring(caminhofinal.lastIndexOf("\\") + 1, caminhofinal.lastIndexOf("MP_"));
                             Tipo = caminhofinal.substring(caminhofinal.lastIndexOf("MP"), caminhofinal.lastIndexOf("MP_") + 3);
@@ -317,6 +332,13 @@ public class UploadFotos extends javax.swing.JFrame {
                                                        
                             BscLote(Lote, Tipo, idleilao); 
                             
+                            int idlote=0; 
+                            String sql4 = "select * from lotes where numeroLote=" + Lote + " and idLeilao=" + idleilao;
+                            PreparedStatement st2 = Conexao.getConnection().prepareStatement(sql4);
+                            ResultSet rs2 = st2.executeQuery();
+                            if(rs2.next()){
+                                idlote = Integer.parseInt(rs2.getString(1)); 
+                            }
                             String sql1 = "select * from fotos where lote=" + Lote + " and (tipo='MP_' or tipo='MF_') and idleilao=" + idleilao;
                             PreparedStatement st = Conexao.getConnection().prepareStatement(sql1);
                             ResultSet rs = st.executeQuery();
@@ -328,6 +350,7 @@ public class UploadFotos extends javax.swing.JFrame {
                                 FotoB.setLote(Lote);
                                 FotoB.setTipo(Tipo);
                                 FotoB.setIdleilao(idleilao);
+                                FotoB.setIdlote(idlote);
                                 FotoC.InserirFotos(FotoB);
                                 String existente = Lote + Tipo;
                                 lblatualizados.setText(lblatualizados.getText() + existente + "\n");
@@ -335,12 +358,18 @@ public class UploadFotos extends javax.swing.JFrame {
                                 String existente = Lote + Tipo;
                                 lblexistentes.setText(lblexistentes.getText() + existente + "\n");
                             }
-
+                            
                         } else if (caminhofinal.contains("MF_")) {
                             Lote = caminhofinal.substring(caminhofinal.lastIndexOf("\\") + 1, caminhofinal.lastIndexOf("MF_"));
                             Tipo = caminhofinal.substring(caminhofinal.lastIndexOf("MF"), caminhofinal.lastIndexOf("MF_") + 3);
                             BscLote(Lote, Tipo, idleilao);
-                            
+                            int idlote=0; 
+                            String sql4 = "select * from lotes where numeroLote=" + Lote + " and idLeilao=" + idleilao;
+                            PreparedStatement st2 = Conexao.getConnection().prepareStatement(sql4);
+                            ResultSet rs2 = st2.executeQuery();
+                            if(rs2.next()){
+                                idlote = Integer.parseInt(rs2.getString(1)); 
+                            }
                             String sql1 = "select * from fotos where lote=" + Lote + " and (tipo='MP_' or tipo='MF_') and idleilao=" + idleilao;
                             PreparedStatement st = Conexao.getConnection().prepareStatement(sql1);
                             ResultSet rs = st.executeQuery();
@@ -353,6 +382,8 @@ public class UploadFotos extends javax.swing.JFrame {
                                 FotoB.setLote(Lote);
                                 FotoB.setTipo(Tipo);
                                 FotoB.setIdleilao(idleilao);
+                                FotoB.setIdlote(idlote);
+
                                 FotoC.InserirFotos(FotoB);
 
                                 String existente = Lote + Tipo;
@@ -361,7 +392,7 @@ public class UploadFotos extends javax.swing.JFrame {
                                 String existente = Lote + Tipo;
                                 lblexistentes.setText(lblexistentes.getText() + existente + "\n");
                             }
-
+                              
                         } else if (caminhofinal.contains("CH_")) {
                             Lote = caminhofinal.substring(caminhofinal.lastIndexOf("\\") + 1, caminhofinal.lastIndexOf("CH_"));
                             Tipo = caminhofinal.substring(caminhofinal.lastIndexOf("CH"), caminhofinal.lastIndexOf("CH_") + 3);
@@ -370,7 +401,13 @@ public class UploadFotos extends javax.swing.JFrame {
                                 veiculoD.cadastrarChassi(Chassi);
                             }
                             BscLote(Lote, Tipo, idleilao);
-                                
+                            int idlote=0; 
+                            String sql4 = "select * from lotes where numeroLote=" + Lote + " and idLeilao=" + idleilao;
+                            PreparedStatement st2 = Conexao.getConnection().prepareStatement(sql4);
+                            ResultSet rs2 = st2.executeQuery();
+                            if(rs2.next()){
+                                idlote = Integer.parseInt(rs2.getString(1)); 
+                            }  
                             String sql1 = "select * from fotos where lote=" + Lote + " and (tipo='CH_' or tipo='CF_') and idleilao=" + idleilao;
                             PreparedStatement st = Conexao.getConnection().prepareStatement(sql1);
                             ResultSet rs = st.executeQuery();
@@ -383,6 +420,7 @@ public class UploadFotos extends javax.swing.JFrame {
                                 FotoB.setLote(Lote);
                                 FotoB.setTipo(Tipo);
                                 FotoB.setIdleilao(idleilao);
+                                FotoB.setIdlote(idlote);
                                 FotoC.InserirFotos(FotoB);
                                 String existente = Lote + Tipo;
                                 lblatualizados.setText(lblatualizados.getText() + existente + "\n");
@@ -390,13 +428,19 @@ public class UploadFotos extends javax.swing.JFrame {
                                 String existente = Lote + Tipo;
                                 lblexistentes.setText(lblexistentes.getText() + existente + "\n");
                             }
-
+                            
                         }  else if (caminhofinal.contains("CF_")) {
                             Lote = caminhofinal.substring(caminhofinal.lastIndexOf("\\") + 1, caminhofinal.lastIndexOf("CF_"));
                             Tipo = caminhofinal.substring(caminhofinal.lastIndexOf("CF"), caminhofinal.lastIndexOf("CF_") + 3);
                             
                             BscLote(Lote, Tipo, idleilao);
-
+                            int idlote=0; 
+                            String sql4 = "select * from lotes where numeroLote=" + Lote + " and idLeilao=" + idleilao;
+                            PreparedStatement st2 = Conexao.getConnection().prepareStatement(sql4);
+                            ResultSet rs2 = st2.executeQuery();
+                            if(rs2.next()){
+                                idlote = Integer.parseInt(rs2.getString(1)); 
+                            }
                             String sql1 = "select * from fotos where lote=" + Lote + " and (tipo='CH_' or tipo='CF_') and idleilao=" + idleilao;
                             PreparedStatement st = Conexao.getConnection().prepareStatement(sql1);
                             ResultSet rs = st.executeQuery();
@@ -409,6 +453,7 @@ public class UploadFotos extends javax.swing.JFrame {
                                 FotoB.setLote(Lote);
                                 FotoB.setTipo(Tipo);
                                 FotoB.setIdleilao(idleilao);
+                                FotoB.setIdlote(idlote);
                                 FotoC.InserirFotos(FotoB);
                                 String existente = Lote + Tipo;
                                 lblatualizados.setText(lblatualizados.getText() + existente + "\n");
@@ -416,12 +461,19 @@ public class UploadFotos extends javax.swing.JFrame {
                                 String existente = Lote + Tipo;
                                 lblexistentes.setText(lblexistentes.getText() + existente + "\n");
                             }
-
+                           
                         }else if (caminhofinal.substring(caminhofinal.length() - 6, caminhofinal.length()).contains("E")) {
                             //    
                             Lote = caminhofinal.substring(caminhofinal.lastIndexOf("\\") + 1, caminhofinal.lastIndexOf(".jpg") - 2);
                             Tipo = caminhofinal.substring(caminhofinal.indexOf(".jpg") - 2, caminhofinal.lastIndexOf(".jpg"));
                             BscLote(Lote, Tipo, idleilao);
+                            int idlote=0; 
+                            String sql4 = "select * from lotes where numeroLote=" + Lote + " and idLeilao=" + idleilao;
+                            PreparedStatement st2 = Conexao.getConnection().prepareStatement(sql4);
+                            ResultSet rs2 = st2.executeQuery();
+                            if(rs2.next()){
+                                idlote = Integer.parseInt(rs2.getString(1)); 
+                            }
                             String sql1 = "select * from fotos where caminho=?";
                             PreparedStatement st = Conexao.getConnection().prepareStatement(sql1);
                             st.setString(1, diretoriofinal + Lote + Tipo + ".jpg");
@@ -435,6 +487,7 @@ public class UploadFotos extends javax.swing.JFrame {
                                 FotoB.setLote(Lote);
                                 FotoB.setTipo(Tipo);
                                 FotoB.setIdleilao(idleilao);
+                                FotoB.setIdlote(idlote);
                                 FotoC.InserirFotos(FotoB);
 
                                 String existente = Lote + Tipo;
@@ -443,11 +496,20 @@ public class UploadFotos extends javax.swing.JFrame {
                                 String existente = Lote + Tipo;
                                 lblexistentes.setText(lblexistentes.getText() + existente + "\n");
                             }
+                            
                         } else if (caminhofinal.contains("F.jpg")) {
                             Lote = caminhofinal.substring(caminhofinal.lastIndexOf("\\") + 1, caminhofinal.lastIndexOf("F"));
                             Tipo = caminhofinal.substring(caminhofinal.lastIndexOf("F"), caminhofinal.lastIndexOf("F") + 1);
                             BscLote(Lote, Tipo, idleilao);
-
+                            int idlote=0; 
+                            
+                            String sql4 = "select * from lotes where numeroLote=" + Lote + " and idLeilao=" + idleilao;
+                            PreparedStatement st2 = Conexao.getConnection().prepareStatement(sql4);
+                            ResultSet rs2 = st2.executeQuery();
+                            if(rs2.next()){
+                                idlote = Integer.parseInt(rs2.getString(1)); 
+                            }
+                            
                             String sql1 = "select * from fotos where caminho=?";
                             PreparedStatement st = Conexao.getConnection().prepareStatement(sql1);
                             st.setString(1, diretoriofinal + Lote + Tipo + ".jpg");
@@ -461,6 +523,7 @@ public class UploadFotos extends javax.swing.JFrame {
                                 FotoB.setLote(Lote);
                                 FotoB.setTipo(Tipo);
                                 FotoB.setIdleilao(idleilao);
+                                FotoB.setIdlote(idlote);
                                 FotoC.InserirFotos(FotoB);
 
                                 String existente = Lote + Tipo;
@@ -469,7 +532,7 @@ public class UploadFotos extends javax.swing.JFrame {
                                 String existente = Lote + Tipo;
                                 lblexistentes.setText(lblexistentes.getText() + existente + "\n");
                             }
-
+                            
                         }
 
                         contador++;

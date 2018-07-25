@@ -19,20 +19,23 @@ public class FotosDAO {
     
     public void InserirFotos(FotosBeans Fotos)
     {
-        String sql = "insert into fotos (tipo, idleilao, caminho, lote) values (?, ?, ?, ?)"; 
+        String sql = "insert into fotos (tipo, idleilao, caminho, lote, idLote) values (?, ?, ?, ?, ?)"; 
         try {
             PreparedStatement st = Conexao.getConnection().prepareStatement(sql); 
             st.setString(1, Fotos.getTipo());
             st.setInt(2, Fotos.getIdleilao()); 
             st.setString(3, Fotos.getCaminho());      
             st.setString(4, Fotos.getLote());
-                    
+            st.setInt(5, Fotos.getIdlote()); 
             st.execute(); 
             Conexao.getConnection().commit();            
         } catch (Exception e) {
             System.out.println(e);
         }
+        
     }
+    
+    
     
     public void BuscarFotos(DefaultTableModel Modelo)
     {
