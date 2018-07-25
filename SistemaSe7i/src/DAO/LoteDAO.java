@@ -111,7 +111,8 @@ public class LoteDAO {
     }
 
     public void cadastrar(LoteBeans lote) {//cad
-        String sqlInsertion = "insert into lotes (numeroLote, idLeilao, idProprietario, idVeiculo, motorBase, chassiBase, dataCad) values (?,?,?,?,?,?,?)";
+        String sqlInsertion = "insert into lotes (numeroLote, idLeilao, idProprietario, idVeiculo, motorBase, chassiBase, observacao, dataCad) values (?,?,?,?,?,?,?,?)";
+        lote.exibe();
         try {
             PreparedStatement pst = Conexao.getConnection().prepareStatement(sqlInsertion);
             pst.setString(1, lote.getNumeroLote());
@@ -135,7 +136,9 @@ public class LoteDAO {
 
             pst.setString(6, lote.getChassiBase());
 
-            pst.setString(7, Corretores.DataAtual());
+            pst.setString(7, lote.getObservacao());
+            
+            pst.setString(8, Corretores.DataAtual());
 
             pst.execute();
             Conexao.getConnection().commit();

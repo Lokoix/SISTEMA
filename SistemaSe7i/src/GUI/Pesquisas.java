@@ -151,6 +151,7 @@ public class Pesquisas extends javax.swing.JInternalFrame {
                     lote.setNumeroLote(s.substring(0, s.indexOf("CAD.txt")));
                     result = manipulaTxt.Leitura(local, s);
 
+                    System.out.println("kkkkk");
                     if (result.size() == 88) { // pesquisa de cadastro normal
                         iCadastro.getLoteCadastro1(result, lote);
                         lote.setVeiculo(conVeiculo.corrigirVeiculoPesquisaCadastro(lote.getVeiculo()));
@@ -158,6 +159,7 @@ public class Pesquisas extends javax.swing.JInternalFrame {
                         conLote.corrigirLoteCadastro(lote);
                         break;
                     } else if (result.size() == 11) { //pesquisa de cadastro sem registro
+                        System.out.println("kkkk");
                         iCadastro.getLoteCadastro2(result, lote);
                         conLote.corrigirLoteCadastro(lote);
                         break;

@@ -176,9 +176,8 @@ public class Cadastro {
         
     }
     
-    public void getLoteCadastro2(List<String> result, LoteBeans lote){
-        
-        lote.setObservacao(lote.getObservacao() + " - Cadastro sem registro");
+    public void getLoteCadastro2(List<String> result, LoteBeans lote){      
+        lote.setObservacao("Cadastro sem registro ");
         
     }
     
