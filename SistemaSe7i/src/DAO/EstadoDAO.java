@@ -33,7 +33,7 @@ public class EstadoDAO {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro EstadoDAO(carregar): " + e);
         }
-        JOptionPane.showMessageDialog(null, "Estado não localizado! ", "Aviso", 1);
+        //JOptionPane.showMessageDialog(null, "Estado não localizado! ", "Aviso", 1);
         return new EstadoBeans();
     }
 

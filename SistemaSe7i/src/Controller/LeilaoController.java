@@ -44,26 +44,50 @@ public class LeilaoController {
             return false;
         }
 
-        if (leilao.getLeiloeiro().equals("")) {
+        if (leilao.getLeiloeiro().equals("Selecionar Leiloeiro")) {
             JOptionPane.showMessageDialog(null, "Selecione o Leiloeiro", "Eroo", 0);
             return false;
         }
 
-        if (leilao.getCidade().equals("")) {
+        if (leilao.getCidade().equals("Selecionar Cidade")) {
             JOptionPane.showMessageDialog(null, "Selecione a Cidade", "Eroo", 0);
             return false;
         }
 
-        if (leilao.getPatio().equals("")) {
+        if (leilao.getPatio().equals("Selecionar Pátio")) {
             JOptionPane.showMessageDialog(null, "Selecione o Pátio", "Erro", 0);
             return false;
         }
         //System.out.println(empresa.getCnpj());
-        if (leilao.getVistoriadora().equals("")) {
+        if (leilao.getVistoriadora().equals("Selecionar Vistoriadora")) {
             JOptionPane.showMessageDialog(null, "Selecione a Vistoriadora", "Erro", 0);
             return false;
         }
-
+        
+        if (leilao.getDesvComDoc() == 0){
+            JOptionPane.showMessageDialog(null, "Preencher Campo Desv. Doc", "Erro", 0);
+            return false;
+        } 
+        
+        if (leilao.getDesvSemDoc() == 0){
+            JOptionPane.showMessageDialog(null, "Preencher Campo Desv. Sem Doc", "Erro", 0);
+            return false;
+        }
+        
+        if(leilao.getDesvSucata() == 0){
+            JOptionPane.showMessageDialog(null, "Preencher Campo Desv. Sucata", "Erro", 0);
+            return false;
+        }
+        
+        if(leilao.getDataInicio() == null){
+             JOptionPane.showMessageDialog(null, "Preencher Campo Data de Início", "Erro", 0);
+            return false;
+        }
+        
+        if(leilao.getDataPrevista() == null){
+             JOptionPane.showMessageDialog(null, "Preencher Campo Data Prevista", "Erro", 0);
+            return false;
+        }
         return true;
     }
     

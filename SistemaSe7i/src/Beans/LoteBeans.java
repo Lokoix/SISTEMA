@@ -14,17 +14,53 @@ import java.util.Date;
 public class LoteBeans {
 
     private Integer id;
-    private LeilaoBeans leilao;
+    private LeilaoBeans leilao = new LeilaoBeans();
     private ProprietarioBeans proprietario = new ProprietarioBeans();
+    private ProprietarioBeans comunicao = new ProprietarioBeans();
+    private ProprietarioBeans alienacao = new ProprietarioBeans();
     private VeiculoBeans veiculo = new VeiculoBeans();
     private String numeroLote;
     private String observacao;
     private String motorBase;
     private String chassiBase;
     private String dataCad;
+    private double fipe;
+    private double debito;
 
     public LoteBeans() {
 
+    }
+
+    public ProprietarioBeans getComunicao() {
+        return comunicao;
+    }
+
+    public void setComunicao(ProprietarioBeans comunicao) {
+        this.comunicao = comunicao;
+    }
+
+    public ProprietarioBeans getAlienacao() {
+        return alienacao;
+    }
+
+    public void setAlienacao(ProprietarioBeans alienacao) {
+        this.alienacao = alienacao;
+    }
+
+    public double getFipe() {
+        return fipe;
+    }
+
+    public void setFipe(double fipe) {
+        this.fipe = fipe;
+    }
+
+    public double getDebito() {
+        return debito;
+    }
+
+    public void setDebito(double debito) {
+        this.debito = debito;
     }
 
     public Integer getId() {
@@ -102,7 +138,7 @@ public class LoteBeans {
     public void exibe() {
         System.out.println("-----LOTE------");
         System.out.println("ID: " + this.getId()
-                +"\nLeilão: "+ this.getLeilao().getId()+", "+this.getLeilao().getDescricao()
+                + "\nLeilão: " + this.getLeilao().getId() + ", " + this.getLeilao().getDescricao()
                 + "\nNumero: " + this.getNumeroLote()
                 + "\nChassi Base: " + this.getChassiBase()
                 + "\nMotor Base: " + this.getMotorBase()

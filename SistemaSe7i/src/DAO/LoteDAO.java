@@ -5,6 +5,7 @@
  */
 package DAO;
 
+import Beans.LeilaoBeans;
 import Beans.LoteBeans;
 import Controller.ProprietarioController;
 import Controller.VeiculoController;
@@ -13,6 +14,7 @@ import Utilitarios.Corretores;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Types;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 /**
@@ -22,6 +24,7 @@ import javax.swing.JOptionPane;
 public class LoteDAO {
 
     VeiculoController conVeiculo = new VeiculoController();
+    VeiculoDAO daoVeiculo = new VeiculoDAO();
     ProprietarioController conProprietario = new ProprietarioController();
 
     public boolean existe(LoteBeans lote) {
@@ -53,15 +56,23 @@ public class LoteDAO {
                 base.setId(rs.getInt("id"));
                 base.setNumeroLote(rs.getString("numeroLote"));
                 base.getLeilao().setId(rs.getInt("idLeilao"));
-                base.getProprietario().setId(rs.getInt("idProprietario"));
-                base.getVeiculo().setId(rs.getInt("idVeiculo"));
+
+                if (rs.getString("idProprietario") != null) {
+                    base.getProprietario().setId(rs.getInt("idProprietario"));
+                }
+
+                if (rs.getString("idVeiculo") != null) {
+                    base.getVeiculo().setId(rs.getInt("idVeiculo"));
+                }
+
                 base.setMotorBase(rs.getString("motorBase"));
                 base.setChassiBase(rs.getString("chassiBase"));
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro LoteDAO(carregar): " + e);
         }
-        return lote;
+
+        return base;
     }
 
     public void alterar(LoteBeans lote) {
@@ -85,21 +96,17 @@ public class LoteDAO {
 
             //Motor Base
             pst.setString(3, lote.getMotorBase());
-
             //Chassi Base
             pst.setString(4, lote.getChassiBase());
-
             //obs
             pst.setString(5, lote.getObservacao());
-
             //id
             pst.setInt(6, lote.getId());
-
             pst.executeUpdate();
             Conexao.getConnection().commit();
 
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Erro ao alterar LOTE no banco: " + e);
+            JOptionPane.showMessageDialog(null, "Erro LoteDAO(alterar):\n" + e);
         }
     }
 
@@ -125,17 +132,51 @@ public class LoteDAO {
             }
 
             pst.setString(5, lote.getMotorBase());
-            
+
             pst.setString(6, lote.getChassiBase());
-            
+
             pst.setString(7, Corretores.DataAtual());
-          
+
             pst.execute();
             Conexao.getConnection().commit();
             //JOptionPane.showMessageDialog(null, "Registro salvo ");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro LoteDAO(cadastrar): " + e);
         }
+    }
+
+    public ArrayList<LoteBeans> buscarTodosLotesDoLeilao(LeilaoBeans leilao) {
+        ArrayList<LoteBeans> lotes = new ArrayList<>();
+        LoteBeans lote;
+        try {
+            String sql = "SELECT lotes.*, veiculos.placa, marcas.nome, modelos.nome FROM lotes, veiculos, marcas, modelos WHERE lotes.idVeiculo = veiculos.id "
+                    + "AND veiculos.idModelo = modelos.id AND modelos.idMarca = marcas.id AND lotes.idLeilao = ? order by lotes.numeroLote ASC";
+            PreparedStatement st = Conexao.getConnection().prepareStatement(sql);
+            st.setInt(1, leilao.getId());
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                lote = new LoteBeans();
+                lote.setId(rs.getInt("id"));
+                lote.setNumeroLote(rs.getString("numeroLote"));
+                lote.getLeilao().setId(rs.getInt("idLeilao"));
+                lote.getProprietario().setId(rs.getInt("idProprietario"));
+                lote.getVeiculo().setId(rs.getInt("idVeiculo"));
+                lote.getVeiculo().setPlaca(rs.getString("veiculos.placa"));
+                lote.getVeiculo().getModelo().setNome(rs.getString("modelos.nome"));
+                lote.getVeiculo().getModelo().getMarca().setNome(rs.getString("marcas.nome"));
+                lote.getComunicao().setId(rs.getInt("idComunicacao"));
+                lote.getAlienacao().setId(rs.getInt("idAlienacao"));
+                lote.setDataCad(rs.getDate("dataCad").toString());
+                lote.setObservacao(rs.getString("observacao"));
+                lote.setMotorBase(rs.getString("motorBase"));
+                lote.setChassiBase(rs.getString("chassiBase"));
+                lote.setFipe(rs.getDouble("fipe"));
+                lote.setDebito(rs.getDouble("debito"));
+                lotes.add(lote);
+            }
+        } catch (Exception e) {
+        }
+        return lotes;
     }
 
 }
