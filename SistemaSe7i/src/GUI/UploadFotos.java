@@ -2,6 +2,7 @@ package GUI;
 
 import Beans.FotosBeans;
 import Controller.FotosController;
+import DAO.VeiculoDAO;
 import Utilitarios.Conexao;
 import Utilitarios.Corretores;
 import java.awt.Image;
@@ -41,7 +42,7 @@ public class UploadFotos extends javax.swing.JFrame {
     ArrayList<String> nomeDosArquivos;
     FotosBeans FotoB = new FotosBeans();
     FotosController FotoC = new FotosController();
-
+    VeiculoDAO veiculoD = new VeiculoDAO(); 
     /**
      * Creates new form Upload
      */
@@ -309,16 +310,9 @@ public class UploadFotos extends javax.swing.JFrame {
                             Lote = caminhofinal.substring(caminhofinal.lastIndexOf("\\") + 1, caminhofinal.lastIndexOf("MP_"));
                             Tipo = caminhofinal.substring(caminhofinal.lastIndexOf("MP"), caminhofinal.lastIndexOf("MP_") + 3);
                             String Motor = caminhofinal.substring(caminhofinal.lastIndexOf("_")+1, caminhofinal.lastIndexOf(".jpg")); 
-                            
-                            
-                            
+                                                                                
                             if(!Motor.equals("")){
-                                String insmotor = "insert into veiculos (motorVeiculo, dataCad) values (?, ?)";
-                                PreparedStatement st2 = Conexao.getConnection().prepareStatement(insmotor);
-                                st2.setString(1, Motor); 
-                                st2.setString(2, Corretores.DataAtual()); 
-                                st2.execute();
-                                Conexao.getConnection().commit();
+                               veiculoD.cadastrarMotor(Motor); 
                             }
                                                        
                             BscLote(Lote, Tipo, idleilao); 
@@ -373,12 +367,7 @@ public class UploadFotos extends javax.swing.JFrame {
                             Tipo = caminhofinal.substring(caminhofinal.lastIndexOf("CH"), caminhofinal.lastIndexOf("CH_") + 3);
                             String Chassi = caminhofinal.substring(caminhofinal.lastIndexOf("_")+1, caminhofinal.lastIndexOf(".jpg")); 
                             if(!Chassi.equals("")){
-                                String inschassi = "insert into veiculos (chassiVeiculo, dataCad) values (?, ?)";
-                                PreparedStatement st2 = Conexao.getConnection().prepareStatement(inschassi);
-                                st2.setString(1, Chassi); 
-                                st2.setString(2, Corretores.DataAtual()); 
-                                st2.execute();
-                                Conexao.getConnection().commit();
+                                veiculoD.cadastrarChassi(Chassi);
                             }
                             BscLote(Lote, Tipo, idleilao);
                                 
