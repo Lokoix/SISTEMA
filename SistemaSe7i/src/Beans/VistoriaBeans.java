@@ -74,4 +74,15 @@ public class VistoriaBeans {
     public void setCidade(CidadeBeans cidade) {
         this.cidade = cidade;
     }
+    
+        public void exibe() {
+        System.out.println(this.id + " - " + this.getNome());
+    }
+
+    @Override
+    public String toString() {
+        return getNome();
+    }
+        
+        
 }

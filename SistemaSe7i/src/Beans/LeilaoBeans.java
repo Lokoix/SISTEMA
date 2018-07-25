@@ -15,8 +15,8 @@ public class LeilaoBeans {
     
     private int id;
     private String descricao;
-    private Date dataInicio;
-    private Date dataPrevista;
+    private String dataInicio;
+    private String dataPrevista;
     private LeiloeiroBeans leiloeiro;
     private String edital;
     private VistoriaBeans vistoriadora;
@@ -62,21 +62,22 @@ public class LeilaoBeans {
         this.descricao = descricao;
     }
 
-    public Date getDataInicio() {
+    public String getDataInicio() {
         return dataInicio;
     }
 
-    public void setDataInicio(Date dataInicio) {
+    public void setDataInicio(String dataInicio) {
         this.dataInicio = dataInicio;
     }
 
-    public Date getDataPrevista() {
+    public String getDataPrevista() {
         return dataPrevista;
     }
 
-    public void setDataPrevista(Date dataPrevista) {
+    public void setDataPrevista(String dataPrevista) {
         this.dataPrevista = dataPrevista;
     }
+
 
     public LeiloeiroBeans getLeiloeiro() {
         return leiloeiro;
@@ -143,6 +144,12 @@ public class LeilaoBeans {
     public void setCartaDeNotificacao(String cartaDeNotificacao) {
         this.cartaDeNotificacao = cartaDeNotificacao;
     }
+
+    @Override
+    public String toString() {
+        return getDescricao(); //To change body of generated methods, choose Tools | Templates.
+    }
+    
     
     
 }

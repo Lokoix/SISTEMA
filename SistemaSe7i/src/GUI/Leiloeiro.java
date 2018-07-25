@@ -61,11 +61,12 @@ public class Leiloeiro extends javax.swing.JInternalFrame {
 
         EmpresaBeans empresa2 = new EmpresaBeans();
         empresa2.setRazaoSocial("Selecionar Empresa");
+        empresa2.setId(0);
         cbox_empresa.addItem(empresa2);
         for (EmpresaBeans empresa : empresaD.carregarEmpresas()) {
             cbox_empresa.addItem(empresa);
         }
-
+        
         limparCampos();
     }
 
@@ -600,7 +601,7 @@ public class Leiloeiro extends javax.swing.JInternalFrame {
         for (int j = 0; j <= cbox_empresa.getItemCount(); j++) {
 
             EmpresaBeans Item = (EmpresaBeans) cbox_empresa.getItemAt(j);
-            if (Item.getId() == leiloeiroB.getEmpresa().getId()) {
+            if ((int)Item.getId() == leiloeiroB.getEmpresa().getId()) {
                 cbox_empresa.setSelectedIndex(j);
                 break;
             }

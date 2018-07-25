@@ -20,6 +20,11 @@ public class CidadeBeans {
     public CidadeBeans(int id){
        this.id = id;
     }
+
+    public CidadeBeans(Integer id, String nome) {
+        this.id = id;
+        this.nome = nome;
+    }
     
     public CidadeBeans(){
        
@@ -43,7 +48,8 @@ public class CidadeBeans {
     }
 
     public void exibe() {
-        System.out.println(this.id + " - " + this.getNome() + " - " + this.estado.getId() + " - " + this.estado.getNome());
+        System.out.println("CIDADE: "+this.getId()+", "+this.getNome());
+        this.estado.exibe();
     }
 
     @Override

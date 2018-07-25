@@ -190,8 +190,6 @@ public class VeiculoBeans {
                 + "\nRENAVAM: " + this.renavam
                 + "\nCHASSI VEICULO: " + this.chassiVeiculo
                 + "\nMOTOR VEICULO: " + this.motorVeiculo
-                + "\nMODELO: " + this.modelo.getNome()
-                + "\nMARCA" + this.getModelo().getMarca().getNome()
                 + "\nCOR: " + this.cor
                 + "\nANO FAB.: " + this.anoFab
                 + "\nANO MOD.: " + this.anoMod
@@ -202,10 +200,8 @@ public class VeiculoBeans {
                 + "\nPOTENCIA: " + this.potencia
                 + "\nCILINDRADA: " + this.cilidrada
                 + "\nLICENCIAMENTO: " + this.licenciamento
-                // + "\nCIDADE ID: " + this.cidade.getId()
-                // + "\nCIDADE NOME: " + this.cidade.getNome()
-                // + "\nCIDADE ESTADO: " + this.cidade.getEstado().getNome()
-                + "------------------"
-        );
+                + "\nCIDADE ID: " + this.cidade.getId());
+        this.modelo.exibe();
+        this.cidade.exibe();
     }
 }

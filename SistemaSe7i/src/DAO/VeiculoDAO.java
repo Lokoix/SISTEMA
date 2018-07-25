@@ -8,6 +8,7 @@ package DAO;
 import Beans.CidadeBeans;
 import Beans.VeiculoBeans;
 import Controller.CidadeController;
+import Controller.ModeloController;
 import Utilitarios.Conexao;
 import Utilitarios.Corretores;
 import java.sql.PreparedStatement;
@@ -23,72 +24,70 @@ import javax.swing.JOptionPane;
 public class VeiculoDAO {
 
     CidadeController munC;
-    ModeloDAO modD = new ModeloDAO();
-    CidadeDAO cidD;
+    ModeloDAO modeloDAO = new ModeloDAO();
+    CidadeDAO cidadeDAO = new CidadeDAO();
 
-    public void CadastrarVeiculo(VeiculoBeans automovel) {
+    public void cadastrar(VeiculoBeans veiculo) {
         String sqlInsertion = "insert into veiculos(placa, renavam, idModelo, cor, anoFabricacao, anoModelo, combustivel, categoria, tipo, especie, potencia, cilindrada,licenciamento, idCidade, dataCad)\n"
                 + " values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-        automovel.exibe();
         try {
             PreparedStatement st = Conexao.getConnection().prepareStatement(sqlInsertion);
-            st.setString(1, automovel.getPlaca());
-            st.setString(2, automovel.getRenavam());
-            st.setInt(3, automovel.getModelo().getId());
-            st.setString(4, automovel.getCor());
-            st.setString(5, automovel.getAnoFab());
-            st.setString(6, automovel.getAnoMod());
-            st.setString(7, automovel.getCombustivel());
-            st.setString(8, automovel.getCategoria());
-            st.setString(9, automovel.getTipo());
-            st.setString(10, automovel.getEspecie());
-            st.setString(11, automovel.getPotencia());
-            st.setString(12, automovel.getCilidrada());
-            st.setString(13, Corretores.ConverterParaSQL(automovel.getLicenciamento()));
+            st.setString(1, veiculo.getPlaca());
+            st.setString(2, veiculo.getRenavam());
+            st.setString(3, veiculo.getModelo().getId().toString());
+            st.setString(4, veiculo.getCor());
+            st.setString(5, veiculo.getAnoFab());
+            st.setString(6, veiculo.getAnoMod());
+            st.setString(7, veiculo.getCombustivel());
+            st.setString(8, veiculo.getCategoria());
+            st.setString(9, veiculo.getTipo());
+            st.setString(10, veiculo.getEspecie());
+            st.setString(11, veiculo.getPotencia());
+            st.setString(12, veiculo.getCilidrada());
+            st.setString(13, Corretores.ConverterParaSQL(veiculo.getLicenciamento()));
 
-            
-            
-            
-            if (automovel.getCidade() == null) {
+            if (veiculo.getCidade().getId() == null) {
                 st.setString(14, null);
+                //JOptionPane.showMessageDialog(null, "é nulo yeah");
             } else {
-                st.setInt(14, automovel.getCidade().getId());
+                st.setInt(14, veiculo.getCidade().getId());
             }
 
             st.setString(15, Corretores.DataAtual());
             st.execute();
             Conexao.getConnection().commit();
-            JOptionPane.showMessageDialog(null, "Registro salvo ");
+            //JOptionPane.showMessageDialog(null, "Registro salvo ");
         } catch (Exception e) {
-
-            JOptionPane.showMessageDialog(null, "Erro ao cadastrar Automovel no banco: " + e);
+            JOptionPane.showMessageDialog(null, "Erro VeiculoDAO(cadastrar): " + e);
         }
     }
 
-    public boolean ExisteVeiculo(VeiculoBeans a) {
+    public boolean existe(VeiculoBeans veiculo) {
         String sql = "select * from veiculos where placa = ?";
         try {
             PreparedStatement st = Conexao.getConnection().prepareStatement(sql);
-            st.setString(1, a.getPlaca());
+            st.setString(1, veiculo.getPlaca());
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
-                JOptionPane.showMessageDialog(null, "Veiculo ja existe no sistema");
+                //JOptionPane.showMessageDialog(null, "Veiculo ja existe no sistema (placa)");
                 return true;
             } else {
                 sql = "select * from veiculos where chassiVeiculo = ?";
                 try {
                     st = Conexao.getConnection().prepareStatement(sql);
-                    st.setString(1, a.getChassiVeiculo());
+                    st.setString(1, veiculo.getChassiVeiculo());
                     rs = st.executeQuery();
                     if (rs.next()) {
-                        JOptionPane.showMessageDialog(null, "Veiculo ja existe no sistema");
+                        //JOptionPane.showMessageDialog(null, "Veiculo ja existe no sistema(chassiVeiculo)");
                         return true;
                     }
                 } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, "Erro VeiculoDAO(existe/chassiVeiculo): " + e);
                 }
                 return false;
             }
         } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro VeiculoDAO(existe/placa): " + e);
         }
         return false;
     }
@@ -104,11 +103,9 @@ public class VeiculoDAO {
                 veiculo.setId(id);
                 veiculo.setPlaca(rs.getString("placa"));
                 veiculo.setRenavam(rs.getString("renavam"));
-                System.out.println("!!!11111");
                 veiculo.setChassiVeiculo(rs.getString("chassiVeiculo"));
-                System.out.println("!!!!22222");
                 veiculo.setMotorVeiculo(rs.getString("motorVeiculo"));
-                veiculo.setModelo(modD.BuscarPorId(rs.getInt("idModelo")));
+                veiculo.setModelo(modeloDAO.carregarPorId(rs.getString("idModelo")));
                 veiculo.setCor(rs.getString("cor"));
                 veiculo.setAnoFab(rs.getString("anoFabricacao"));
                 veiculo.setAnoMod(rs.getString("anoModelo"));
@@ -119,15 +116,13 @@ public class VeiculoDAO {
                 veiculo.setPotencia(rs.getString("potencia"));
                 veiculo.setCilidrada(rs.getString("cilindrada"));
                 veiculo.setLicenciamento(Corretores.ConverterParaJava(rs.getString("licenciamento")));
-                System.out.println("!!!!3333");
 
                 if (rs.getString("idCidade") == null) {
                     veiculo.setCidade(null);
                 } else {
-                    veiculo.setCidade(cidD.getCidadeId(rs.getInt("idCidade")));
+                    veiculo.setCidade(cidadeDAO.getCidadeId(rs.getInt("idCidade")));
                 }
 
-                System.out.println("!!!!!4444");
                 veiculo.setDataCad(Corretores.ConverterParaJava(rs.getString("dataCad")));
                 return veiculo;
             }
@@ -135,6 +130,40 @@ public class VeiculoDAO {
             JOptionPane.showMessageDialog(null, "Erro ao getVeiculo no banco: " + e);
         }
         return null;
+    }
+
+    public VeiculoBeans carregar(VeiculoBeans veiculo) {
+        String sql = "select * from veiculos where placa = ? ";//placa existe
+        try {
+            PreparedStatement st = Conexao.getConnection().prepareStatement(sql);
+            st.setString(1, veiculo.getPlaca());
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                VeiculoBeans veiculoB = new VeiculoBeans();
+                veiculoB.setId(rs.getInt("id"));
+                veiculoB.setPlaca(rs.getString("placa"));
+                veiculoB.setRenavam(rs.getString("renavam"));
+                veiculoB.setChassiVeiculo(rs.getString("chassiVeiculo"));
+                veiculoB.setMotorVeiculo(rs.getString("motorVeiculo"));
+                veiculoB.setModelo(modeloDAO.carregarPorId(rs.getString("idModelo")));
+                veiculoB.setCor(rs.getString("cor"));
+                veiculoB.setAnoFab(Corretores.ano(rs.getString("anoFabricacao")));
+                veiculoB.setAnoMod(Corretores.ano(rs.getString("anoModelo")));
+                veiculoB.setCombustivel(rs.getString("combustivel"));
+                veiculoB.setCategoria(rs.getString("categoria"));
+                veiculoB.setTipo(rs.getString("tipo"));
+                veiculoB.setEspecie(rs.getString("especie"));
+                veiculoB.setPotencia(rs.getString("potencia"));
+                veiculoB.setCilidrada(rs.getString("cilindrada"));
+                veiculoB.setLicenciamento(Corretores.ConverterParaJava(rs.getString("licenciamento")));
+                veiculoB.setCidade(cidadeDAO.carregarPorId(rs.getString("idCidade")));
+                veiculoB.setDataCad(Corretores.ConverterParaJava(rs.getString("dataCad")));
+                return veiculoB;
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro VeiculoDAO(carregar): " + e);
+        }
+        return veiculo;
     }
 
     public Integer BuscarVeiculo(VeiculoBeans veiculo) {
@@ -154,27 +183,15 @@ public class VeiculoDAO {
     }// retorna o cod
 
     public void AlterarVeiculo(VeiculoBeans automovel) {
-        String sqlUpdate = "update veiculos set "
-                + "placa  = ?, "
-                + "renavam = ?, "
-                + "idModelo = ?, "
-                + "cor = ?, "
-                + "anoFabricacao = ?, "
-                + "anoModelo = ?, "
-                + "combustivel = ?, "
-                + "categoria = ?, "
-                + "tipo = ?, "
-                + "especie = ?, "
-                + "potencia = ?, "
-                + "cilindrada = ?, "
-                + "licenciamento = ?, "
-                + "idCidade = ? "
-                + "where id = ?";
+        automovel.exibe();
+        String sqlUpdate = "update veiculos set placa  = ?,renavam = ?, idModelo = ?, cor = ?, anoFabricacao = ?, anoModelo = ?, "
+                + "combustivel = ?, categoria = ?, tipo = ?, especie = ?, potencia = ?, cilindrada = ?, licenciamento = ?, "
+                + "idCidade = ? where id = ?";
         try {
             PreparedStatement pst = Conexao.getConnection().prepareStatement(sqlUpdate);
             pst.setString(1, automovel.getPlaca());
             pst.setString(2, automovel.getRenavam());
-            pst.setInt(3, automovel.getModelo().getId());
+            pst.setString(3, automovel.getModelo().getId().toString());
             pst.setString(4, automovel.getCor());
             pst.setString(5, automovel.getAnoFab());
             pst.setString(6, automovel.getAnoMod());
@@ -185,21 +202,20 @@ public class VeiculoDAO {
             pst.setString(11, automovel.getPotencia());
             pst.setString(12, automovel.getCilidrada());
             pst.setString(13, Corretores.ConverterParaSQL(automovel.getLicenciamento()));
-            System.out.println("????111");
-            automovel.exibe();
-            
-            if (automovel.getCidade() == null) {
+            if (automovel.getCidade().getId() == null) {
                 pst.setString(14, null);
+                JOptionPane.showMessageDialog(null, "é nulo yeah");
             } else {
                 pst.setInt(14, automovel.getCidade().getId());
             }
-            System.out.println("????2222");
-            pst.setInt(15, automovel.getId());
 
+            pst.setInt(15, automovel.getId());
             pst.executeUpdate();
-            JOptionPane.showMessageDialog(null, "Alterado Com OK");
+            Conexao.getConnection().commit();
+            //JOptionPane.showMessageDialog(null, "Alterado Com OK");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro ao Editar Automovel no banco: " + e);
         }
     }
+
 }

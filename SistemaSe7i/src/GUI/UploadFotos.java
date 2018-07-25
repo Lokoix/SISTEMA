@@ -3,6 +3,7 @@ package GUI;
 import Beans.FotosBeans;
 import Controller.FotosController;
 import Utilitarios.Conexao;
+import Utilitarios.Corretores;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -197,9 +198,9 @@ public class UploadFotos extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtIdleilao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(cbleilao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(barraProgresso, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(barraProgresso, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(7, 7, 7)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(30, 30, 30)
@@ -246,7 +247,7 @@ public class UploadFotos extends javax.swing.JFrame {
             }
 
         } else {
-            JOptionPane.showMessageDialog(null, "Você não selecionou nenhum arquivo.");
+            JOptionPane.showMessageDialog(null, "Você não selecionou nenhum arquivo!");
         }
     }
 
@@ -259,32 +260,31 @@ public class UploadFotos extends javax.swing.JFrame {
                     barraProgresso.setMaximum(imagens.size());
                     for (BufferedImage i : imagens) {
 
-                      
                         java.io.File diretorio1 = new java.io.File("C:\\Users\\joaoh\\Desktop\\Leilões");
                         boolean statusDir1 = diretorio1.mkdir();
-                        
+
                         String leilao = cbleilao.getSelectedItem().toString();
                         java.io.File diretorio2 = new java.io.File(diretorio1 + "\\" + leilao + "\\");
                         boolean statusDir2 = diretorio2.mkdir();
-                        
+
                         java.io.File diretorio3 = new java.io.File(diretorio2 + "\\Fotos\\");
                         boolean statusDir3 = diretorio3.mkdir();
 
-                        
                         String caminhofinal = diretorio3 + "\\" + nomeDosArquivos.get(contador);
-                        
+
                         String diretoriofinal = diretorio3 + "\\";
-                         
+
                         String Lote, Tipo;
-                        int idleilao = Integer.parseInt(txtIdleilao.getText()); 
-                               
+                        int idleilao = Integer.parseInt(txtIdleilao.getText());
+
                         if (caminhofinal.contains("T_")) {
                             Lote = caminhofinal.substring(caminhofinal.lastIndexOf("\\") + 1, caminhofinal.lastIndexOf("T_"));
                             Tipo = caminhofinal.substring(caminhofinal.lastIndexOf("T_"), caminhofinal.lastIndexOf("T_") + 2);
 
-                            String sql1 = "select * from fotos where caminho=?";
+                            BscLote(Lote, Tipo, idleilao);
+
+                            String sql1 = "select * from fotos where lote=" + Lote + " and tipo='" + Tipo + "' and idleilao=" + idleilao;
                             PreparedStatement st = Conexao.getConnection().prepareStatement(sql1);
-                            st.setString(1, diretoriofinal + Lote + Tipo + ".jpg");
                             ResultSet rs = st.executeQuery();
 
                             if (!rs.next()) {
@@ -299,18 +299,32 @@ public class UploadFotos extends javax.swing.JFrame {
 
                                 String existente = Lote + Tipo;
                                 lblatualizados.setText(lblatualizados.getText() + existente + "\n");
-                    
+
                             } else {
                                 String existente = Lote + Tipo;
                                 lblexistentes.setText(lblexistentes.getText() + existente + "\n");
                             }
+
                         } else if (caminhofinal.contains("MP_")) {
                             Lote = caminhofinal.substring(caminhofinal.lastIndexOf("\\") + 1, caminhofinal.lastIndexOf("MP_"));
                             Tipo = caminhofinal.substring(caminhofinal.lastIndexOf("MP"), caminhofinal.lastIndexOf("MP_") + 3);
-
-                            String sql1 = "select * from fotos where caminho=?";
+                            String Motor = caminhofinal.substring(caminhofinal.lastIndexOf("_")+1, caminhofinal.lastIndexOf(".jpg")); 
+                            
+                            
+                            
+                            if(!Motor.equals("")){
+                                String insmotor = "insert into veiculos (motorVeiculo, dataCad) values (?, ?)";
+                                PreparedStatement st2 = Conexao.getConnection().prepareStatement(insmotor);
+                                st2.setString(1, Motor); 
+                                st2.setString(2, Corretores.DataAtual()); 
+                                st2.execute();
+                                Conexao.getConnection().commit();
+                            }
+                                                       
+                            BscLote(Lote, Tipo, idleilao); 
+                            
+                            String sql1 = "select * from fotos where lote=" + Lote + " and (tipo='MP_' or tipo='MF_') and idleilao=" + idleilao;
                             PreparedStatement st = Conexao.getConnection().prepareStatement(sql1);
-                            st.setString(1, diretoriofinal + Lote + Tipo + ".jpg");
                             ResultSet rs = st.executeQuery();
 
                             if (!rs.next()) {
@@ -327,13 +341,14 @@ public class UploadFotos extends javax.swing.JFrame {
                                 String existente = Lote + Tipo;
                                 lblexistentes.setText(lblexistentes.getText() + existente + "\n");
                             }
+
                         } else if (caminhofinal.contains("MF_")) {
                             Lote = caminhofinal.substring(caminhofinal.lastIndexOf("\\") + 1, caminhofinal.lastIndexOf("MF_"));
                             Tipo = caminhofinal.substring(caminhofinal.lastIndexOf("MF"), caminhofinal.lastIndexOf("MF_") + 3);
-
-                            String sql1 = "select * from fotos where caminho=?";
+                            BscLote(Lote, Tipo, idleilao);
+                            
+                            String sql1 = "select * from fotos where lote=" + Lote + " and (tipo='MP_' or tipo='MF_') and idleilao=" + idleilao;
                             PreparedStatement st = Conexao.getConnection().prepareStatement(sql1);
-                            st.setString(1, diretoriofinal + Lote + Tipo + ".jpg");
                             ResultSet rs = st.executeQuery();
 
                             if (!rs.next()) {
@@ -352,13 +367,23 @@ public class UploadFotos extends javax.swing.JFrame {
                                 String existente = Lote + Tipo;
                                 lblexistentes.setText(lblexistentes.getText() + existente + "\n");
                             }
+
                         } else if (caminhofinal.contains("CH_")) {
                             Lote = caminhofinal.substring(caminhofinal.lastIndexOf("\\") + 1, caminhofinal.lastIndexOf("CH_"));
                             Tipo = caminhofinal.substring(caminhofinal.lastIndexOf("CH"), caminhofinal.lastIndexOf("CH_") + 3);
-
-                            String sql1 = "select * from fotos where caminho=?";
+                            String Chassi = caminhofinal.substring(caminhofinal.lastIndexOf("_")+1, caminhofinal.lastIndexOf(".jpg")); 
+                            if(!Chassi.equals("")){
+                                String inschassi = "insert into veiculos (chassiVeiculo, dataCad) values (?, ?)";
+                                PreparedStatement st2 = Conexao.getConnection().prepareStatement(inschassi);
+                                st2.setString(1, Chassi); 
+                                st2.setString(2, Corretores.DataAtual()); 
+                                st2.execute();
+                                Conexao.getConnection().commit();
+                            }
+                            BscLote(Lote, Tipo, idleilao);
+                                
+                            String sql1 = "select * from fotos where lote=" + Lote + " and (tipo='CH_' or tipo='CF_') and idleilao=" + idleilao;
                             PreparedStatement st = Conexao.getConnection().prepareStatement(sql1);
-                            st.setString(1, diretoriofinal + Lote + Tipo + ".jpg");
                             ResultSet rs = st.executeQuery();
 
                             if (!rs.next()) {
@@ -376,14 +401,38 @@ public class UploadFotos extends javax.swing.JFrame {
                                 String existente = Lote + Tipo;
                                 lblexistentes.setText(lblexistentes.getText() + existente + "\n");
                             }
-                        }
-                       
-                        else if (caminhofinal.substring(caminhofinal.length() - 6, caminhofinal.length()).contains("E")) {
+
+                        }  else if (caminhofinal.contains("CF_")) {
+                            Lote = caminhofinal.substring(caminhofinal.lastIndexOf("\\") + 1, caminhofinal.lastIndexOf("CF_"));
+                            Tipo = caminhofinal.substring(caminhofinal.lastIndexOf("CF"), caminhofinal.lastIndexOf("CF_") + 3);
+                            
+                            BscLote(Lote, Tipo, idleilao);
+
+                            String sql1 = "select * from fotos where lote=" + Lote + " and (tipo='CH_' or tipo='CF_') and idleilao=" + idleilao;
+                            PreparedStatement st = Conexao.getConnection().prepareStatement(sql1);
+                            ResultSet rs = st.executeQuery();
+
+                            if (!rs.next()) {
+                                File outputfile = new File(diretoriofinal + Lote + Tipo + ".jpg");
+                                ImageIO.write(i, "jpg", outputfile);
+
+                                FotoB.setCaminho(caminhofinal);
+                                FotoB.setLote(Lote);
+                                FotoB.setTipo(Tipo);
+                                FotoB.setIdleilao(idleilao);
+                                FotoC.InserirFotos(FotoB);
+                                String existente = Lote + Tipo;
+                                lblatualizados.setText(lblatualizados.getText() + existente + "\n");
+                            } else {
+                                String existente = Lote + Tipo;
+                                lblexistentes.setText(lblexistentes.getText() + existente + "\n");
+                            }
+
+                        }else if (caminhofinal.substring(caminhofinal.length() - 6, caminhofinal.length()).contains("E")) {
                             //    
                             Lote = caminhofinal.substring(caminhofinal.lastIndexOf("\\") + 1, caminhofinal.lastIndexOf(".jpg") - 2);
                             Tipo = caminhofinal.substring(caminhofinal.indexOf(".jpg") - 2, caminhofinal.lastIndexOf(".jpg"));
-                            
-                            System.out.println(caminhofinal);   
+                            BscLote(Lote, Tipo, idleilao);
                             String sql1 = "select * from fotos where caminho=?";
                             PreparedStatement st = Conexao.getConnection().prepareStatement(sql1);
                             st.setString(1, diretoriofinal + Lote + Tipo + ".jpg");
@@ -398,7 +447,7 @@ public class UploadFotos extends javax.swing.JFrame {
                                 FotoB.setTipo(Tipo);
                                 FotoB.setIdleilao(idleilao);
                                 FotoC.InserirFotos(FotoB);
-                                
+
                                 String existente = Lote + Tipo;
                                 lblatualizados.setText(lblatualizados.getText() + existente + "\n");
                             } else {
@@ -408,10 +457,8 @@ public class UploadFotos extends javax.swing.JFrame {
                         } else if (caminhofinal.contains("F.jpg")) {
                             Lote = caminhofinal.substring(caminhofinal.lastIndexOf("\\") + 1, caminhofinal.lastIndexOf("F"));
                             Tipo = caminhofinal.substring(caminhofinal.lastIndexOf("F"), caminhofinal.lastIndexOf("F") + 1);
-                             
-                            System.out.println(Lote);
-                            System.out.println(Tipo);
-                            
+                            BscLote(Lote, Tipo, idleilao);
+
                             String sql1 = "select * from fotos where caminho=?";
                             PreparedStatement st = Conexao.getConnection().prepareStatement(sql1);
                             st.setString(1, diretoriofinal + Lote + Tipo + ".jpg");
@@ -433,13 +480,15 @@ public class UploadFotos extends javax.swing.JFrame {
                                 String existente = Lote + Tipo;
                                 lblexistentes.setText(lblexistentes.getText() + existente + "\n");
                             }
+
                         }
+
                         contador++;
                         barraProgresso.setValue(contador);
                     }
-                   
-                    nomeDosArquivos.clear();
-                    imagens.clear();
+
+                    //nomeDosArquivos.clear();
+                    //imagens.clear();
                     JOptionPane.showMessageDialog(rootPane, "Imagens enviadas com sucesso");
 
                 } catch (IOException ex) {
@@ -451,11 +500,31 @@ public class UploadFotos extends javax.swing.JFrame {
             }
         }.start();
     }
-    
+
+    public void BscLote(String Lote, String Tipo, int idLeilao) {
+        String sql = "select * from lotes where numeroLote=" + Lote + " and idLeilao=" + idLeilao;
+        try {
+            PreparedStatement st = Conexao.getConnection().prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            if (!rs.next()) {
+                String inserir = "insert into lotes (numeroLote, idLeilao) values (?, ?)";
+                PreparedStatement st2 = Conexao.getConnection().prepareStatement(inserir);
+                st2.setString(1, Lote);
+                st2.setInt(2, idLeilao);
+
+                lblnovo.setText(lblnovo.getText() + Lote+Tipo + "\n");
+
+                st2.execute();
+                Conexao.getConnection().commit();
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
 
     private void cbleilaoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbleilaoItemStateChanged
         BuscarIdCidade();
-      
     }//GEN-LAST:event_cbleilaoItemStateChanged
 
     private void btn_OpenFolderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_OpenFolderActionPerformed
@@ -463,6 +532,7 @@ public class UploadFotos extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_OpenFolderActionPerformed
 
     private void btn_ImportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ImportActionPerformed
+
         InserirFotos();
 
     }//GEN-LAST:event_btn_ImportActionPerformed

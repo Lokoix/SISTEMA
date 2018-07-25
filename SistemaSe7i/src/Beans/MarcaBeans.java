@@ -14,6 +14,15 @@ public class MarcaBeans {
     private Integer id;
     private String nome;
 
+    public MarcaBeans(Integer id, String nome) {
+        this.id = id;
+        this.nome = nome;
+    }
+    
+    public MarcaBeans(){
+        
+    }
+
     public Integer getId() {
         return id;
     }
@@ -28,6 +37,10 @@ public class MarcaBeans {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+    
+    public void exibe(){
+        System.out.println("Marca: "+this.getId()+", "+this.getNome());
     }
 
 }

@@ -119,4 +119,14 @@ public class LeiloeiroBeans {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    public void exibe() {
+        System.out.println(this.id + " - " + this.getNome());
+    }
+
+    @Override
+    public String toString() {
+        return getNome();
+    }
+
 }

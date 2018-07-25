@@ -44,6 +44,7 @@ public class Vistoria extends javax.swing.JInternalFrame {
         CidadeBeans cidade2 = new CidadeBeans();
         cidade2.setNome("Selecionar ");
         cidade2.setEstado(new EstadoBeans("Cidade"));
+        cidade2.setId(0);
         cbox_cidade.addItem(cidade2);
         for (CidadeBeans cidade : cidadeD.carregarCidades()) {
             cbox_cidade.addItem(cidade);
@@ -462,7 +463,7 @@ public class Vistoria extends javax.swing.JInternalFrame {
         for (int i = 0; i <= cbox_cidade.getItemCount(); i++) {
 
             CidadeBeans item = (CidadeBeans) cbox_cidade.getItemAt(i);
-            if (item.getId() == vistoriaB.getCidade().getId()) {
+            if ((int)item.getId() == vistoriaB.getCidade().getId()) {
                 cbox_cidade.setSelectedIndex(i);
                 break;
             }

@@ -6,7 +6,10 @@
 package Teste;
 
 import Beans.CidadeBeans;
+import Beans.ModeloBeans;
 import Controller.CidadeController;
+import Controller.ModeloController;
+import importacao.arqtxt.Beans.ManipulaTxt;
 
 
 /**
@@ -16,10 +19,9 @@ import Controller.CidadeController;
 public class testeRaf2 {
 
     public static void main(String[] args) {
-        CidadeController cont = new CidadeController();
-        CidadeBeans cidade = new CidadeBeans();
+        ManipulaTxt m = new ManipulaTxt();
         
-        System.out.println(cidade.getNome());
+        m.Leitura("C:\\Users\\rafae\\Desktop\\interface\\ttt\\", "8CAD.txt");
         
     }
 }

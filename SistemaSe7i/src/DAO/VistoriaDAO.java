@@ -10,6 +10,8 @@ import Beans.VistoriaBeans;
 import Utilitarios.Conexao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -19,9 +21,10 @@ import javax.swing.table.DefaultTableModel;
  * @author User
  */
 public class VistoriaDAO {
-    public void cadastrar(VistoriaBeans vistoria){
-    
-    String sql = "insert into vistoriadoras(nome, endereco, numero, bairro, cep, "
+
+    public void cadastrar(VistoriaBeans vistoria) {
+
+        String sql = "insert into vistoriadoras(nome, endereco, numero, bairro, cep, "
                 + "idCidade) values(?, ?, ?, ?, ?, ?)";
         try {
             PreparedStatement st = Conexao.getConnection().prepareStatement(sql);
@@ -79,7 +82,6 @@ public class VistoriaDAO {
                 cidadeB.setId(rs.getInt("idCidade"));
                 vistoria.setCidade(cidadeB);
 
-
             }
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex);
@@ -129,8 +131,8 @@ public class VistoriaDAO {
         }
 
     }
-    
-        public void deletar(VistoriaBeans patio) {
+
+    public void deletar(VistoriaBeans patio) {
         String sql = "delete from vistoriadoras where id = ?";
         try {
             PreparedStatement st = Conexao.getConnection().prepareStatement(sql);
@@ -143,6 +145,27 @@ public class VistoriaDAO {
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex);
         }
+
+    }
     
-} 
+    public ArrayList<VistoriaBeans> carregarVistoria() {// retorna uma lista das cidades que inicial com a string
+        ArrayList<VistoriaBeans> lista = new ArrayList<>();
+        try {
+            String sql = "select * from vistoriadoras order by vistoriadoras.nome ASC";
+            PreparedStatement pst = Conexao.getConnection().prepareStatement(sql);
+
+            ResultSet rs = pst.executeQuery();
+            while (rs.next()) {
+                VistoriaBeans vistoria = new VistoriaBeans();
+                vistoria.setId(rs.getInt("id"));
+                vistoria.setNome(rs.getString("nome"));
+                lista.add(vistoria);
+                vistoria.exibe();
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro método dao carregar Patio: " + e);
+        }
+        return lista;
+    }
+
 }

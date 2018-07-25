@@ -13,10 +13,12 @@ public class EstadoBeans {
 
     private Integer id;
     private String nome;
+    private String uf;
 
-    public EstadoBeans(Integer id, String nome) {
+    public EstadoBeans(Integer id, String nome, String uf) {
         this.id = id;
         this.nome = nome;
+        this.uf = uf;
     }
     
      public EstadoBeans(String nome) {
@@ -40,6 +42,18 @@ public class EstadoBeans {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+    
+    public String getUf(){
+        return uf;
+    }
+    
+    public void setUf(String uf){
+        this.uf = uf;
+    }
+    
+    public void exibe (){
+        System.out.println("Estado: " + this.getId() +", "+this.getNome()+", "+this.getUf());
     }
 
 }
