@@ -101,17 +101,17 @@ public class Leilao extends javax.swing.JInternalFrame {
 
     public void popularLeilao() {
         leilaoB.setDescricao(txt_descricao.getText());
-        if(data_inicio.getDate()== null){
-           leilaoB.setDataInicio(null);
-        }else{
-            leilaoB.setDataInicio(spf.format(data_inicio.getDate())); 
+        if (data_inicio.getDate() == null) {
+            leilaoB.setDataInicio(null);
+        } else {
+            leilaoB.setDataInicio(spf.format(data_inicio.getDate()));
         }
-        if(data_termino.getDate()==null){
+        if (data_termino.getDate() == null) {
             leilaoB.setDataPrevista(null);
-        }else{
+        } else {
             leilaoB.setDataPrevista(spf.format(data_termino.getDate()));
         }
-        
+
         if (!txt_custoLaudo.getText().equals("R$  .  ")) {
             leilaoB.setCustoLaudo(Double.parseDouble(txt_custoLaudo.getText().replace("R$", "")));
         }
@@ -160,7 +160,7 @@ public class Leilao extends javax.swing.JInternalFrame {
         txt_doc.setEnabled(valor);
         txt_noDoc.setEnabled(valor);
         txt_sucata.setEnabled(valor);
-        txt_notificacao.setEnabled(valor);        
+        txt_notificacao.setEnabled(valor);
         cbox_leiloeiro.setEnabled(valor);
         cbox_vistoria.setEnabled(valor);
         cbox_cidade.setEnabled(valor);
@@ -194,13 +194,13 @@ public class Leilao extends javax.swing.JInternalFrame {
         });
     }
 
-        public void ValidaNumero(JTextField Numero) {
+    public void ValidaNumero(JTextField Numero) {
         long valor;
         if (Numero.getText().length() != 0 && Numero.getText().contains("%")) {
             try {
-                
+
                 valor = Long.parseLong(Numero.getText().replace("%", ""));
-                
+
             } catch (NumberFormatException ex) {
                 JOptionPane.showMessageDialog(null, "Esse Campo só aceita números", "Informação", JOptionPane.INFORMATION_MESSAGE);
                 Numero.grabFocus();
@@ -208,6 +208,7 @@ public class Leilao extends javax.swing.JInternalFrame {
             }
         }
     }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -1152,7 +1153,8 @@ public class Leilao extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_tb_leilaoMouseClicked
 
     private void txt_buscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_buscarKeyReleased
-       
+        Modelo.setNumRows(0);
+        leilaoC.controlePesquisa(txt_buscar.getText(), Modelo);
     }//GEN-LAST:event_txt_buscarKeyReleased
 
     private void txt_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_buscarActionPerformed
@@ -1160,8 +1162,7 @@ public class Leilao extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txt_buscarActionPerformed
 
     private void txt_buscarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_buscarKeyPressed
-        Modelo.setNumRows(0);
-        leilaoC.controlePesquisa(txt_buscar1.getText(), Modelo);
+
     }//GEN-LAST:event_txt_buscarKeyPressed
 
 
