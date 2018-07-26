@@ -14,6 +14,7 @@ import Utilitarios.Corretores;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Types;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
@@ -23,6 +24,7 @@ import javax.swing.JOptionPane;
  */
 public class LoteDAO {
 
+    DecimalFormat df = new DecimalFormat("0.##");
     VeiculoController conVeiculo = new VeiculoController();
     VeiculoDAO daoVeiculo = new VeiculoDAO();
     ProprietarioController conProprietario = new ProprietarioController();
@@ -149,7 +151,7 @@ public class LoteDAO {
         ArrayList<LoteBeans> lotes = new ArrayList<>();
         LoteBeans lote;
         try {
-            String sql = "SELECT lotes.*, veiculos.placa, marcas.nome, modelos.nome FROM lotes, veiculos, marcas, modelos WHERE lotes.idVeiculo = veiculos.id "
+            String sql = "SELECT lotes.*, veiculos.placa, veiculos.fipe, veiculos.debito, marcas.nome, modelos.nome FROM lotes, veiculos, marcas, modelos WHERE lotes.idVeiculo = veiculos.id "
                     + "AND veiculos.idModelo = modelos.id AND modelos.idMarca = marcas.id AND lotes.idLeilao = ? order by lotes.numeroLote ASC";
             PreparedStatement st = Conexao.getConnection().prepareStatement(sql);
             st.setInt(1, leilao.getId());
@@ -158,6 +160,7 @@ public class LoteDAO {
                 lote = new LoteBeans();
                 lote.setId(rs.getInt("id"));
                 lote.setNumeroLote(rs.getString("numeroLote"));
+                System.out.println(lote.getNumeroLote());
                 lote.getLeilao().setId(rs.getInt("idLeilao"));
                 lote.getProprietario().setId(rs.getInt("idProprietario"));
                 lote.getVeiculo().setId(rs.getInt("idVeiculo"));
@@ -170,8 +173,9 @@ public class LoteDAO {
                 lote.setObservacao(rs.getString("observacao"));
                 lote.setMotorBase(rs.getString("motorBase"));
                 lote.setChassiBase(rs.getString("chassiBase"));
-                lote.setFipe(rs.getDouble("fipe"));
-                lote.setDebito(rs.getDouble("debito"));
+                lote.getVeiculo().setFipe(rs.getBigDecimal("veiculos.fipe"));
+                lote.getVeiculo().setDebito(rs.getBigDecimal("veiculos.debito"));
+               
                 lotes.add(lote);
             }
         } catch (Exception e) {

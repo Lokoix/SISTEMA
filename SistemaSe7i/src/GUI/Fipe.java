@@ -9,10 +9,14 @@ import Beans.LeilaoBeans;
 import Beans.LoteBeans;
 import DAO.LeilaoDAO;
 import DAO.LoteDAO;
+import Utilitarios.Colorir;
+import java.awt.Color;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
 
 /**
  *
@@ -20,6 +24,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class Fipe extends javax.swing.JFrame {
 
+    DecimalFormat df = new DecimalFormat("#.##");
     LeilaoDAO leilaoD;
     LoteDAO loteD;
     DefaultTableModel Modelo;
@@ -28,7 +33,10 @@ public class Fipe extends javax.swing.JFrame {
         initComponents();
         loteD = new LoteDAO();
         leilaoD = new LeilaoDAO();
-        tb_fipe.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        TableCellRenderer renderer = new Colorir();
+        tb_fipe.setColumnSelectionAllowed(false);
+       
+        tb_fipe.setDefaultRenderer(Object.class, renderer);
         Modelo = (DefaultTableModel) tb_fipe.getModel();
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         cmb_leilao.addItem("Selecionar Leilao");
@@ -298,12 +306,14 @@ public class Fipe extends javax.swing.JFrame {
             txt_desvDoc.setText(Integer.toString(leilao.getDesvComDoc()) + "%");
             txt_desvFVU.setText(Integer.toString(leilao.getDesvSemDoc()) + "%");
             txt_desvSucata.setText(Double.toString(leilao.getDesvSucata()).replace(".", ","));
+
             for (LoteBeans l : loteD.buscarTodosLotesDoLeilao(leilao)) {
+
                 Modelo.addRow(new Object[]{l.getNumeroLote(), l.getVeiculo().getPlaca(),
                     l.getVeiculo().getModelo().getMarca().getNome(), l.getVeiculo().getModelo().getNome(),
-                    l.getFipe(), l.getDebito(), l.getDebito(), l.getFipe(), l.getObservacao()});
+                    l.getVeiculo().getFipe(), l.getVeiculo().getDebito(), l.getValorDoc(), l.getValorFVU(), l.getValorSucata()});
+
             }
-            
         }
     }//GEN-LAST:event_cmb_leilaoActionPerformed
 

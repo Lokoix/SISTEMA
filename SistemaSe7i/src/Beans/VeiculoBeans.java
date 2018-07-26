@@ -5,6 +5,7 @@
  */
 package Beans;
 
+import java.math.BigDecimal;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
@@ -33,24 +34,26 @@ public class VeiculoBeans {
     private CidadeBeans cidade = new CidadeBeans();
     private String apreencao;
     private String dataCad;
-    private double fipe;
-    private double debito;
+    private BigDecimal fipe;
+    private BigDecimal debito;
 
-    public double getFipe() {
+    public BigDecimal getFipe() {
         return fipe;
     }
 
-    public void setFipe(double fipe) {
+    public void setFipe(BigDecimal fipe) {
         this.fipe = fipe;
     }
 
-    public double getDebito() {
+    public BigDecimal getDebito() {
         return debito;
     }
 
-    public void setDebito(double debito) {
+    public void setDebito(BigDecimal debito) {
         this.debito = debito;
     }
+    
+    
 
     public Integer getId() {
         return id;

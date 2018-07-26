@@ -24,8 +24,33 @@ public class LoteBeans {
     private String motorBase;
     private String chassiBase;
     private String dataCad;
-    private double fipe;
-    private double debito;
+    private String valorDoc;
+    private String valorFVU;
+    private String valorSucata;
+
+    public String getValorDoc() {
+        return valorDoc;
+    }
+
+    public void setValorDoc(String valorDoc) {
+        this.valorDoc = valorDoc;
+    }
+
+    public String getValorFVU() {
+        return valorFVU;
+    }
+
+    public void setValorFVU(String valorFVU) {
+        this.valorFVU = valorFVU;
+    }
+
+    public String getValorSucata() {
+        return valorSucata;
+    }
+
+    public void setValorSucata(String valorSucata) {
+        this.valorSucata = valorSucata;
+    }
 
     public LoteBeans() {
 
@@ -45,22 +70,6 @@ public class LoteBeans {
 
     public void setAlienacao(ProprietarioBeans alienacao) {
         this.alienacao = alienacao;
-    }
-
-    public double getFipe() {
-        return fipe;
-    }
-
-    public void setFipe(double fipe) {
-        this.fipe = fipe;
-    }
-
-    public double getDebito() {
-        return debito;
-    }
-
-    public void setDebito(double debito) {
-        this.debito = debito;
     }
 
     public Integer getId() {
