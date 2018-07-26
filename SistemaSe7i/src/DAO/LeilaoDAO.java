@@ -143,7 +143,7 @@ public class LeilaoDAO {
             PreparedStatement st = Conexao.getConnection().prepareStatement(sql);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
-                Modelo.addRow(new Object[]{rs.getString("id"), rs.getString("leiloes.descricao"), rs.getString("leiloeiros.nome"), rs.getString("patios.nome"), rs.getString("cidades.nome"), rs.getString("edital")});
+                Modelo.addRow(new Object[]{rs.getString("leiloes.id"), rs.getString("leiloes.descricao"), rs.getString("leiloeiros.nome"), rs.getString("patios.nome"), rs.getString("cidades.nome"), rs.getString("edital")});
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro ao Buscar LeilaoDAO" + e);
