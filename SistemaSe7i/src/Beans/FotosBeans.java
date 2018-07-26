@@ -15,9 +15,18 @@ public class FotosBeans {
     private String lote; 
     private String tipo; 
     private int idleilao; 
-
+    private int idlote; 
+    
     public int getId() {
         return id;
+    }
+
+    public int getIdlote() {
+        return idlote;
+    }
+
+    public void setIdlote(int idlote) {
+        this.idlote = idlote;
     }
 
     public void setId(int id) {

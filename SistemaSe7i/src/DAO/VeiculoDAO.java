@@ -62,6 +62,32 @@ public class VeiculoDAO {
         }
     }
 
+    public void cadastrarMotor(String Motor) {
+        String insmotor = "insert into veiculos (motorVeiculo, dataCad) values (?, ?)";
+        try {
+            PreparedStatement st2 = Conexao.getConnection().prepareStatement(insmotor);
+            st2.setString(1, Motor);
+            st2.setString(2, Corretores.DataAtual());
+            st2.execute();
+            Conexao.getConnection().commit();
+        } catch (Exception e) {
+        }
+        
+    }
+
+    public void cadastrarChassi(String Chassi) {
+        String inschassi = "insert into veiculos (chassiVeiculo, dataCad) values (?, ?)";
+        try {
+            PreparedStatement st2 = Conexao.getConnection().prepareStatement(inschassi);
+            st2.setString(1, Chassi);
+            st2.setString(2, Corretores.DataAtual());
+            st2.execute();
+            Conexao.getConnection().commit();
+        } catch (Exception e) {
+        }
+
+    }
+
     public boolean existe(VeiculoBeans veiculo) {
         String sql = "select * from veiculos where placa = ?";
         try {
@@ -205,7 +231,7 @@ public class VeiculoDAO {
         }
         return new VeiculoBeans();
     }
-    
+
     public Integer BuscarVeiculo(VeiculoBeans veiculo) {
         String sql = "select * from veiculos where placa = ?";//placa existe
         try {
