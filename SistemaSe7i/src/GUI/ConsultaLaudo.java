@@ -5,26 +5,35 @@
  */
 package GUI;
 
+import Beans.LeilaoBeans;
+import DAO.LeilaoDAO;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author User
- */
 public class ConsultaLaudo extends javax.swing.JFrame {
 
     DefaultTableModel Modelo;
-    
+    LeilaoBeans leilaoB;
+    LeilaoDAO leilaoD;
+
     public ConsultaLaudo() {
         initComponents();
         Modelo = new DefaultTableModel();
+        leilaoD = new LeilaoDAO();
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        
-        
+
+        LeilaoBeans leilao2 = new LeilaoBeans();
+        leilao2.setDescricao("Selecionar ");
+        leilao2.setId(0);
+        //cidade2.setEstado(new EstadoBeans("Cidade"));
+        cbox_leilao.addItem(leilao2);
+        for (LeilaoBeans leilao : leilaoD.buscarTodosLeiloes()) {
+            cbox_leilao.addItem(leilao);
+
+        }
+
     }
-   
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -69,7 +78,7 @@ public class ConsultaLaudo extends javax.swing.JFrame {
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        cbox_leilao = new javax.swing.JComboBox<>();
         jComboBox2 = new javax.swing.JComboBox<>();
         jButton2 = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
@@ -424,7 +433,7 @@ public class ConsultaLaudo extends javax.swing.JFrame {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(cbox_leilao, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                                 .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 391, javax.swing.GroupLayout.PREFERRED_SIZE))
                                             .addComponent(jLabel7)
                                             .addComponent(jLabel8))
@@ -470,7 +479,7 @@ public class ConsultaLaudo extends javax.swing.JFrame {
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jLabel7)
                                         .addGap(5, 5, 5)
-                                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(cbox_leilao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(layout.createSequentialGroup()
                                         .addGap(10, 10, 10)
                                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -515,7 +524,7 @@ public class ConsultaLaudo extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_intervaloActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_jButton8ActionPerformed
 
 
@@ -524,6 +533,7 @@ public class ConsultaLaudo extends javax.swing.JFrame {
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.ButtonGroup buttonGroup3;
+    private javax.swing.JComboBox<Object> cbox_leilao;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton11;
@@ -537,7 +547,6 @@ public class ConsultaLaudo extends javax.swing.JFrame {
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
