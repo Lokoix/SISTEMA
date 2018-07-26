@@ -161,6 +161,8 @@ public class Fipe extends javax.swing.JFrame {
                 .addGap(6, 6, 6))
         );
 
+        tb_fipe.setAutoCreateRowSorter(true);
+        tb_fipe.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         tb_fipe.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -178,12 +180,13 @@ public class Fipe extends javax.swing.JFrame {
             }
         });
         tb_fipe.setColumnSelectionAllowed(true);
+        tb_fipe.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        tb_fipe.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane1.setViewportView(tb_fipe);
         tb_fipe.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
         if (tb_fipe.getColumnModel().getColumnCount() > 0) {
             tb_fipe.getColumnModel().getColumn(0).setPreferredWidth(100);
             tb_fipe.getColumnModel().getColumn(1).setPreferredWidth(100);
-            tb_fipe.getColumnModel().getColumn(6).setResizable(false);
             tb_fipe.getColumnModel().getColumn(9).setPreferredWidth(300);
         }
 
@@ -306,13 +309,10 @@ public class Fipe extends javax.swing.JFrame {
             txt_desvDoc.setText(Integer.toString(leilao.getDesvComDoc()) + "%");
             txt_desvFVU.setText(Integer.toString(leilao.getDesvSemDoc()) + "%");
             txt_desvSucata.setText(Double.toString(leilao.getDesvSucata()).replace(".", ","));
-
             for (LoteBeans l : loteD.buscarTodosLotesDoLeilao(leilao)) {
-
                 Modelo.addRow(new Object[]{l.getNumeroLote(), l.getVeiculo().getPlaca(),
                     l.getVeiculo().getModelo().getMarca().getNome(), l.getVeiculo().getModelo().getNome(),
                     l.getVeiculo().getFipe(), l.getVeiculo().getDebito(), l.getValorDoc(), l.getValorFVU(), l.getValorSucata()});
-
             }
         }
     }//GEN-LAST:event_cmb_leilaoActionPerformed

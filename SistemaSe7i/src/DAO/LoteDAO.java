@@ -163,23 +163,22 @@ public class LoteDAO {
                 lote = new LoteBeans();
                 lote.setId(rs.getInt("id"));
                 lote.setNumeroLote(rs.getString("numeroLote"));
-                System.out.println(lote.getNumeroLote());
                 lote.getLeilao().setId(rs.getInt("idLeilao"));
                 lote.getProprietario().setId(rs.getInt("idProprietario"));
                 lote.getVeiculo().setId(rs.getInt("idVeiculo"));
                 lote.getVeiculo().setPlaca(rs.getString("veiculos.placa"));
                 lote.getVeiculo().getModelo().setNome(rs.getString("modelos.nome"));
                 lote.getVeiculo().getModelo().getMarca().setNome(rs.getString("marcas.nome"));
-                lote.getComunicao().setId(rs.getInt("idComunicacao"));
+                lote.getComunicao().setId(rs.getInt("idComunicacao"));  
                 lote.getAlienacao().setId(rs.getInt("idAlienacao"));
-                lote.setDataCad(rs.getDate("dataCad").toString());
+                lote.setDataCad(Corretores.ConverterParaJava(rs.getDate("dataCad").toString()));
                 lote.setObservacao(rs.getString("observacao"));
                 lote.setMotorBase(rs.getString("motorBase"));
                 lote.setChassiBase(rs.getString("chassiBase"));
                 lote.getVeiculo().setFipe(rs.getBigDecimal("veiculos.fipe"));
                 lote.getVeiculo().setDebito(rs.getBigDecimal("veiculos.debito"));
-               
                 lotes.add(lote);
+                
             }
         } catch (Exception e) {
         }

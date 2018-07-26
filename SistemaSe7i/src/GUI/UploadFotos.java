@@ -266,7 +266,7 @@ public class UploadFotos extends javax.swing.JFrame {
                     barraProgresso.setMaximum(imagens.size());
                     for (BufferedImage i : imagens) {
 
-                        java.io.File diretorio1 = new java.io.File("C:\\Users\\joaoh\\Desktop\\Leilões");
+                        java.io.File diretorio1 = new java.io.File("C:\\Users\\Eu\\Documents\\GitHub\\Fotos");
                         boolean statusDir1 = diretorio1.mkdir();
 
                         String leilao = cbleilao.getSelectedItem().toString();
@@ -563,7 +563,7 @@ public class UploadFotos extends javax.swing.JFrame {
                 PreparedStatement st2 = Conexao.getConnection().prepareStatement(inserir);
                 st2.setString(1, Lote);
                 st2.setInt(2, idLeilao);
-
+                
                 lblnovo.setText(lblnovo.getText() + Lote+Tipo + "\n");
 
                 st2.execute();
