@@ -40,6 +40,8 @@ public class LoteController {
             daoLote.cadastrar(lote);
         }
     }
+    
+    public void corrigirLoteBloqueio(LoteBeans lote)
 
     private void compararLoteCadastro(LoteBeans lote, LoteBeans base) {
         this.compararProprietarioLote(lote, base);

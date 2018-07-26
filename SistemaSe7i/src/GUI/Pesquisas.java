@@ -8,12 +8,15 @@ package GUI;
 import Beans.LeilaoBeans;
 import Beans.LoteBeans;
 import Beans.ProprietarioBeans;
+import Beans.Restricoes.RestricaoBloqueioBeans;
 import Beans.VeiculoBeans;
 import Controller.LoteController;
 import Controller.ProprietarioController;
+import Controller.Restricoes.RestricaoBloqueioController;
 import Controller.VeiculoController;
 import DAO.LeilaoDAO;
 import Interface.BaseNacional;
+import Interface.Bloqueio;
 import Interface.Cadastro;
 import importacao.arqtxt.Beans.ManipulaTxt;
 import java.io.File;
@@ -33,6 +36,8 @@ public class Pesquisas extends javax.swing.JInternalFrame {
     ManipulaTxt manipulaTxt;
     Cadastro iCadastro;
     BaseNacional iBaseNacional;
+    Bloqueio iBloqueio;
+    RestricaoBloqueioController conRestricaoBlo;
     VeiculoController conVeiculo;
     ProprietarioController conProprietario;
     ArrayList<Integer> tipoTxt;
@@ -46,9 +51,11 @@ public class Pesquisas extends javax.swing.JInternalFrame {
 
         iCadastro = new Cadastro();
         iBaseNacional = new BaseNacional();
+        iBloqueio = new Bloqueio();
         conVeiculo = new VeiculoController();
         conProprietario = new ProprietarioController();
         conLote = new LoteController();
+        conRestricaoBlo = new RestricaoBloqueioController();
         for (LeilaoBeans leilao : leilaoD.buscarTodosLeiloes()) {
             cmb_Leilao.addItem(leilao);
         }
@@ -67,6 +74,7 @@ public class Pesquisas extends javax.swing.JInternalFrame {
         btn_iniciar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         cmb_Leilao = new javax.swing.JComboBox<>();
+        barraProgresso = new javax.swing.JProgressBar();
 
         setClosable(true);
 
@@ -92,6 +100,9 @@ public class Pesquisas extends javax.swing.JInternalFrame {
             }
         });
 
+        barraProgresso.setForeground(new java.awt.Color(0, 0, 255));
+        barraProgresso.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(153, 153, 255), 1, true));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -107,6 +118,9 @@ public class Pesquisas extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btn_iniciar, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(barraProgresso, javax.swing.GroupLayout.PREFERRED_SIZE, 556, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -119,7 +133,9 @@ public class Pesquisas extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_iniciar)
                     .addComponent(txt_local, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(400, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(barraProgresso, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(373, Short.MAX_VALUE))
         );
 
         pack();
@@ -135,68 +151,97 @@ public class Pesquisas extends javax.swing.JInternalFrame {
 
         listaDeArquivos = listaDeArquivos(local);
 
-        //System.out.println("tamanho Lista de arquivos.size: "+listaDeArquivos.size() + "tamanho Tipos TXT: "+ tipoTxt.size());
-        for (int i = 0; i < listaDeArquivos.size(); i++) {
-            VeiculoBeans veic = new VeiculoBeans();
-            ProprietarioBeans proprietario = new ProprietarioBeans();
-            LoteBeans lote = new LoteBeans();
-            System.out.println("");
-            lote.setLeilao((LeilaoBeans) cmb_Leilao.getSelectedItem());
-            ArrayList<String> result = new ArrayList<>();
-            String s;
+        new Thread() {
+            @Override
+            public void run() {
+                try {
+                    barraProgresso.setMaximum(listaDeArquivos.size()-1);
+                    //System.out.println("tamanho Lista de arquivos.size: "+listaDeArquivos.size() + "tamanho Tipos TXT: "+ tipoTxt.size());
+                    for (int i = 0; i < listaDeArquivos.size(); i++) {
+                        VeiculoBeans veic = new VeiculoBeans();
+                        ProprietarioBeans proprietario = new ProprietarioBeans();
+                        LoteBeans lote = new LoteBeans();
+                        System.out.println("");
+                        lote.setLeilao((LeilaoBeans) cmb_Leilao.getSelectedItem());
+                        ArrayList<String> result = new ArrayList<>();
+                        String s;
 
-            switch (tipoTxt.get(i)) {
-                case 1:
-                    s = listaDeArquivos.get(i);
-                    lote.setNumeroLote(s.substring(0, s.indexOf("CAD.txt")));
-                    result = manipulaTxt.Leitura(local, s);
+                        switch (tipoTxt.get(i)) {
+                            case 1:
+                                s = listaDeArquivos.get(i);
+                                lote.setNumeroLote(s.substring(0, s.indexOf("CAD.txt")));
+                                result = manipulaTxt.Leitura(local, s);
 
-                    System.out.println("kkkkk");
-                    if (result.size() == 88) { // pesquisa de cadastro normal
-                        iCadastro.getLoteCadastro1(result, lote);
-                        lote.setVeiculo(conVeiculo.corrigirVeiculoPesquisaCadastro(lote.getVeiculo()));
-                        lote.setProprietario(conProprietario.CorrigirProprietarioPesquisaCadastro(lote.getProprietario()));
-                        conLote.corrigirLoteCadastro(lote);
-                        break;
-                    } else if (result.size() == 11) { //pesquisa de cadastro sem registro
-                        System.out.println("kkkk");
-                        iCadastro.getLoteCadastro2(result, lote);
-                        conLote.corrigirLoteCadastro(lote);
-                        break;
-                    } else if (result.size() == 54) {
-                        iCadastro.getLoteCadastro3(result, lote); // pesquisa de cadastro de fora do estado
-                        lote.setVeiculo(conVeiculo.corrigirVeiculoPesquisaCadastro(lote.getVeiculo()));
-                        lote.setProprietario(conProprietario.CorrigirProprietarioPesquisaCadastro(lote.getProprietario()));
-                        conLote.corrigirLoteCadastro(lote);
-                        break;
-                    } else {
-                        JOptionPane.showMessageDialog(null, "interface difere de CAD: " + listaDeArquivos.get(i).toString());
-                        break;
+                                System.out.println("kkkkk");
+                                if (result.size() == 88) { // pesquisa de cadastro normal
+                                    iCadastro.getLoteCadastro1(result, lote);
+                                    lote.setVeiculo(conVeiculo.corrigirVeiculoPesquisaCadastro(lote.getVeiculo()));
+                                    lote.setProprietario(conProprietario.CorrigirProprietarioPesquisaCadastro(lote.getProprietario()));
+                                    conLote.corrigirLoteCadastro(lote);
+                                    break;
+                                } else if (result.size() == 11) { //pesquisa de cadastro sem registro
+                                    System.out.println("kkkk");
+                                    iCadastro.getLoteCadastro2(result, lote);
+                                    conLote.corrigirLoteCadastro(lote);
+                                    break;
+                                } else if (result.size() == 54) {
+                                    iCadastro.getLoteCadastro3(result, lote); // pesquisa de cadastro de fora do estado
+                                    lote.setVeiculo(conVeiculo.corrigirVeiculoPesquisaCadastro(lote.getVeiculo()));
+                                    lote.setProprietario(conProprietario.CorrigirProprietarioPesquisaCadastro(lote.getProprietario()));
+                                    conLote.corrigirLoteCadastro(lote);
+                                    break;
+                                } else {
+                                    JOptionPane.showMessageDialog(null, "interface difere de CAD: " + listaDeArquivos.get(i).toString());
+                                    break;
+                                }
+
+                            case 2:
+                                s = listaDeArquivos.get(i);
+                                lote.setNumeroLote(s.substring(0, s.indexOf("BIN.txt")));
+                                result = manipulaTxt.Leitura(local, s);
+
+                                if (result.size() == 62) {
+                                    iBaseNacional.getLoteBaseNacional1(result, lote);
+                                    lote.setVeiculo(conVeiculo.corrigirVeiculoPesquisa(lote.getVeiculo()));
+                                    conLote.corrigirLote(lote);
+                                    break;
+                                } else {
+                                    JOptionPane.showMessageDialog(null, "interface difere de BIN: " + listaDeArquivos.get(i).toString());
+                                }
+                            case 3:
+                                s = listaDeArquivos.get(i);
+                                lote.setNumeroLote(s.substring(0, s.indexOf("BLO")));
+                                result = manipulaTxt.Leitura(local, s);
+
+                                if (result.get(17).contains("OBITO") || result.get(17).contains("JUDICIAL")) {
+
+                                } else {
+                                    if (result.size() == 39) { // bloqueio padrao 1
+                                        RestricaoBloqueioBeans restricaoBlo = new RestricaoBloqueioBeans();
+                                        restricaoBlo.setLote(lote);
+                                        iBloqueio.getBloqueio1(listaDeArquivos, restricaoBlo);
+                                        conRestricaoBlo.corrigirBloqueioPesquisa();
+
+                                    }
+                                }
+
+                            default:
+                                JOptionPane.showMessageDialog(null, "não: " + listaDeArquivos.get(i).toString());
+                                break;
+                        }
+
+                        //JOptionPane.showMessageDialog(null, "Arquivo lido: " + listaDeArquivos.get(i).toString());
+                        //JOptionPane.showMessageDialog(null, "ID Leilao: " + ((LeilaoBeans) cmb_Leilao.getSelectedItem()).getId() + ", " + ((LeilaoBeans) cmb_Leilao.getSelectedItem()).getDescricao() + " Lote: " + lote.getNumeroLote() + "  " + listaDeArquivos.get(i).toString());
+                        barraProgresso.setValue(i);
                     }
+                    JOptionPane.showMessageDialog(null, "ACABOOO");
 
-                case 2:
-                    s = listaDeArquivos.get(i);
-                    lote.setNumeroLote(s.substring(0, s.indexOf("BIN.txt")));
-                    result = manipulaTxt.Leitura(local, s);
+                } catch (Exception e) {
 
-                    if (result.size() == 62) {
-                        iBaseNacional.getLoteBaseNacional1(result, lote);
-                        lote.setVeiculo(conVeiculo.corrigirVeiculoPesquisa(lote.getVeiculo()));
-                        conLote.corrigirLote(lote);
-                        break;
-                    } else {
-                        JOptionPane.showMessageDialog(null, "interface difere de BIN: " + listaDeArquivos.get(i).toString());
-                    }
-
-                default:
-                    JOptionPane.showMessageDialog(null, "não: " + listaDeArquivos.get(i).toString());
-                    break;
+                }
             }
+        }.start();
 
-            //JOptionPane.showMessageDialog(null, "Arquivo lido: " + listaDeArquivos.get(i).toString());
-            //JOptionPane.showMessageDialog(null, "ID Leilao: " + ((LeilaoBeans) cmb_Leilao.getSelectedItem()).getId() + ", " + ((LeilaoBeans) cmb_Leilao.getSelectedItem()).getDescricao() + " Lote: " + lote.getNumeroLote() + "  " + listaDeArquivos.get(i).toString());
-        }
-        JOptionPane.showMessageDialog(null, "ACABOOO");
 
     }//GEN-LAST:event_btn_iniciarActionPerformed
 
@@ -210,6 +255,7 @@ public class Pesquisas extends javax.swing.JInternalFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JProgressBar barraProgresso;
     private javax.swing.JButton btn_iniciar;
     private javax.swing.JComboBox<Object> cmb_Leilao;
     private javax.swing.JLabel jLabel1;
