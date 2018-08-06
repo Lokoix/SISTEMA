@@ -34,15 +34,7 @@ public class TesteRafael {
         System.out.println("arquivos base:" + arquivosBase.size());
 
         for (int i = 0; i < arquivosEntrada.size(); i++) {
-            System.out.println("Item " + i + ": " + arquivosEntrada.get(i).getName());
-
-            if (arquivosBase.indexOf(arquivosEntrada.get(i)) == -1) {
-                System.out.println("    arquivo copiado");
-                arquivosBase.add(arquivosEntrada.get(i));
-            } else {
-                System.out.println("    ñ arquivo ja existe");
-            }
-
+            System.out.println("Item " + i + ": " + arquivosEntrada.get(i));
         }
 
         /*
