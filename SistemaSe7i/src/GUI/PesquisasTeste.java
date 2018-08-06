@@ -33,7 +33,7 @@ import javax.swing.JOptionPane;
  *
  * @author rafae
  */
-public class Pesquisas extends javax.swing.JInternalFrame {
+public class PesquisasTeste extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form Pesquisas
@@ -48,27 +48,20 @@ public class Pesquisas extends javax.swing.JInternalFrame {
     ArrayList<Integer> tipoTxt;
     LeilaoDAO leilaoD;
     LoteController conLote;
-    List<File> arquivosEntrada;
-    List<File> arquivosBase;
+    List<String> listaDeArquivos;
+    ArrayList<String> listaDePesquisa;
 
-    public Pesquisas() {
+    public PesquisasTeste() {
         initComponents();
         leilaoD = new LeilaoDAO();
-
-        conVeiculo = new VeiculoController();
-        conProprietario = new ProprietarioController();
-        conLote = new LoteController();
-        conRestricaoBlo = new RestricaoBloqueioController();
 
         iCadastro = new Cadastro();
         iBaseNacional = new BaseNacional();
         iBloqueio = new Bloqueio();
-
-        manipulaTxt = new ManipulaTxt();
-        
-        arquivosBase = new ArrayList<>();
-        arquivosEntrada = new ArrayList<>();
-
+        conVeiculo = new VeiculoController();
+        conProprietario = new ProprietarioController();
+        conLote = new LoteController();
+        conRestricaoBlo = new RestricaoBloqueioController();
         for (LeilaoBeans leilao : leilaoD.buscarTodosLeiloes()) {
             cmb_Leilao.addItem(leilao);
         }
@@ -155,26 +148,29 @@ public class Pesquisas extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_iniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_iniciarActionPerformed
+        tipoTxt = new ArrayList();
+        manipulaTxt = new ManipulaTxt();
+        listaDeArquivos = new ArrayList();
+        listaDePesquisa = new ArrayList<>();
 
         String destino = "C://" + ((LeilaoBeans) cmb_Leilao.getSelectedItem()).getDescricao() + "//pesquisas//";
-
         if (new File(destino).mkdirs()) {
             JOptionPane.showMessageDialog(null, "Pasta Criada");
         }
-        String local = txt_local.getText();
 
-        listaDeArquivos(destino, arquivosBase);
-        listaDeArquivos(local, arquivosEntrada);
+        String local = txt_local.getText();
+        listaDePesquisa = listaDeArquivos(destino);
+        listaDeArquivos = listaDeArquivos(local);
 
         new Thread() {
             @Override
             public void run() {
                 try {
-                    barraProgresso.setMaximum(arquivosEntrada.size() - 1);
+                    barraProgresso.setMaximum(listaDeArquivos.size() - 1);
                     //System.out.println("tamanho Lista de arquivos.size: "+listaDeArquivos.size() + "tamanho Tipos TXT: "+ tipoTxt.size());
-                    for (int i = 0; i < arquivosEntrada.size(); i++) {
+                    for (int i = 0; i < listaDeArquivos.size(); i++) {
 
-                        if (arquivosEntrada.indexOf(arquivosBase.get(i)) == -1) {
+                        if (listaDePesquisa.indexOf(listaDeArquivos.get(i)) == -1) {
                             VeiculoBeans veic = new VeiculoBeans();
                             ProprietarioBeans proprietario = new ProprietarioBeans();
                             LoteBeans lote = new LoteBeans();
@@ -278,13 +274,29 @@ public class Pesquisas extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txt_local;
     // End of variables declaration//GEN-END:variables
 
-    public void listaDeArquivos(String local, List<File> lista) {
+    public ArrayList<String> listaDeArquivos(String local) {
+        System.out.println("entrou na lista de arquivos");
+        System.out.println("local: " + local);
         File dir = new File(local);
+        ArrayList<String> lista = new ArrayList();
         for (File f : dir.listFiles()) {// lista o que possui no diretorio dir
             if (f.isFile()) {//se for um arquivo true;
-                lista.add(f);
+
+                lista.add(f.getName());
+                if (f.getName().contains("CAD")) {
+                    tipoTxt.add(1);
+                } else if (f.getName().contains("BIN")) {
+                    tipoTxt.add(2);
+                } else if (f.getName().contains("BLO")) {
+                    tipoTxt.add(3);
+                } else {
+                    tipoTxt.add(9);
+                }
             }
         }
+        System.out.println("lista: " + lista.size() + " tipotxt: " + tipoTxt.size());
+        System.out.println("saiu da lista de arquivos");
+        return lista;
     }
 
     public void copy(File src, File dst) throws IOException {
@@ -298,5 +310,5 @@ public class Pesquisas extends javax.swing.JInternalFrame {
         in.close();
         out.close();
     }
-
+    
 }
