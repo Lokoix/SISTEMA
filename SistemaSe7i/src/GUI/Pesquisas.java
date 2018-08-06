@@ -56,7 +56,7 @@ public class Pesquisas extends javax.swing.JInternalFrame {
     public Pesquisas() {
         initComponents();
         
-        barraProgresso
+        
         
         leilaoD = new LeilaoDAO();
 

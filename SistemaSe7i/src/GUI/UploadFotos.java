@@ -265,9 +265,9 @@ public class UploadFotos extends javax.swing.JFrame {
                     int contador = 0;
                     barraProgresso.setMaximum(imagens.size());
                     for (BufferedImage i : imagens) {
-
+                                
 <<<<<<< HEAD
-                        java.io.File diretorio1 = new java.io.File("C:\\Users\\Eu\\Documents\\GitHub\\Fotos");
+                        ja  va.io.File diretorio1 = new java.io.File("C:\\Users\\Eu\\Documents\\GitHub\\Fotos");
 =======
                         java.io.File diretorio1 = new java.io.File("C:\\Users\\User\\Desktop\\Leilões");
 >>>>>>> 5359e33be4c731c8433450b04229fbf1429b4ee6
