@@ -7,7 +7,9 @@ package Controller;
 
 import Beans.LoteBeans;
 import DAO.LoteDAO;
+import java.awt.TextArea;
 import javax.swing.JOptionPane;
+import javax.swing.JTextArea;
 
 /**
  *
@@ -19,29 +21,30 @@ public class LoteController {
     VeiculoController conVeiculo = new VeiculoController();
     ProprietarioController conProprietario = new ProprietarioController();
 
-    public void corrigirLote(LoteBeans lote) {
+    public void corrigirLote(LoteBeans lote, JTextArea novo, JTextArea atualizado, String arquivo) {
         if (daoLote.existe(lote)) {
             LoteBeans base = daoLote.carregar(lote);
             this.compararLote(lote, base);
             daoLote.alterar(base);
-
+            atualizado.setText(atualizado.getText() + "\n" + arquivo);
         } else {
             daoLote.cadastrar(lote);
+            novo.setText(novo.getText() + "\n" + arquivo);
         }
     }
 
-    public void corrigirLoteCadastro(LoteBeans lote) {
+    public void corrigirLoteCadastro(LoteBeans lote, JTextArea novo, JTextArea atualizado, String arquivo) {
         if (daoLote.existe(lote)) {
             LoteBeans base = daoLote.carregar(lote);
             this.compararLoteCadastro(lote, base);
             daoLote.alterar(base);
+            atualizado.setText(atualizado.getText() + "\n" + arquivo);
         } else {
             lote.exibe();
             daoLote.cadastrar(lote);
+            novo.setText(novo.getText() + "\n" + arquivo);
         }
     }
-    
-    public void corrigirLoteBloqueio(LoteBeans lote)
 
     private void compararLoteCadastro(LoteBeans lote, LoteBeans base) {
         this.compararProprietarioLote(lote, base);

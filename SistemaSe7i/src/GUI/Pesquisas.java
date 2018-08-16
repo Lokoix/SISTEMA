@@ -15,14 +15,22 @@ import Controller.ProprietarioController;
 import Controller.Restricoes.RestricaoBloqueioController;
 import Controller.VeiculoController;
 import DAO.LeilaoDAO;
+import DAO.PesquisaDAO;
 import Interface.BaseNacional;
 import Interface.Bloqueio;
 import Interface.Cadastro;
 import importacao.arqtxt.Beans.ManipulaTxt;
+import java.awt.Color;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.UIManager;
 
 /**
  *
@@ -40,22 +48,32 @@ public class Pesquisas extends javax.swing.JInternalFrame {
     RestricaoBloqueioController conRestricaoBlo;
     VeiculoController conVeiculo;
     ProprietarioController conProprietario;
-    ArrayList<Integer> tipoTxt;
     LeilaoDAO leilaoD;
     LoteController conLote;
-    List<String> listaDeArquivos;
+    List<File> arquivosEntrada;
+    PesquisaDAO pesqDAO;
 
     public Pesquisas() {
         initComponents();
+        
+        
+        
         leilaoD = new LeilaoDAO();
 
-        iCadastro = new Cadastro();
-        iBaseNacional = new BaseNacional();
-        iBloqueio = new Bloqueio();
         conVeiculo = new VeiculoController();
         conProprietario = new ProprietarioController();
         conLote = new LoteController();
         conRestricaoBlo = new RestricaoBloqueioController();
+
+        iCadastro = new Cadastro();
+        iBaseNacional = new BaseNacional();
+        iBloqueio = new Bloqueio();
+
+        manipulaTxt = new ManipulaTxt();
+
+        arquivosEntrada = new ArrayList<>();
+        pesqDAO = new PesquisaDAO();
+
         for (LeilaoBeans leilao : leilaoD.buscarTodosLeiloes()) {
             cmb_Leilao.addItem(leilao);
         }
@@ -75,6 +93,15 @@ public class Pesquisas extends javax.swing.JInternalFrame {
         jLabel1 = new javax.swing.JLabel();
         cmb_Leilao = new javax.swing.JComboBox<>();
         barraProgresso = new javax.swing.JProgressBar();
+        jLabel6 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        lblexistentes = new javax.swing.JTextArea();
+        jLabel7 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        lblatualizados = new javax.swing.JTextArea();
+        jLabel8 = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        lblnovo = new javax.swing.JTextArea();
 
         setClosable(true);
 
@@ -100,8 +127,38 @@ public class Pesquisas extends javax.swing.JInternalFrame {
             }
         });
 
-        barraProgresso.setForeground(new java.awt.Color(0, 0, 255));
+        barraProgresso.setForeground(new java.awt.Color(102, 255, 0));
         barraProgresso.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(153, 153, 255), 1, true));
+
+        jLabel6.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel6.setText("Lotes Existentes");
+
+        lblexistentes.setEditable(false);
+        lblexistentes.setBackground(new java.awt.Color(255, 204, 204));
+        lblexistentes.setColumns(10);
+        lblexistentes.setFont(new java.awt.Font("Monospaced", 1, 13)); // NOI18N
+        lblexistentes.setRows(5);
+        jScrollPane1.setViewportView(lblexistentes);
+
+        jLabel7.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel7.setText("Lotes Atualizados");
+
+        lblatualizados.setEditable(false);
+        lblatualizados.setBackground(new java.awt.Color(51, 255, 255));
+        lblatualizados.setColumns(10);
+        lblatualizados.setFont(new java.awt.Font("Monospaced", 1, 13)); // NOI18N
+        lblatualizados.setRows(5);
+        jScrollPane2.setViewportView(lblatualizados);
+
+        jLabel8.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel8.setText("Lotes Novos");
+
+        lblnovo.setEditable(false);
+        lblnovo.setBackground(new java.awt.Color(153, 255, 153));
+        lblnovo.setColumns(10);
+        lblnovo.setFont(new java.awt.Font("Monospaced", 1, 13)); // NOI18N
+        lblnovo.setRows(5);
+        jScrollPane3.setViewportView(lblnovo);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -109,18 +166,39 @@ public class Pesquisas extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(85, 85, 85)
+                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(89, 89, 89))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cmb_Leilao, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(txt_local, javax.swing.GroupLayout.PREFERRED_SIZE, 367, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btn_iniciar, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(barraProgresso, javax.swing.GroupLayout.PREFERRED_SIZE, 556, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                        .addGap(10, 10, 10)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(barraProgresso, javax.swing.GroupLayout.PREFERRED_SIZE, 556, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 34, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(txt_local, javax.swing.GroupLayout.PREFERRED_SIZE, 367, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel1)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(cmb_Leilao, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btn_iniciar, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap())))))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(10, 10, 10)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(10, 10, 10)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -135,81 +213,116 @@ public class Pesquisas extends javax.swing.JInternalFrame {
                     .addComponent(txt_local, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(barraProgresso, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(373, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(427, Short.MAX_VALUE))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(158, 158, 158)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 413, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 413, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 413, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_iniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_iniciarActionPerformed
-        tipoTxt = new ArrayList();
-        manipulaTxt = new ManipulaTxt();
-        listaDeArquivos = new ArrayList();
 
-        String local;
-        local = txt_local.getText();
+        String destino = "C://" + ((LeilaoBeans) cmb_Leilao.getSelectedItem()).getDescricao() + "//pesquisas//";
 
-        listaDeArquivos = listaDeArquivos(local);
+        JOptionPane.showMessageDialog(null, "Destino: " + destino);
+
+        if (new File(destino).mkdirs()) {
+            JOptionPane.showMessageDialog(null, "Pasta Criada");
+        }
+        String local = txt_local.getText();
+
+        listaDeArquivos(local, arquivosEntrada);// carregar o ArrayList de File, com os arquivos para subir no Servidor
+        System.out.println("LISTA DE ARQUIVOS ENTRADA SIZE: " + arquivosEntrada.size());
 
         new Thread() {
             @Override
             public void run() {
                 try {
-                    barraProgresso.setMaximum(listaDeArquivos.size()-1);
+                    barraProgresso.setMaximum(arquivosEntrada.size() - 1);
                     //System.out.println("tamanho Lista de arquivos.size: "+listaDeArquivos.size() + "tamanho Tipos TXT: "+ tipoTxt.size());
-                    for (int i = 0; i < listaDeArquivos.size(); i++) {
-                        VeiculoBeans veic = new VeiculoBeans();
-                        ProprietarioBeans proprietario = new ProprietarioBeans();
+                    for (int i = 0; i < arquivosEntrada.size(); i++) {
                         LoteBeans lote = new LoteBeans();
-                        System.out.println("");
+
                         lote.setLeilao((LeilaoBeans) cmb_Leilao.getSelectedItem());
-                        ArrayList<String> result = new ArrayList<>();
-                        String s;
 
-                        switch (tipoTxt.get(i)) {
+                        ArrayList<String> result = new ArrayList<>(100);
+                        String desc = "";
+
+                        switch (tipoDeArquivo(arquivosEntrada.get(i).getName())) {
                             case 1:
-                                s = listaDeArquivos.get(i);
-                                lote.setNumeroLote(s.substring(0, s.indexOf("CAD.txt")));
-                                result = manipulaTxt.Leitura(local, s);
+                                lote.setNumeroLote(arquivosEntrada.get(i).getName().substring(0, arquivosEntrada.get(i).getName().indexOf("CAD")));
+                                desc = arquivosEntrada.get(i).getName().substring(arquivosEntrada.get(i).getName().indexOf("CAD"), arquivosEntrada.get(i).getName().indexOf(".txt"));
 
-                                System.out.println("kkkkk");
-                                if (result.size() == 88) { // pesquisa de cadastro normal
-                                    iCadastro.getLoteCadastro1(result, lote);
-                                    lote.setVeiculo(conVeiculo.corrigirVeiculoPesquisaCadastro(lote.getVeiculo()));
-                                    lote.setProprietario(conProprietario.CorrigirProprietarioPesquisaCadastro(lote.getProprietario()));
-                                    conLote.corrigirLoteCadastro(lote);
-                                    break;
-                                } else if (result.size() == 11) { //pesquisa de cadastro sem registro
-                                    System.out.println("kkkk");
-                                    iCadastro.getLoteCadastro2(result, lote);
-                                    conLote.corrigirLoteCadastro(lote);
-                                    break;
-                                } else if (result.size() == 54) {
-                                    iCadastro.getLoteCadastro3(result, lote); // pesquisa de cadastro de fora do estado
-                                    lote.setVeiculo(conVeiculo.corrigirVeiculoPesquisaCadastro(lote.getVeiculo()));
-                                    lote.setProprietario(conProprietario.CorrigirProprietarioPesquisaCadastro(lote.getProprietario()));
-                                    conLote.corrigirLoteCadastro(lote);
-                                    break;
-                                } else {
-                                    JOptionPane.showMessageDialog(null, "interface difere de CAD: " + listaDeArquivos.get(i).toString());
+                                if (!pesqDAO.existe(lote.getLeilao().getId(), lote.getNumeroLote(), desc)) {
+                                    result = manipulaTxt.Leitura(arquivosEntrada.get(i));
+
+                                    if (result.size() == 88) { // pesquisa de cadastro normal
+                                        iCadastro.getLoteCadastro1(result, lote);
+                                        lote.setVeiculo(conVeiculo.corrigirVeiculoPesquisaCadastro(lote.getVeiculo()));
+                                        lote.setProprietario(conProprietario.CorrigirProprietarioPesquisaCadastro(lote.getProprietario()));
+                                        conLote.corrigirLoteCadastro(lote, lblnovo, lblatualizados, arquivosEntrada.get(i).getName());
+
+                                    } else if (result.size() == 11) { //pesquisa de cadastro sem registro
+                                        iCadastro.getLoteCadastro2(result, lote);
+                                        conLote.corrigirLoteCadastro(lote, lblnovo, lblatualizados, arquivosEntrada.get(i).getName());
+
+                                    } else if (result.size() == 54) {
+                                        iCadastro.getLoteCadastro3(result, lote); // pesquisa de cadastro de fora do estado
+                                        lote.setVeiculo(conVeiculo.corrigirVeiculoPesquisaCadastro(lote.getVeiculo()));
+                                        lote.setProprietario(conProprietario.CorrigirProprietarioPesquisaCadastro(lote.getProprietario()));
+                                        conLote.corrigirLoteCadastro(lote, lblnovo, lblatualizados, arquivosEntrada.get(i).getName());
+
+                                    } else {
+                                        JOptionPane.showMessageDialog(null, "interface difere de CAD: " + arquivosEntrada.get(i).getName());
+                                        break;
+                                    }
+                                    File arquivoDestino = new File(destino + arquivosEntrada.get(i).getName());
+                                    copy(arquivosEntrada.get(i), arquivoDestino);
+                                    pesqDAO.cadastrar(lote, desc, arquivoDestino.toString());
                                     break;
                                 }
-
+                                lblexistentes.setText(lblexistentes.getText() + "\n" + arquivosEntrada.get(i).getName());
+                                break;
                             case 2:
-                                s = listaDeArquivos.get(i);
-                                lote.setNumeroLote(s.substring(0, s.indexOf("BIN.txt")));
-                                result = manipulaTxt.Leitura(local, s);
+                                System.out.println("case 2");
+                                lote.setNumeroLote(arquivosEntrada.get(i).getName().substring(0, arquivosEntrada.get(i).getName().indexOf("BIN")));
+                                desc = arquivosEntrada.get(i).getName().substring(arquivosEntrada.get(i).getName().indexOf("BIN"), arquivosEntrada.get(i).getName().indexOf(".txt"));
 
-                                if (result.size() == 62) {
-                                    iBaseNacional.getLoteBaseNacional1(result, lote);
-                                    lote.setVeiculo(conVeiculo.corrigirVeiculoPesquisa(lote.getVeiculo()));
-                                    conLote.corrigirLote(lote);
+                                if (!pesqDAO.existe(lote.getLeilao().getId(), lote.getNumeroLote(), desc)) {
+
+                                    result = manipulaTxt.Leitura(arquivosEntrada.get(i));
+
+                                    if (result.size() == 62) {
+                                        iBaseNacional.getLoteBaseNacional1(result, lote);
+                                        lote.setVeiculo(conVeiculo.corrigirVeiculoPesquisa(lote.getVeiculo()));
+                                        conLote.corrigirLote(lote, lblnovo, lblatualizados, arquivosEntrada.get(i).getName());
+
+                                    } else {
+                                        JOptionPane.showMessageDialog(null, "interface difere de BIN: " + arquivosEntrada.get(i).getName());
+                                        break;
+                                    }
+                                    File arquivoDestino = new File(destino + arquivosEntrada.get(i).getName());
+                                    copy(arquivosEntrada.get(i), arquivoDestino);
+                                    pesqDAO.cadastrar(lote, desc, arquivoDestino.toString());
                                     break;
-                                } else {
-                                    JOptionPane.showMessageDialog(null, "interface difere de BIN: " + listaDeArquivos.get(i).toString());
                                 }
+                                lblexistentes.setText(lblexistentes.getText() + "\n" + arquivosEntrada.get(i).getName());
+                                break;
                             case 3:
-                                s = listaDeArquivos.get(i);
+                                System.out.println("case 3");
+                                /*
                                 lote.setNumeroLote(s.substring(0, s.indexOf("BLO")));
                                 result = manipulaTxt.Leitura(local, s);
 
@@ -223,10 +336,11 @@ public class Pesquisas extends javax.swing.JInternalFrame {
                                         conRestricaoBlo.corrigirBloqueioPesquisa();
 
                                     }
-                                }
-
+                                }*/
+                                lblexistentes.setText(lblexistentes.getText() + "\n" + arquivosEntrada.get(i).getName());
+                                break;
                             default:
-                                JOptionPane.showMessageDialog(null, "não: " + listaDeArquivos.get(i).toString());
+                                lblexistentes.setText(lblexistentes.getText() + "\n" + arquivosEntrada.get(i).getName());
                                 break;
                         }
 
@@ -234,10 +348,10 @@ public class Pesquisas extends javax.swing.JInternalFrame {
                         //JOptionPane.showMessageDialog(null, "ID Leilao: " + ((LeilaoBeans) cmb_Leilao.getSelectedItem()).getId() + ", " + ((LeilaoBeans) cmb_Leilao.getSelectedItem()).getDescricao() + " Lote: " + lote.getNumeroLote() + "  " + listaDeArquivos.get(i).toString());
                         barraProgresso.setValue(i);
                     }
-                    JOptionPane.showMessageDialog(null, "ACABOOO");
+                    JOptionPane.showMessageDialog(null, "importação concluida");
 
                 } catch (Exception e) {
-
+                    JOptionPane.showMessageDialog(null, "Erro da barra> " + e);
                 }
             }
         }.start();
@@ -259,32 +373,54 @@ public class Pesquisas extends javax.swing.JInternalFrame {
     private javax.swing.JButton btn_iniciar;
     private javax.swing.JComboBox<Object> cmb_Leilao;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JTextArea lblatualizados;
+    private javax.swing.JTextArea lblexistentes;
+    private javax.swing.JTextArea lblnovo;
     private javax.swing.JTextField txt_local;
     // End of variables declaration//GEN-END:variables
 
-    public ArrayList<String> listaDeArquivos(String local) {
-        System.out.println("entrou na lista de arquivos");
-        System.out.println("local: " + local);
+    public void listaDeArquivos(String local, List<File> lista) {
         File dir = new File(local);
-        ArrayList<String> lista = new ArrayList();
         for (File f : dir.listFiles()) {// lista o que possui no diretorio dir
             if (f.isFile()) {//se for um arquivo true;
-
-                lista.add(f.getName());
-                if (f.getName().contains("CAD")) {
-                    tipoTxt.add(1);
-                } else if (f.getName().contains("BIN")) {
-                    tipoTxt.add(2);
-                } else if (f.getName().contains("BLO")) {
-                    tipoTxt.add(3);
-                } else {
-                    tipoTxt.add(9);
-                }
+                lista.add(f);
             }
         }
-        System.out.println("lista: " + lista.size() + " tipotxt: " + tipoTxt.size());
-        System.out.println("saiu da lista de arquivos");
-        return lista;
+    }
+
+    public int tipoDeArquivo(String s) {
+        if (s.contains("CAD")) {
+            return 1;
+        }
+        if (s.contains("BIN")) {
+            return 2;
+        }
+        if (s.contains("BLO")) {
+            return 3;
+        }
+        if (s.contains("JUD")) {
+            return 4;
+        } else {
+            return 0;
+        }
+    }
+
+    public void copy(File src, File dst) throws IOException {
+        InputStream in = new FileInputStream(src);
+        OutputStream out = new FileOutputStream(dst);           // Transferindo bytes de entrada para saída
+        byte[] buf = new byte[1024];
+        int len;
+        while ((len = in.read(buf)) > 0) {
+            out.write(buf, 0, len);
+        }
+        in.close();
+        out.close();
     }
 
 }
