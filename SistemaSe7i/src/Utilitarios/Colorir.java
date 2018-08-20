@@ -25,7 +25,7 @@ public class Colorir implements TableCellRenderer {
         ((JLabel) renderer).setOpaque(true);
         Color foreground, background;
         if (isSelected) {
-            foreground = Color.black;
+            foreground = Color.white;
             background = Color.blue;
         } else {
             if (row % 2 == 0) {
