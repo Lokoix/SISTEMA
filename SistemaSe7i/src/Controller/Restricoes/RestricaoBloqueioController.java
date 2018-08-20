@@ -13,7 +13,5 @@ import Beans.Restricoes.RestricaoBloqueioBeans;
  */
 public class RestricaoBloqueioController {
     
-    public RestricaoBloqueioBeans corrigirBloqueioPesquisa(){
-    
-    }   
+     
 }

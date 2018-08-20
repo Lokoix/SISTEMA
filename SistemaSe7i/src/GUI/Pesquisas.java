@@ -234,7 +234,7 @@ public class Pesquisas extends javax.swing.JInternalFrame {
 
     private void btn_iniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_iniciarActionPerformed
 
-        String destino = "C://" + ((LeilaoBeans) cmb_Leilao.getSelectedItem()).getDescricao() + "//pesquisas//";
+        String destino = "C://" + ((LeilaoBeans) cmb_Leilao.getSelectedItem()).getDescricao() + "//Pesquisas//";
 
         JOptionPane.showMessageDialog(null, "Destino: " + destino);
 
@@ -244,7 +244,6 @@ public class Pesquisas extends javax.swing.JInternalFrame {
         String local = txt_local.getText();
 
         listaDeArquivos(local, arquivosEntrada);// carregar o ArrayList de File, com os arquivos para subir no Servidor
-        System.out.println("LISTA DE ARQUIVOS ENTRADA SIZE: " + arquivosEntrada.size());
 
         new Thread() {
             @Override
