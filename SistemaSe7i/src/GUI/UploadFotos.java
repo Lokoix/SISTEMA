@@ -26,6 +26,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Map;
 import javax.swing.JFrame;
 
 /*
@@ -98,7 +99,6 @@ public class UploadFotos extends javax.swing.JFrame {
 
         txtIdleilao.setEditable(false);
         txtIdleilao.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        txtIdleilao.setText("1");
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel6.setText("Lotes Existentes");
@@ -231,7 +231,6 @@ public class UploadFotos extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
     File[] arquivos;
-
     public void CaminhoFotos() {
         JFileChooser fc = new JFileChooser();
         fc.setMultiSelectionEnabled(true);
@@ -266,7 +265,8 @@ public class UploadFotos extends javax.swing.JFrame {
                     barraProgresso.setMaximum(imagens.size());
                     for (BufferedImage i : imagens) {
 
-                        java.io.File diretorio1 = new java.io.File("C:\\Users\\joaoh\\Desktop\\Leilões");
+                        java.io.File diretorio1 = new java.io.File("C:\\Users\\User\\Desktop\\Leilões");
+
                         boolean statusDir1 = diretorio1.mkdir();
 
                         String leilao = cbleilao.getSelectedItem().toString();
@@ -572,7 +572,11 @@ public class UploadFotos extends javax.swing.JFrame {
                 st2.setString(1, Lote);
                 st2.setInt(2, idLeilao);
 
+
                 lblnovo.setText(lblnovo.getText() + Lote + Tipo + "\n");
+
+                
+                lblnovo.setText(lblnovo.getText() + Lote+Tipo + "\n");
 
                 st2.execute();
                 Conexao.getConnection().commit();
@@ -603,7 +607,7 @@ public class UploadFotos extends javax.swing.JFrame {
 
     public void BuscarIdCidade() {
         try {
-            String sql = "select * from leiloes where descricao like '%" + cbleilao.getSelectedItem() + "%' ";
+            String sql = "select * from leiloes where descricao =" + cbleilao.getSelectedItem();
             PreparedStatement preparedStatement = Conexao.getConnection().prepareStatement(sql);
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
