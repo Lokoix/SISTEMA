@@ -311,6 +311,7 @@ public class UploadFotos extends javax.swing.JFrame {
                                 FotoB.setTipo(Tipo);
                                 FotoB.setIdleilao(idleilao);
                                 FotoB.setIdlote(idlote);
+                                
                                 FotoC.InserirFotos(FotoB);
 
                                 String existente = Lote + Tipo;
@@ -339,6 +340,7 @@ public class UploadFotos extends javax.swing.JFrame {
                             if(rs2.next()){
                                 idlote = Integer.parseInt(rs2.getString(1)); 
                             }
+                            
                             String sql1 = "select * from fotos where lote=" + Lote + " and (tipo='MP_' or tipo='MF_') and idleilao=" + idleilao;
                             PreparedStatement st = Conexao.getConnection().prepareStatement(sql1);
                             ResultSet rs = st.executeQuery();
@@ -351,6 +353,7 @@ public class UploadFotos extends javax.swing.JFrame {
                                 FotoB.setTipo(Tipo);
                                 FotoB.setIdleilao(idleilao);
                                 FotoB.setIdlote(idlote);
+                                
                                 FotoC.InserirFotos(FotoB);
                                 String existente = Lote + Tipo;
                                 lblatualizados.setText(lblatualizados.getText() + existente + "\n");
@@ -421,6 +424,7 @@ public class UploadFotos extends javax.swing.JFrame {
                                 FotoB.setTipo(Tipo);
                                 FotoB.setIdleilao(idleilao);
                                 FotoB.setIdlote(idlote);
+                                
                                 FotoC.InserirFotos(FotoB);
                                 String existente = Lote + Tipo;
                                 lblatualizados.setText(lblatualizados.getText() + existente + "\n");
@@ -454,7 +458,8 @@ public class UploadFotos extends javax.swing.JFrame {
                                 FotoB.setTipo(Tipo);
                                 FotoB.setIdleilao(idleilao);
                                 FotoB.setIdlote(idlote);
-                                FotoC.InserirFotos(FotoB);
+                                
+                                FotoC.InserirFotos(FotoB);                              
                                 String existente = Lote + Tipo;
                                 lblatualizados.setText(lblatualizados.getText() + existente + "\n");
                             } else {
@@ -488,6 +493,7 @@ public class UploadFotos extends javax.swing.JFrame {
                                 FotoB.setTipo(Tipo);
                                 FotoB.setIdleilao(idleilao);
                                 FotoB.setIdlote(idlote);
+                                
                                 FotoC.InserirFotos(FotoB);
 
                                 String existente = Lote + Tipo;
@@ -500,6 +506,7 @@ public class UploadFotos extends javax.swing.JFrame {
                         } else if (caminhofinal.contains("F.jpg")) {
                             Lote = caminhofinal.substring(caminhofinal.lastIndexOf("\\") + 1, caminhofinal.lastIndexOf("F"));
                             Tipo = caminhofinal.substring(caminhofinal.lastIndexOf("F"), caminhofinal.lastIndexOf("F") + 1);
+                            
                             BscLote(Lote, Tipo, idleilao);
                             int idlote=0; 
                             
@@ -524,6 +531,7 @@ public class UploadFotos extends javax.swing.JFrame {
                                 FotoB.setTipo(Tipo);
                                 FotoB.setIdleilao(idleilao);
                                 FotoB.setIdlote(idlote);
+                                
                                 FotoC.InserirFotos(FotoB);
 
                                 String existente = Lote + Tipo;
@@ -564,7 +572,7 @@ public class UploadFotos extends javax.swing.JFrame {
                 st2.setString(1, Lote);
                 st2.setInt(2, idLeilao);
 
-                lblnovo.setText(lblnovo.getText() + Lote+Tipo + "\n");
+                lblnovo.setText(lblnovo.getText() + Lote + Tipo + "\n");
 
                 st2.execute();
                 Conexao.getConnection().commit();

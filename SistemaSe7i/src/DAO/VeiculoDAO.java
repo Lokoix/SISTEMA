@@ -71,8 +71,7 @@ public class VeiculoDAO {
             st2.execute();
             Conexao.getConnection().commit();
         } catch (Exception e) {
-        }
-        
+        }    
     }
 
     public void cadastrarChassi(String Chassi) {

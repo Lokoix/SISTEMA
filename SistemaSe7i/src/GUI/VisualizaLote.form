@@ -39,7 +39,7 @@
                       <EmptySpace min="-2" pref="67" max="-2" attributes="0"/>
                       <Component id="txtidleilao" min="-2" pref="20" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jComboBox1" min="-2" pref="268" max="-2" attributes="0"/>
+                      <Component id="cbleilao" min="-2" pref="268" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="txtbuscalote" alignment="0" min="-2" pref="97" max="-2" attributes="0"/>
@@ -87,7 +87,7 @@
                       <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="txtbuscalote" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jComboBox1" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="cbleilao" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jButton1" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="txtidleilao" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="txtbuscalote2" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -150,14 +150,15 @@
     </Container>
     <Component class="javax.swing.JTextField" name="txtbuscalote">
     </Component>
-    <Component class="javax.swing.JComboBox" name="jComboBox1">
+    <Component class="javax.swing.JComboBox" name="cbleilao">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="1">
-            <StringItem index="0" value="CET 37"/>
-          </StringArray>
+          <StringArray count="0"/>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="cbleilaoItemStateChanged"/>
+      </Events>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
       </AuxValues>
@@ -171,12 +172,24 @@
       </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="lbltraseira">
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lbltraseiraMouseClicked"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="lblfrente">
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblfrenteMouseClicked"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="lblchassi">
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblchassiMouseClicked"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="lblmotor">
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblmotorMouseClicked"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="lbllote">
       <Properties>
@@ -191,7 +204,6 @@
     <Component class="javax.swing.JTextField" name="txtidleilao">
       <Properties>
         <Property name="editable" type="boolean" value="false"/>
-        <Property name="text" type="java.lang.String" value="1"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel1">

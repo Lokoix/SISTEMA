@@ -8,8 +8,10 @@ package GUI;
 import DAO.FotosDAO;
 import Utilitarios.Conexao;
 import java.awt.Image;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -23,13 +25,13 @@ public class VisualizaLote extends javax.swing.JFrame {
 
     DefaultTableModel modelo; 
     FotosDAO FotoD = new FotosDAO(); 
-    
+    FrmVerFoto frmverfoto = new FrmVerFoto();
     public VisualizaLote() {
         initComponents();
         int nlotes = 0; 
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         modelo = (DefaultTableModel) tblote.getModel(); 
-        
+        carregaComboBox();
         
     }
 
@@ -45,7 +47,7 @@ public class VisualizaLote extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblote = new javax.swing.JTable();
         txtbuscalote = new javax.swing.JTextField();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        cbleilao = new javax.swing.JComboBox<>();
         jButton1 = new javax.swing.JButton();
         lbltraseira = new javax.swing.JLabel();
         lblfrente = new javax.swing.JLabel();
@@ -87,12 +89,40 @@ public class VisualizaLote extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tblote);
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "CET 37" }));
+        cbleilao.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbleilaoItemStateChanged(evt);
+            }
+        });
 
         jButton1.setText("Buscar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
+            }
+        });
+
+        lbltraseira.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lbltraseiraMouseClicked(evt);
+            }
+        });
+
+        lblfrente.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblfrenteMouseClicked(evt);
+            }
+        });
+
+        lblchassi.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblchassiMouseClicked(evt);
+            }
+        });
+
+        lblmotor.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblmotorMouseClicked(evt);
             }
         });
 
@@ -104,7 +134,6 @@ public class VisualizaLote extends javax.swing.JFrame {
         });
 
         txtidleilao.setEditable(false);
-        txtidleilao.setText("1");
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel1.setText("Lote:");
@@ -138,7 +167,7 @@ public class VisualizaLote extends javax.swing.JFrame {
                         .addGap(67, 67, 67)
                         .addComponent(txtidleilao, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cbleilao, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtbuscalote, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -175,7 +204,7 @@ public class VisualizaLote extends javax.swing.JFrame {
                         .addGap(5, 5, 5)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtbuscalote, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cbleilao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButton1)
                             .addComponent(txtidleilao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtbuscalote2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -238,6 +267,95 @@ public class VisualizaLote extends javax.swing.JFrame {
            
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void lblchassiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblchassiMouseClicked
+        
+        String sql = "select * from fotos where (lote ="+lbllote.getText()+" and idleilao="+txtidleilao.getText()+") and (tipo='CH_' or tipo='CF_')";
+        try {
+            PreparedStatement st = Conexao.getConnection().prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            String caminhofinal = null;
+
+            while (rs.next()) {
+                caminhofinal = rs.getString(4);
+            }
+
+            ImageIcon iconchassi = new ImageIcon(caminhofinal);
+            String tipo = "Chassi"; 
+            frmverfoto.setVisible(true);
+            frmverfoto.setarImagem(iconchassi, tipo);
+            
+            Conexao.getConnection().commit();
+        } catch (Exception e) {
+        }
+    }//GEN-LAST:event_lblchassiMouseClicked
+
+    private void cbleilaoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbleilaoItemStateChanged
+         BuscarIdCidade(); 
+    }//GEN-LAST:event_cbleilaoItemStateChanged
+
+    private void lblmotorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblmotorMouseClicked
+        String sql = "select * from fotos where (lote ="+lbllote.getText()+" and idleilao="+txtidleilao.getText()+") and (tipo='MP_' or tipo='MF_')";
+        try {
+            PreparedStatement st = Conexao.getConnection().prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            String caminhofinal = null;
+
+            while (rs.next()) {
+                caminhofinal = rs.getString(4);
+            }
+            String tipo = "Motor"; 
+            ImageIcon iconmotor = new ImageIcon(caminhofinal);
+            frmverfoto.setVisible(true);
+            frmverfoto.setarImagem(iconmotor, tipo);
+            
+            Conexao.getConnection().commit();
+        } catch (Exception e) {
+            //System.out.println("MOTOR: "+e);
+        }
+    }//GEN-LAST:event_lblmotorMouseClicked
+
+    private void lbltraseiraMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbltraseiraMouseClicked
+        String sql = "select * from fotos where lote ="+lbllote.getText()+" and idleilao="+txtidleilao.getText()+" and tipo='T_'";
+        try {
+            PreparedStatement st = Conexao.getConnection().prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            String caminhofinal = null;
+
+            while (rs.next()) {
+                caminhofinal = rs.getString(4);
+            }
+            String tipo = "Traseira"; 
+            ImageIcon icontraseira = new ImageIcon(caminhofinal);
+            lbltraseira.setIcon(new ImageIcon(icontraseira.getImage().getScaledInstance(lbltraseira.getWidth(), lbltraseira.getHeight(), Image.SCALE_DEFAULT)));
+            frmverfoto.setVisible(true);
+            frmverfoto.setarImagem(icontraseira, tipo);
+            Conexao.getConnection().commit();
+        } catch (Exception e) {
+        }
+    }//GEN-LAST:event_lbltraseiraMouseClicked
+
+    private void lblfrenteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblfrenteMouseClicked
+       String sql = "select * from fotos where lote="+lbllote.getText()+" and idleilao="+txtidleilao.getText()+" and tipo='F'";
+        
+        try {
+            PreparedStatement st = Conexao.getConnection().prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            String caminhofinal = null;
+
+            while (rs.next()) {
+                caminhofinal = rs.getString(4);
+            }
+            String tipo = "Frente"; 
+            ImageIcon iconfrente = new ImageIcon(caminhofinal);
+            frmverfoto.setVisible(true);
+            frmverfoto.setarImagem(iconfrente, tipo);
+            
+            Conexao.getConnection().commit();
+        } catch (Exception e) {
+            
+        }
+    }//GEN-LAST:event_lblfrenteMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -274,8 +392,8 @@ public class VisualizaLote extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> cbleilao;
     private javax.swing.JButton jButton1;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -303,14 +421,14 @@ public class VisualizaLote extends javax.swing.JFrame {
     
     public void SetarLabelTraseira()
     {
-        String sql = "select * from fotos where lote ="+lbllote.getText()+" and leilao="+txtidleilao.getText()+" and tipo='T_'";
+        String sql = "select * from fotos where lote ="+lbllote.getText()+" and idleilao="+txtidleilao.getText()+" and tipo='T_'";
         try {
             PreparedStatement st = Conexao.getConnection().prepareStatement(sql);
             ResultSet rs = st.executeQuery();
             String caminhofinal = null;
 
             while (rs.next()) {
-                caminhofinal = rs.getString(2);
+                caminhofinal = rs.getString(4);
             }
 
             ImageIcon icontraseira = new ImageIcon(caminhofinal);
@@ -323,14 +441,16 @@ public class VisualizaLote extends javax.swing.JFrame {
     
     public void SetarLabelFrente()
     {
-        String sql = "select * from fotos where lote ="+lbllote.getText()+" and leilao="+txtidleilao.getText()+" and tipo='F'";
+      
+        String sql = "select * from fotos where lote="+lbllote.getText()+" and idleilao="+txtidleilao.getText()+" and tipo='F'";
+        
         try {
             PreparedStatement st = Conexao.getConnection().prepareStatement(sql);
             ResultSet rs = st.executeQuery();
             String caminhofinal = null;
 
             while (rs.next()) {
-                caminhofinal = rs.getString(2);
+                caminhofinal = rs.getString(4);
             }
 
             ImageIcon icontraseira = new ImageIcon(caminhofinal);
@@ -338,19 +458,20 @@ public class VisualizaLote extends javax.swing.JFrame {
 
             Conexao.getConnection().commit();
         } catch (Exception e) {
+            
         }
     }
     
     public void SetarLabelChassi()
     {
-        String sql = "select * from fotos where (lote ="+lbllote.getText()+" and leilao="+txtidleilao.getText()+") and (tipo='CH_' or tipo='CF_')";
+        String sql = "select * from fotos where (lote ="+lbllote.getText()+" and idleilao="+txtidleilao.getText()+") and (tipo='CH_' or tipo='CF_')";
         try {
             PreparedStatement st = Conexao.getConnection().prepareStatement(sql);
             ResultSet rs = st.executeQuery();
             String caminhofinal = null;
 
             while (rs.next()) {
-                caminhofinal = rs.getString(2);
+                caminhofinal = rs.getString(4);
             }
 
             ImageIcon icontraseira = new ImageIcon(caminhofinal);
@@ -364,14 +485,14 @@ public class VisualizaLote extends javax.swing.JFrame {
     
     public void SetarLabelMotor()
     {
-        String sql = "select * from fotos where (lote ="+lbllote.getText()+" and leilao="+txtidleilao.getText()+") and (tipo='MP_' or tipo='MF_')";
+        String sql = "select * from fotos where (lote ="+lbllote.getText()+" and idleilao="+txtidleilao.getText()+") and (tipo='MP_' or tipo='MF_')";
         try {
             PreparedStatement st = Conexao.getConnection().prepareStatement(sql);
             ResultSet rs = st.executeQuery();
             String caminhofinal = null;
 
             while (rs.next()) {
-                caminhofinal = rs.getString(2);
+                caminhofinal = rs.getString(4);
             }
 
             ImageIcon icontraseira = new ImageIcon(caminhofinal);
@@ -386,7 +507,7 @@ public class VisualizaLote extends javax.swing.JFrame {
     public void BuscarFoto(DefaultTableModel Modelo,String lote, String leilao)
     {     
         Modelo.setNumRows(0);
-        String sql = "select DISTINCT lote from fotos where leilao="+leilao+" and lote="+lote+" order by lote asc";
+        String sql = "select * from lotes where idLeilao="+leilao+" and numeroLote="+lote+" order by lote asc";
         try {
             PreparedStatement st = Conexao.getConnection().prepareStatement(sql);
             ResultSet rs = st.executeQuery();
@@ -420,7 +541,7 @@ public class VisualizaLote extends javax.swing.JFrame {
     public void BuscarFotosLeilao(DefaultTableModel Modelo, String leilao)
     {     
         Modelo.setNumRows(0);
-        String sql = "select DISTINCT lote from fotos where leilao="+leilao+" order by lote asc";
+        String sql = "select DISTINCT lote from fotos where idleilao="+leilao+" order by lote asc";
         try {
             PreparedStatement st = Conexao.getConnection().prepareStatement(sql);
             ResultSet rs = st.executeQuery();
@@ -478,6 +599,34 @@ public class VisualizaLote extends javax.swing.JFrame {
             while(rs.next())
             {
                 lbltotlot.setText(rs.getString("c"));
+            }
+        } catch (Exception e) {
+        }
+    }
+    
+    public void carregaComboBox() {
+        try {
+            Connection conn;
+            conn = Conexao.getConnection();
+            Statement st = conn.createStatement();
+            ResultSet rs = st.executeQuery("SELECT leiloes.descricao FROM leiloes");
+            while (rs.next()) {
+                cbleilao.addItem(rs.getString("descricao"));
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,
+                    "Ocorreu erro ao carregar a Combo Box", "Erro",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+    public void BuscarIdCidade() {
+        try {
+            String sql = "select * from leiloes where descricao like '%" + cbleilao.getSelectedItem() + "%' ";
+            PreparedStatement preparedStatement = Conexao.getConnection().prepareStatement(sql);
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()) {
+                txtidleilao.setText(rs.getString(1));
             }
         } catch (Exception e) {
         }

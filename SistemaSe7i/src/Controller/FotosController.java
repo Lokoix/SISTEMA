@@ -16,7 +16,7 @@ public class FotosController {
     FotosDAO FotosD;
     
     public FotosController()
-    {
+    {  
         FotosD = new FotosDAO(); 
     }
     
