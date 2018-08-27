@@ -26,13 +26,13 @@ import javax.swing.JOptionPane;
  */
 public class ManipulaTxt {
 
-    public ArrayList<String> Leitura(String local, String arquivo) {
+    public ArrayList<String> Leitura(File pesquisa) {
         StringBuffer sb = new StringBuffer();
         String linha = "";
         ArrayList<String> lista = new ArrayList<>();
         try {
             try {
-                Scanner s = new Scanner(new FileInputStream(local + arquivo),"UTF-16LE");
+                Scanner s = new Scanner(new FileInputStream(pesquisa),"UTF-16LE");
                 
                 
                 //PrintStream ps = new PrintStream("C:\\Users\\rafae\\Documents\\NetBeansProjects\\Java-III\\src\\Aula4\\Video\\saida.txt");

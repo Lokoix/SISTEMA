@@ -14,6 +14,7 @@ import Utilitarios.Corretores;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Types;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
@@ -23,6 +24,7 @@ import javax.swing.JOptionPane;
  */
 public class LoteDAO {
 
+    DecimalFormat df = new DecimalFormat("0.##");
     VeiculoController conVeiculo = new VeiculoController();
     VeiculoDAO daoVeiculo = new VeiculoDAO();
     ProprietarioController conProprietario = new ProprietarioController();
@@ -152,7 +154,7 @@ public class LoteDAO {
         ArrayList<LoteBeans> lotes = new ArrayList<>();
         LoteBeans lote;
         try {
-            String sql = "SELECT lotes.*, veiculos.placa, marcas.nome, modelos.nome FROM lotes, veiculos, marcas, modelos WHERE lotes.idVeiculo = veiculos.id "
+            String sql = "SELECT lotes.*, veiculos.placa, veiculos.fipe, veiculos.debito, marcas.nome, modelos.nome FROM lotes, veiculos, marcas, modelos WHERE lotes.idVeiculo = veiculos.id "
                     + "AND veiculos.idModelo = modelos.id AND modelos.idMarca = marcas.id AND lotes.idLeilao = ? order by lotes.numeroLote ASC";
             PreparedStatement st = Conexao.getConnection().prepareStatement(sql);
             st.setInt(1, leilao.getId());
@@ -167,15 +169,16 @@ public class LoteDAO {
                 lote.getVeiculo().setPlaca(rs.getString("veiculos.placa"));
                 lote.getVeiculo().getModelo().setNome(rs.getString("modelos.nome"));
                 lote.getVeiculo().getModelo().getMarca().setNome(rs.getString("marcas.nome"));
-                lote.getComunicao().setId(rs.getInt("idComunicacao"));
+                lote.getComunicao().setId(rs.getInt("idComunicacao"));  
                 lote.getAlienacao().setId(rs.getInt("idAlienacao"));
-                lote.setDataCad(rs.getDate("dataCad").toString());
+                lote.setDataCad(Corretores.ConverterParaJava(rs.getDate("dataCad").toString()));
                 lote.setObservacao(rs.getString("observacao"));
                 lote.setMotorBase(rs.getString("motorBase"));
                 lote.setChassiBase(rs.getString("chassiBase"));
-                lote.setFipe(rs.getDouble("fipe"));
-                lote.setDebito(rs.getDouble("debito"));
+                lote.getVeiculo().setFipe(rs.getBigDecimal("veiculos.fipe"));
+                lote.getVeiculo().setDebito(rs.getBigDecimal("veiculos.debito"));
                 lotes.add(lote);
+                
             }
         } catch (Exception e) {
         }

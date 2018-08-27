@@ -5,26 +5,34 @@
  */
 package GUI;
 
+import Beans.LeilaoBeans;
+import DAO.ConsultaLaudoDAO;
+import DAO.LeilaoDAO;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author User
- */
 public class ConsultaLaudo extends javax.swing.JFrame {
 
     DefaultTableModel Modelo;
-    
+    LeilaoBeans leilaoB;
+    LeilaoDAO leilaoD;
+    ConsultaLaudoDAO laudoD;
+
     public ConsultaLaudo() {
         initComponents();
         Modelo = new DefaultTableModel();
+        leilaoD = new LeilaoDAO();
+        laudoD = new ConsultaLaudoDAO();
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        
-        
+
+        cbox_leilao.addItem("Selecionar Leilão");
+        for (LeilaoBeans leilao : leilaoD.buscarTodosLeiloes()) {
+            cbox_leilao.addItem(leilao);
+
+        }
+
     }
-   
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -60,7 +68,7 @@ public class ConsultaLaudo extends javax.swing.JFrame {
         jRadioButton1 = new javax.swing.JRadioButton();
         jRadioButton2 = new javax.swing.JRadioButton();
         jRadioButton3 = new javax.swing.JRadioButton();
-        jButton1 = new javax.swing.JButton();
+        btn_buscar = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
         jScrollPane3 = new javax.swing.JScrollPane();
@@ -69,7 +77,7 @@ public class ConsultaLaudo extends javax.swing.JFrame {
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        cbox_leilao = new javax.swing.JComboBox<>();
         jComboBox2 = new javax.swing.JComboBox<>();
         jButton2 = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
@@ -166,22 +174,45 @@ public class ConsultaLaudo extends javax.swing.JFrame {
         );
 
         jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel6.setText("Incons. Motor");
-        jPanel3.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, -1));
 
         buttonGroup2.add(jRadioButton1);
         jRadioButton1.setText("S");
-        jPanel3.add(jRadioButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, -1, -1));
 
         buttonGroup2.add(jRadioButton2);
         jRadioButton2.setText("N");
-        jPanel3.add(jRadioButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 30, -1, -1));
 
         buttonGroup2.add(jRadioButton3);
         jRadioButton3.setText("T");
-        jPanel3.add(jRadioButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 30, -1, -1));
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(9, 9, 9)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel6)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jRadioButton1)
+                        .addGap(3, 3, 3)
+                        .addComponent(jRadioButton2)
+                        .addGap(3, 3, 3)
+                        .addComponent(jRadioButton3))))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(9, 9, 9)
+                .addComponent(jLabel6)
+                .addGap(4, 4, 4)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jRadioButton1)
+                    .addComponent(jRadioButton2)
+                    .addComponent(jRadioButton3))
+                .addContainerGap())
+        );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -198,11 +229,15 @@ public class ConsultaLaudo extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/Search.png"))); // NOI18N
+        btn_buscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/Search.png"))); // NOI18N
+        btn_buscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_buscarActionPerformed(evt);
+            }
+        });
 
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -356,7 +391,7 @@ public class ConsultaLaudo extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Lote", "Placa", "Renavam", "Tipo do Veículo", "Marca", "Modelo", "Cor", "Ano/Modelo", "Motor", "Motor Base", "Chassi", "Chassi Base", "Observação", "Cliente", "CPF", "Endereço", "Bairro", "CEP", "Cidade", "Título 20"
+                "Leilão", "Lote", "Placa", "Renavam", "Tipo do Veículo", "Marca", "Modelo", "Cor", "Ano/Modelo", "Motor", "Motor Base", "Chassi", "Chassi Base", "Observação", "Cliente", "CPF", "Endereço", "Bairro", "CEP", "Cidade"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -368,6 +403,11 @@ public class ConsultaLaudo extends javax.swing.JFrame {
             }
         });
         jScrollPane4.setViewportView(tb_consulta);
+        if (tb_consulta.getColumnModel().getColumnCount() > 0) {
+            tb_consulta.getColumnModel().getColumn(0).setMinWidth(180);
+            tb_consulta.getColumnModel().getColumn(0).setPreferredWidth(180);
+            tb_consulta.getColumnModel().getColumn(0).setMaxWidth(180);
+        }
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -397,7 +437,6 @@ public class ConsultaLaudo extends javax.swing.JFrame {
                         .addGap(45, 45, 45))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jScrollPane4, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -424,14 +463,14 @@ public class ConsultaLaudo extends javax.swing.JFrame {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(cbox_leilao, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                                 .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 391, javax.swing.GroupLayout.PREFERRED_SIZE))
                                             .addComponent(jLabel7)
                                             .addComponent(jLabel8))
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addGroup(layout.createSequentialGroup()
-                                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(btn_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                             .addGroup(layout.createSequentialGroup()
@@ -443,6 +482,10 @@ public class ConsultaLaudo extends javax.swing.JFrame {
                                 .addGap(57, 57, 57)
                                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 348, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(31, 31, 31))))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(70, 70, 70)
+                .addComponent(jScrollPane4)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -470,10 +513,10 @@ public class ConsultaLaudo extends javax.swing.JFrame {
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jLabel7)
                                         .addGap(5, 5, 5)
-                                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(cbox_leilao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(layout.createSequentialGroup()
                                         .addGap(10, 10, 10)
-                                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(btn_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
@@ -488,9 +531,9 @@ public class ConsultaLaudo extends javax.swing.JFrame {
                                             .addComponent(jPanel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(45, 45, 45)
+                .addGap(61, 61, 61)
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 616, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(1, 1, 1)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -515,16 +558,27 @@ public class ConsultaLaudo extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_intervaloActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_jButton8ActionPerformed
+
+    private void btn_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_buscarActionPerformed
+        Modelo.setNumRows(0);
+        if (cbox_leilao.getSelectedItem() instanceof LeilaoBeans) {
+            LeilaoBeans leilao = (LeilaoBeans) cbox_leilao.getSelectedItem();
+            System.out.println(leilao.getId());
+            laudoD.buscarLeilaoConsulta(Modelo, leilao);
+        }
+
+    }//GEN-LAST:event_btn_buscarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_buscar;
     private javax.swing.JButton btn_intervalo;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.ButtonGroup buttonGroup3;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JComboBox<Object> cbox_leilao;
     private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton11;
     private javax.swing.JButton jButton12;
@@ -537,7 +591,6 @@ public class ConsultaLaudo extends javax.swing.JFrame {
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

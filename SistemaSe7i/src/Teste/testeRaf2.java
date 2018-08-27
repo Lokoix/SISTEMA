@@ -14,7 +14,6 @@ import Interface.Cadastro;
 import importacao.arqtxt.Beans.ManipulaTxt;
 import java.util.ArrayList;
 
-
 /**
  *
  * @author rafae
@@ -22,18 +21,11 @@ import java.util.ArrayList;
 public class testeRaf2 {
 
     public static void main(String[] args) {
-        ManipulaTxt m = new ManipulaTxt();
-         ArrayList<String> result = new ArrayList<>();
-         LoteBeans lote = new LoteBeans();
-         Cadastro iCadastro = new Cadastro();
-         String local="C:\\Users\\rafae\\Desktop\\interface\\Cad\\";
-         String s = "86CAD.txt";
-         
-         
-         result = m.Leitura(local, s);
-         iCadastro.getLoteCadastro3(result, lote);
-         
-         lote.exibe();
+
+        String a = "123CAD.txt";
+        String b = "233BIN.txt";
         
+        
+
     }
 }

@@ -7,12 +7,20 @@ package GUI;
 
 import Beans.LeilaoBeans;
 import Beans.LoteBeans;
+import DAO.FotosDAO;
 import DAO.LeilaoDAO;
 import DAO.LoteDAO;
+import Utilitarios.Colorir;
+import java.awt.Color;
+import java.awt.Image;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
 
 /**
  *
@@ -20,21 +28,33 @@ import javax.swing.table.DefaultTableModel;
  */
 public class Fipe extends javax.swing.JFrame {
 
+    DecimalFormat df = new DecimalFormat("#.##");
     LeilaoDAO leilaoD;
     LoteDAO loteD;
     DefaultTableModel Modelo;
+    FotosDAO fotosD;
 
     public Fipe() {
         initComponents();
         loteD = new LoteDAO();
         leilaoD = new LeilaoDAO();
-        tb_fipe.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        fotosD = new FotosDAO();
+        TableCellRenderer renderer = new Colorir();
+        tb_fipe.setColumnSelectionAllowed(false);
+
+        tb_fipe.setDefaultRenderer(Object.class, renderer);
         Modelo = (DefaultTableModel) tb_fipe.getModel();
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         cmb_leilao.addItem("Selecionar Leilao");
         for (LeilaoBeans leilao : leilaoD.buscarTodosLeiloes()) {
             cmb_leilao.addItem(leilao);
         }
+    }
+
+    private void carregarFotoNaLabel(String caminhoFinal, JLabel label) {
+        
+        ImageIcon icontraseira = new ImageIcon(caminhoFinal);
+        label.setIcon(new ImageIcon(icontraseira.getImage().getScaledInstance(label.getWidth(), label.getHeight(), Image.SCALE_DEFAULT)));
     }
 
     /**
@@ -68,10 +88,10 @@ public class Fipe extends javax.swing.JFrame {
         jLabel10 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
-        jLabel11 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
-        jLabel14 = new javax.swing.JLabel();
-        jLabel16 = new javax.swing.JLabel();
+        lblChassi = new javax.swing.JLabel();
+        lblFrente = new javax.swing.JLabel();
+        lblTraseira = new javax.swing.JLabel();
+        lblMotor = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tb_fipe = new javax.swing.JTable();
         jLabel13 = new javax.swing.JLabel();
@@ -118,41 +138,35 @@ public class Fipe extends javax.swing.JFrame {
 
         jLabel10.setText("Valor Débito");
 
-        jLabel11.setText("jLabel11");
-
-        jLabel12.setText("jLabel11");
-
-        jLabel14.setText("jLabel11");
-
-        jLabel16.setText("jLabel11");
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(36, 36, 36)
-                .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(44, 44, 44)
-                .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(40, 40, 40)
-                .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lblFrente, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
+                .addComponent(lblTraseira, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
+                .addComponent(lblMotor, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
+                .addComponent(lblChassi, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
-                    .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel16, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(6, 6, 6))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lblChassi, javax.swing.GroupLayout.DEFAULT_SIZE, 245, Short.MAX_VALUE)
+                    .addComponent(lblMotor, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblTraseira, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblFrente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
+        tb_fipe.setAutoCreateRowSorter(true);
+        tb_fipe.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         tb_fipe.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -170,12 +184,18 @@ public class Fipe extends javax.swing.JFrame {
             }
         });
         tb_fipe.setColumnSelectionAllowed(true);
+        tb_fipe.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        tb_fipe.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        tb_fipe.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tb_fipeMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tb_fipe);
         tb_fipe.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
         if (tb_fipe.getColumnModel().getColumnCount() > 0) {
             tb_fipe.getColumnModel().getColumn(0).setPreferredWidth(100);
             tb_fipe.getColumnModel().getColumn(1).setPreferredWidth(100);
-            tb_fipe.getColumnModel().getColumn(6).setResizable(false);
             tb_fipe.getColumnModel().getColumn(9).setPreferredWidth(300);
         }
 
@@ -185,11 +205,13 @@ public class Fipe extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane1)
                             .addGroup(layout.createSequentialGroup()
@@ -230,8 +252,8 @@ public class Fipe extends javax.swing.JFrame {
                                         .addGap(64, 64, 64)
                                         .addComponent(txt_totalGeral, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel13)))
-                        .addContainerGap())))
+                                .addComponent(jLabel13)))))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -287,7 +309,7 @@ public class Fipe extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        setBounds(1280, 728, 1166, 743);
+        setBounds(1280, 728, 1202, 743);
     }// </editor-fold>//GEN-END:initComponents
 
     private void cmb_leilaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmb_leilaoActionPerformed
@@ -301,11 +323,23 @@ public class Fipe extends javax.swing.JFrame {
             for (LoteBeans l : loteD.buscarTodosLotesDoLeilao(leilao)) {
                 Modelo.addRow(new Object[]{l.getNumeroLote(), l.getVeiculo().getPlaca(),
                     l.getVeiculo().getModelo().getMarca().getNome(), l.getVeiculo().getModelo().getNome(),
-                    l.getFipe(), l.getDebito(), l.getDebito(), l.getFipe(), l.getObservacao()});
+                    l.getVeiculo().getFipe(), l.getVeiculo().getDebito(), l.getValorDoc(), l.getValorFVU(), l.getValorSucata()});
             }
-            
         }
     }//GEN-LAST:event_cmb_leilaoActionPerformed
+
+    private void tb_fipeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tb_fipeMouseClicked
+        String lote = Modelo.getValueAt(tb_fipe.getSelectedRow(), 0).toString();
+        Object obj = cmb_leilao.getSelectedItem();
+        if(obj instanceof LeilaoBeans){       
+            LeilaoBeans leilao = (LeilaoBeans) obj;
+            this.carregarFotoNaLabel(fotosD.buscarFrente(lote, leilao), lblFrente);  
+            this.carregarFotoNaLabel(fotosD.buscarTraseira(lote, leilao), lblTraseira);
+            this.carregarFotoNaLabel(fotosD.buscarMotor(lote, leilao), lblMotor);
+            this.carregarFotoNaLabel(fotosD.buscarChassi(lote, leilao), lblChassi);
+        }
+        
+    }//GEN-LAST:event_tb_fipeMouseClicked
 
     /**
      * @param args the command line arguments
@@ -347,11 +381,7 @@ public class Fipe extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -364,6 +394,10 @@ public class Fipe extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextField5;
+    private javax.swing.JLabel lblChassi;
+    private javax.swing.JLabel lblFrente;
+    private javax.swing.JLabel lblMotor;
+    private javax.swing.JLabel lblTraseira;
     private javax.swing.JTable tb_fipe;
     private javax.swing.JTextField txt_Totalsucata;
     private javax.swing.JTextField txt_desvDoc;
