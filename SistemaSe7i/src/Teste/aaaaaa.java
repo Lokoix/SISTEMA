@@ -27,7 +27,7 @@ public class aaaaaa {
 
     public static void main(String[] args) throws FileNotFoundException, IOException {
 
-        File arq = new File("C:\\Users\\rafae\\Desktop\\interface\\ttt\\", "8CAD.txt");
+        File arq = new File("C:\\Users\\rafae\\Desktop\\interface\\Cad\\teste 5\\blo\\", "5BLOA.txt");
 
         Scanner s = new Scanner(new FileInputStream(arq), "UTF-16LE");
 

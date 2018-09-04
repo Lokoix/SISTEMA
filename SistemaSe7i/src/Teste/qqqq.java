@@ -33,7 +33,7 @@ public class qqqq {
         List<String> lista = new ArrayList<>();
         try {
 
-            Scanner s = new Scanner(new FileReader("C:\\Users\\rafae\\Desktop\\interface\\Cad\\teste 5\\blo\\5BLO.txt"));
+            Scanner s = new Scanner(new FileReader("C:\\Users\\rafae\\Desktop\\interface\\Cad\\teste 5\\blo\\5BLOB.txt"));
 
             //PrintStream ps = new PrintStream("C:\\Users\\rafae\\Documents\\NetBeansProjects\\Java-III\\src\\Aula4\\Video\\saida.txt");
 

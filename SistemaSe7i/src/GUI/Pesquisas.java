@@ -7,9 +7,7 @@ package GUI;
 
 import Beans.LeilaoBeans;
 import Beans.LoteBeans;
-import Beans.ProprietarioBeans;
 import Beans.Restricoes.RestricaoBloqueioBeans;
-import Beans.VeiculoBeans;
 import Controller.LoteController;
 import Controller.ProprietarioController;
 import Controller.Restricoes.RestricaoBloqueioController;
@@ -55,9 +53,7 @@ public class Pesquisas extends javax.swing.JInternalFrame {
 
     public Pesquisas() {
         initComponents();
-        
-        
-        
+
         leilaoD = new LeilaoDAO();
 
         conVeiculo = new VeiculoController();
@@ -295,7 +291,6 @@ public class Pesquisas extends javax.swing.JInternalFrame {
                                 lblexistentes.setText(lblexistentes.getText() + "\n" + arquivosEntrada.get(i).getName());
                                 break;
                             case 2:
-                                System.out.println("case 2");
                                 lote.setNumeroLote(arquivosEntrada.get(i).getName().substring(0, arquivosEntrada.get(i).getName().indexOf("BIN")));
                                 desc = arquivosEntrada.get(i).getName().substring(arquivosEntrada.get(i).getName().indexOf("BIN"), arquivosEntrada.get(i).getName().indexOf(".txt"));
 
@@ -305,6 +300,7 @@ public class Pesquisas extends javax.swing.JInternalFrame {
 
                                     if (result.size() == 62) {
                                         iBaseNacional.getLoteBaseNacional1(result, lote);
+
                                         lote.setVeiculo(conVeiculo.corrigirVeiculoPesquisa(lote.getVeiculo()));
                                         conLote.corrigirLote(lote, lblnovo, lblatualizados, arquivosEntrada.get(i).getName());
 
@@ -321,21 +317,53 @@ public class Pesquisas extends javax.swing.JInternalFrame {
                                 break;
                             case 3:
                                 System.out.println("case 3");
-                                /*
-                                lote.setNumeroLote(s.substring(0, s.indexOf("BLO")));
-                                result = manipulaTxt.Leitura(local, s);
 
-                                if (result.get(17).contains("OBITO") || result.get(17).contains("JUDICIAL")) {
+                                lote.setNumeroLote(arquivosEntrada.get(i).getName().substring(0, arquivosEntrada.get(i).getName().indexOf("BLO")));
 
-                                } else {
+                                desc = arquivosEntrada.get(i).getName().substring(arquivosEntrada.get(i).getName().indexOf("BLO"), arquivosEntrada.get(i).getName().indexOf(".txt"));
+                                System.out.println("2");
+                                if (!pesqDAO.existe(lote.getLeilao().getId(), lote.getNumeroLote(), desc)) {
+                                    System.out.println("Existe");
+                                    result = manipulaTxt.Leitura(arquivosEntrada.get(i));
+
                                     if (result.size() == 39) { // bloqueio padrao 1
+                                        System.out.println("if 39");
                                         RestricaoBloqueioBeans restricaoBlo = new RestricaoBloqueioBeans();
                                         restricaoBlo.setLote(lote);
-                                        iBloqueio.getBloqueio1(listaDeArquivos, restricaoBlo);
-                                        conRestricaoBlo.corrigirBloqueioPesquisa();
 
+                                        restricaoBlo.setLote(conLote.corrigirLotePesquisa(restricaoBlo.getLote(), lblnovo, lblatualizados, arquivosEntrada.get(i).getName()));
+                                        JOptionPane.showMessageDialog(null, restricaoBlo.getLote().getId());
+                                        iBloqueio.getBloqueio1(result, restricaoBlo);
+                                        conRestricaoBlo.corrigirRestricaoBloqueio(restricaoBlo);
+                                    } else if (result.size() == 33) {
+                                        System.out.println("if 33");
+                                        RestricaoBloqueioBeans restricaoBlo = new RestricaoBloqueioBeans();
+                                        restricaoBlo.setLote(lote);
+
+                                        restricaoBlo.setLote(conLote.corrigirLotePesquisa(restricaoBlo.getLote(), lblnovo, lblatualizados,  arquivosEntrada.get(i).getName()));
+                                        iBloqueio.getBloqueio2(result, restricaoBlo);
+                                        conRestricaoBlo.corrigirRestricaoBloqueio(restricaoBlo);
+                                    } else if (result.size() == 20) {
+                                        System.out.println("if 20");
+                                        RestricaoBloqueioBeans restricaoBlo = new RestricaoBloqueioBeans();
+                                        restricaoBlo.setLote(lote);
+
+                                        restricaoBlo.setLote(conLote.corrigirLotePesquisa(restricaoBlo.getLote(), lblnovo, lblatualizados,  arquivosEntrada.get(i).getName()));
+                                        iBloqueio.getBloqueio3(result, restricaoBlo);
+                                        conRestricaoBlo.corrigirRestricaoBloqueio(restricaoBlo);
+
+                                    } else {
+                                        System.out.println("else");
+                                        JOptionPane.showMessageDialog(null, "interface difere de BLO: " + arquivosEntrada.get(i).getName());
+                                        break;
                                     }
-                                }*/
+                                    File arquivoDestino = new File(destino + arquivosEntrada.get(i).getName());
+                                    copy(arquivosEntrada.get(i), arquivoDestino);
+                                    pesqDAO.cadastrar(lote, desc, arquivoDestino.toString());
+                                    break;
+
+                                }
+
                                 lblexistentes.setText(lblexistentes.getText() + "\n" + arquivosEntrada.get(i).getName());
                                 break;
                             default:

@@ -29,7 +29,23 @@ public class LoteController {
             atualizado.setText(atualizado.getText() + "\n" + arquivo);
         } else {
             daoLote.cadastrar(lote);
+            
             novo.setText(novo.getText() + "\n" + arquivo);
+        }
+    }
+    
+    public LoteBeans corrigirLotePesquisa (LoteBeans lote, JTextArea novo, JTextArea atualizado, String arquivo) {
+        if (daoLote.existe(lote)) {
+            LoteBeans base = daoLote.carregar(lote);
+            this.compararLote(lote, base);
+            daoLote.alterar(base);
+            atualizado.setText(atualizado.getText() + "\n" + arquivo);
+            return base;
+        } else {
+            daoLote.cadastrar(lote);
+            
+            novo.setText(novo.getText() + "\n" + arquivo);
+            return daoLote.carregar(lote);
         }
     }
 

@@ -6,12 +6,23 @@
 package Controller.Restricoes;
 
 import Beans.Restricoes.RestricaoBloqueioBeans;
+import DAO.RestricaoBloqueioDAO;
 
 /**
  *
  * @author rafae
  */
 public class RestricaoBloqueioController {
-    
-     
-}
+
+    RestricaoBloqueioDAO daoRestricaoBloqueio = new RestricaoBloqueioDAO();
+    BloqueioController conBloqueio = new BloqueioController();
+
+    public RestricaoBloqueioBeans corrigirRestricaoBloqueio(RestricaoBloqueioBeans restricao) {
+        
+            restricao.setBloqueio(conBloqueio.corrigirBloqueio(restricao.getBloqueio()));
+            daoRestricaoBloqueio.cadastrar(restricao);
+            return restricao;
+        }
+    }
+
+

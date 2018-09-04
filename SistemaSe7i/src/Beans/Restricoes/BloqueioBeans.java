@@ -13,6 +13,16 @@ public class BloqueioBeans {
     private Integer id;
     private String descricao;
 
+    
+    public BloqueioBeans(){
+        
+    }
+    
+    public BloqueioBeans(Integer id, String descricao){
+        this.id = id;
+        this.descricao = descricao;
+    }
+    
     public Integer getId() {
         return id;
     }
